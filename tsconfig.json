@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "lib": [],
+    "target": "ES6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "include": ["*"]
+}
