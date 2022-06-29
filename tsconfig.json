@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "baseUrl": ".",
-    "lib": [],
+    "lib": ["dom"],
     "target": "ES6",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -11,9 +11,8 @@
     "allowJs": true,
     "noImplicitAny": true,
     "sourceMap": true,
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "skipLibCheck": true,
+    "jsx": "react-jsx"
   },
-  "include": ["*"]
+  "include": ["**/*"]
 }

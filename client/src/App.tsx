@@ -4,7 +4,7 @@ import Home from "./Layouts/Home/Home";
 import RegistLogin from "./Layouts/Regiser/Login/Register/Register/RegistLogin";
 import "./App.css";
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <div className="App">
       <Routes>
