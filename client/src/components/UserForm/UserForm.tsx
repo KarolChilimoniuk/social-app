@@ -1,7 +1,29 @@
 import React, { useState } from "react";
+import RegisterFormTemplate from "../RegisterFormTemplate/RegisterFormTemplate";
+import LoginFormTemplate from "../LoginFormTemplate/LoginFormTemplate";
+import { signUp, login } from "../../services/api/auth";
+
+interface IFormData {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  repeatedPassword: string;
+  birthDate: string;
+  email: string;
+}
 
 const UserForm = (): JSX.Element => {
   const [haveAccount, setAccountStatus] = useState<boolean>(false);
+  const [formData, newFormData] = useState<IFormData>({
+    userName: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    repeatedPassword: "",
+    birthDate: "",
+    email: "",
+  });
 
   const accountStatus = (): void => {
     setAccountStatus(!haveAccount);
@@ -9,33 +31,34 @@ const UserForm = (): JSX.Element => {
   const registerHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
     console.log("Sign up process");
+    signUp(formData);
   };
   const loginHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
     console.log("Login process");
+    login(formData);
+  };
+
+  const onChangeHandler = (e: React.SyntheticEvent): void => {
+    const target = e.target as HTMLTextAreaElement;
+    newFormData({ ...formData, [target.name]: target.value });
   };
 
   return (
     <>
       {!haveAccount && (
         <>
-          <form onSubmit={registerHandler}>
-            <div>
-              <input type="string" placeholder="Username" />
-            </div>
-            <div>
-              <input type="email" placeholder="Email" />
-            </div>
-            <div>
-              <input type="password" placeholder="Password" />
-            </div>
-            <div>
-              <input type="password" placeholder="Repeat your password" />
-            </div>
-            <div>
-              <input type="submit" value="Sign up" />
-            </div>
-          </form>
+          <RegisterFormTemplate
+            registerHandler={registerHandler}
+            onChangeHandler={onChangeHandler}
+            userName={formData.userName}
+            firstName={formData.firstName}
+            lastName={formData.lastName}
+            password={formData.password}
+            repeatedPassword={formData.repeatedPassword}
+            birthDate={formData.birthDate}
+            email={formData.email}
+          />
           <button onClick={accountStatus}>
             Do you have an account? Log in!
           </button>
@@ -43,18 +66,15 @@ const UserForm = (): JSX.Element => {
       )}
       {haveAccount && (
         <>
-          <form onSubmit={loginHandler}>
-            <div>
-              <input type="email" placeholder="Email" />
-            </div>
-            <div>
-              <input type="password" placeholder="Password" />
-            </div>
-            <div>
-              <input type="submit" value="Log in" />
-            </div>
-          </form>
-          <button onClick={accountStatus}>Do you have account? Register</button>
+          <LoginFormTemplate
+            loginHandler={loginHandler}
+            onChangeHandler={onChangeHandler}
+            email={formData.email}
+            password={formData.password}
+          />
+          <button onClick={accountStatus}>
+            Don't you have an account? Sign up!
+          </button>
         </>
       )}
     </>
