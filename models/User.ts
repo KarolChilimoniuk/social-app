@@ -30,7 +30,7 @@ const UserSchema = new Schema<IUser>({
   eMail: { type: String, required: true },
   password: { type: String, required: true },
   birthDate: Date,
-  registerDate: { type: Date, default: Date.now() },
+  registerDate: { type: Date, default: new Date() },
   chats: [Number],
   posts: [Number],
   friendsList: [Number],

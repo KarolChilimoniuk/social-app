@@ -3,7 +3,7 @@ import { isAwaitExpression } from "typescript";
 
 const instance = axios.create({ baseURL: `http://localhost:4000` });
 
-export const signUp = async (userData: any) => {
+export const signUp = async (userData: any): Promise<void> => {
   try {
     await instance
       .post(`/auth/signUp`, {
@@ -22,7 +22,7 @@ export const signUp = async (userData: any) => {
   }
 };
 
-export const login = async (userData: any) => {
+export const login = async (userData: any): Promise<void> => {
   try {
     await instance
       .post(`/auth/login`, {
@@ -33,5 +33,19 @@ export const login = async (userData: any) => {
       .catch((err) => console.log(err.response.data));
   } catch (err) {
     console.error(`Request can't be executed`);
+  }
+};
+
+export const loginByGoogle = async (googleData: any): Promise<void> => {
+  try {
+    await instance
+      .post(`/auth/login/google`, {
+        clientId: googleData.clientId,
+        credential: googleData.credential,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.response.data));
+  } catch (err) {
+    console.log(err);
   }
 };

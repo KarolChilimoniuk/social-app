@@ -12,7 +12,8 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": []
   },
   "include": ["**/*"]
 }

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { UserModel, signUpValidation, loginValidation } from "../models/User";
-import { idText, isJSDocUnknownTag } from "typescript";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -30,7 +30,7 @@ export const register = async (req: Request, res: Response) => {
       return res.status(404).send(error.message);
     }
     if (password !== repeatedPassword) {
-      res.status(404).send("Passwords aren't the same");
+      return res.status(404).send("Passwords aren't the same");
     }
     const user = await UserModel.findOne({ eMail: email });
     console.log(user);
@@ -54,7 +54,7 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-export const login = async (req: Request, res: Response) => {
+export const nativeLogin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
     console.log(req.body);
@@ -71,9 +71,26 @@ export const login = async (req: Request, res: Response) => {
     if (!validatedPassword) {
       res.status(401).send("Wrong password");
     }
-    const token = await user.genAuthToken(user._id, user.eMail);
+    const token: string = await user.genAuthToken(user._id, user.eMail);
     res.status(202).send({ message: "You're logged", userData: { user } });
   } catch (err) {
     console.error(`${err.message}`);
+  }
+};
+
+export const googleLogin = async (req: Request, res: Response) => {
+  const { clientId, credential } = req.body;
+  if (credential) {
+    const googleUserInfo: any = jwt.decode(credential);
+    const appUser: string = await UserModel.findOne({
+      eMail: googleUserInfo.email,
+    });
+    if (!appUser) {
+      res.status(404).send("User with email is not found");
+    } else {
+      res.status(200).send({ userData: googleUserInfo });
+    }
+  } else {
+    res.status(404).send("User with email is not found");
   }
 };
