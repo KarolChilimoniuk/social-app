@@ -1,7 +1,10 @@
 import axios from "axios";
 import { isAwaitExpression } from "typescript";
 
-const instance = axios.create({ baseURL: `http://localhost:4000` });
+const instance = axios.create({
+  baseURL: `http://localhost:4000`,
+  withCredentials: true,
+});
 
 export const signUp = async (userData: any): Promise<void> => {
   try {
@@ -29,7 +32,7 @@ export const login = async (userData: any): Promise<void> => {
         email: userData.email,
         password: userData.password,
       })
-      .then((response) => console.log(response.data.userData))
+      .then((response) => console.log(response.data.message))
       .catch((err) => console.log(err.response.data));
   } catch (err) {
     console.error(`Request can't be executed`);
@@ -43,7 +46,7 @@ export const loginByGoogle = async (googleData: any): Promise<void> => {
         clientId: googleData.clientId,
         credential: googleData.credential,
       })
-      .then((res) => console.log(res))
+      .then((response) => console.log(response.data.message))
       .catch((err) => console.log(err.response.data));
   } catch (err) {
     console.log(err);

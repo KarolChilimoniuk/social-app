@@ -1,27 +1,9 @@
 import mongoose, { ObjectId, Types, Schema, model } from "mongoose";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
+import { IUser } from "../services/interfaces";
 
 // types in interface are mainly taken from mongoose types in node_modules
-
-interface IUser {
-  _id: ObjectId;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  eMail: string;
-  password: string;
-  birthDate: Date;
-  registerDate: Date;
-  chats: Array<ObjectId>;
-  posts: Array<ObjectId>;
-  friendsList: Array<ObjectId>;
-  groups: Array<ObjectId>;
-  genAuthToken: (
-    id: mongoose.Schema.Types.ObjectId,
-    email: string
-  ) => Promise<any>;
-}
 
 const UserSchema = new Schema<IUser>({
   firstName: { type: String, required: true },
@@ -39,11 +21,16 @@ const UserSchema = new Schema<IUser>({
 
 UserSchema.methods.genAuthToken = async (
   id: mongoose.Schema.Types.ObjectId,
-  email: string
-): Promise<any> => {
-  const token = jwt.sign({ id: id, email: email }, process.env.PRIVATE_KEY, {
-    expiresIn: "3d",
-  });
+  email: string,
+  password: string
+): Promise<string> => {
+  const token = jwt.sign(
+    { id: id, email: email, password: password },
+    process.env.PRIVATE_KEY,
+    {
+      expiresIn: "3d",
+    }
+  );
   return token;
 };
 

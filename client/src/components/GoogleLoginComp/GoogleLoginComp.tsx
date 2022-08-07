@@ -6,7 +6,6 @@ const GoogleLoginComp = (): JSX.Element => {
     try {
       console.log("Google authentication completed");
       const googleData = await Object.assign({}, response);
-      console.log(googleData);
       googleData && (await loginByGoogle(googleData));
     } catch (error) {
       console.log(error);

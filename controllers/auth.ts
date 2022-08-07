@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { UserModel, signUpValidation, loginValidation } from "../models/User";
+import { IUser } from "../services/interfaces";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
-    const users = await UserModel.find();
+    const users: Array<IUser> = await UserModel.find();
     res.status(200).json(users);
   } catch (err) {
     res.status(400).json(err.message);
@@ -32,14 +33,14 @@ export const register = async (req: Request, res: Response) => {
     if (password !== repeatedPassword) {
       return res.status(404).send("Passwords aren't the same");
     }
-    const user = await UserModel.findOne({ eMail: email });
+    const user: IUser = await UserModel.findOne({ eMail: email });
     console.log(user);
     if (user) {
       return res
         .status(409)
         .send("User using this email exists - choose other email");
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword: string = await bcrypt.hash(password, 10);
     await UserModel.create({
       firstName: firstName,
       lastName: lastName,
@@ -63,16 +64,32 @@ export const nativeLogin = async (req: Request, res: Response) => {
       console.log(error.message);
       return res.status(404).send(error.message);
     }
-    const user = await UserModel.findOne({ eMail: email });
+    const user: IUser = await UserModel.findOne({ eMail: email });
     if (!user) {
       res.status(404).send("User with email is not found");
     }
-    const validatedPassword = await bcrypt.compare(password, user.password);
+    const validatedPassword: boolean = await bcrypt.compare(
+      password,
+      user.password
+    );
     if (!validatedPassword) {
       res.status(401).send("Wrong password");
     }
-    const token: string = await user.genAuthToken(user._id, user.eMail);
-    res.status(202).send({ message: "You're logged", userData: { user } });
+    const cookieToken: string = await user.genAuthToken(
+      user._id,
+      user.eMail,
+      user.password
+    );
+    res
+      .status(202)
+      .cookie("token", cookieToken, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 3,
+      })
+      .send({
+        message: "You're logged",
+        userData: user,
+      });
   } catch (err) {
     console.error(`${err.message}`);
   }
@@ -82,13 +99,27 @@ export const googleLogin = async (req: Request, res: Response) => {
   const { clientId, credential } = req.body;
   if (credential) {
     const googleUserInfo: any = jwt.decode(credential);
-    const appUser: string = await UserModel.findOne({
+    const appUser: IUser = await UserModel.findOne({
       eMail: googleUserInfo.email,
     });
     if (!appUser) {
       res.status(404).send("User with email is not found");
     } else {
-      res.status(200).send({ userData: googleUserInfo });
+      const cookieToken: string = await appUser.genAuthToken(
+        appUser._id,
+        appUser.eMail,
+        appUser.password
+      );
+      res
+        .status(202)
+        .cookie("token", cookieToken, {
+          httpOnly: true,
+          maxAge: 1000 * 60 * 60 * 24 * 3,
+        })
+        .send({
+          message: "You're logged",
+          userData: appUser,
+        });
     }
   } else {
     res.status(404).send("User with email is not found");
