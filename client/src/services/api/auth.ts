@@ -1,5 +1,4 @@
 import axios from "axios";
-import { isAwaitExpression } from "typescript";
 
 const instance = axios.create({
   baseURL: `http://localhost:4000`,
