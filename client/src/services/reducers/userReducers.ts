@@ -33,6 +33,8 @@ const userReducers = (state = initialState, action: AnyAction) => {
         friendsList: action.payloads.friendList,
         groups: action.payloads.groups,
       };
+    default:
+      return { ...state };
   }
 };
 
