@@ -1,12 +1,6 @@
 import React from "react";
 import GoogleLoginComp from "../GoogleLoginComp/GoogleLoginComp";
-
-type LoginFormTemplateProps = {
-  loginHandler(e: React.SyntheticEvent): void;
-  onChangeHandler(e: React.SyntheticEvent): void;
-  email: string;
-  password: string;
-};
+import { LoginFormTemplateProps } from "../../services/types/types";
 
 const LoginFormTemplate = ({
   loginHandler,

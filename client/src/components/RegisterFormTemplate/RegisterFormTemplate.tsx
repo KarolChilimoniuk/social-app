@@ -1,16 +1,5 @@
 import React from "react";
-
-type RegisterFormTemplProps = {
-  registerHandler(e: React.SyntheticEvent): void;
-  onChangeHandler(e: React.SyntheticEvent): void;
-  userName: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  repeatedPassword: string;
-  birthDate: string;
-  email: string;
-};
+import { RegisterFormTemplProps } from "../../services/types/types";
 
 const RegisterFormTemplate = ({
   registerHandler,

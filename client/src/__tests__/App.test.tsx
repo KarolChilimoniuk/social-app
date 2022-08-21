@@ -1,15 +1,14 @@
-import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import App from "../App";
 
 describe("Main container tests", () => {
-  test("render App Comp", () => {
+  test("App Component rendering test", () => {
     const appContainer = render(
       <Router>
         <App />
       </Router>
     );
-    console.debug(appContainer);
+    expect(screen.getByText("Join our society :)")).toBeInTheDocument();
   });
 });
