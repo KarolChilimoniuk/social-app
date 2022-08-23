@@ -1,17 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-
-const HomeHeader = styled.h2`
-  font-size: 4rem;
-`;
+import MainImg from "../../components/MainImg/MainImg";
+import { HomeSection, HomeHeader, HomeLink } from "./Home.style";
 
 const Home = (): JSX.Element => {
   return (
-    <div>
-      <HomeHeader>Home</HomeHeader>
-      <NavLink to="/auth">Join our society :)</NavLink>
-    </div>
+    <HomeSection>
+      <HomeHeader>Welcome to your right place to meet other people!</HomeHeader>
+      <HomeLink to="/auth">Join our society :)</HomeLink>
+      <MainImg />
+    </HomeSection>
   );
 };
 
