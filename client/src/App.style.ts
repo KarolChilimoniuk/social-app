@@ -4,13 +4,13 @@ export const AppContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  // height: 100vh;
-  // max-height: 100vh;
-  // max-width: 100vw;
-  // overflow: hidden;
-  // width: 100vw;
+  max-height: 100wh;
+  max-width: 100vw;
+  overflow: hidden;
 `;
 
 export const MainDiv = styled.div`
+  flex-grow: 1;
+  min-height: 100vh;
   width: 90%;
 `;

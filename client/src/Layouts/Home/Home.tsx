@@ -1,5 +1,3 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
 import MainImg from "../../components/MainImg/MainImg";
 import { HomeSection, HomeHeader, HomeLink } from "./Home.style";
 
