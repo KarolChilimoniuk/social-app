@@ -1,17 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import RegisterFormTemplate from "../RegisterFormTemplate/RegisterFormTemplate";
 import LoginFormTemplate from "../LoginFormTemplate/LoginFormTemplate";
 import { signUp, login } from "../../services/api/auth";
-
-interface IFormData {
-  userName: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  repeatedPassword: string;
-  birthDate: string;
-  email: string;
-}
+import { IFormData } from "../../services/interfaces/interfaces";
 
 const UserForm = (): JSX.Element => {
   const [haveAccount, setAccountStatus] = useState<boolean>(false);

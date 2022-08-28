@@ -1,3 +1,4 @@
+import React from "react";
 import rootReducer from "../reducers";
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -17,4 +18,12 @@ export type RegisterFormTemplProps = {
   repeatedPassword: string;
   birthDate: string;
   email: string;
+};
+
+export type InputProps = {
+  onChangeHandler?(e: React.SyntheticEvent): void;
+  placeholder?: string;
+  name?: string;
+  value?: string;
+  type?: string;
 };

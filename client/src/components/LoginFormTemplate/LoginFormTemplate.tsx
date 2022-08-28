@@ -1,4 +1,3 @@
-import React from "react";
 import GoogleLoginComp from "../GoogleLoginComp/GoogleLoginComp";
 import { LoginFormTemplateProps } from "../../services/types/types";
 

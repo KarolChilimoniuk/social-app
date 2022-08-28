@@ -1,11 +1,12 @@
 import React from "react";
 import UserForm from "../../../../../components/UserForm/UserForm";
+import { FormsContainer } from "./RegistLogin.style";
 
 const RegistLogin = (): JSX.Element => {
   return (
-    <section>
+    <FormsContainer>
       <UserForm />
-    </section>
+    </FormsContainer>
   );
 };
 

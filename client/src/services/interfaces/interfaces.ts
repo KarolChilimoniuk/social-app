@@ -12,3 +12,13 @@ export interface IInitState {
   friendsList: Array<string>;
   groups: Array<string>;
 }
+
+export interface IFormData {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  repeatedPassword: string;
+  birthDate: string;
+  email: string;
+}

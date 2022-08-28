@@ -1,5 +1,13 @@
-import React from "react";
 import { RegisterFormTemplProps } from "../../services/types/types";
+import FormInput from "../TextFormInput/TextFormInput";
+import PasswordInput from "../PasswordInput/PasswordInput";
+import BirthDateInput from "../BirthDateInput/BirthDate";
+import SubInput from "../SubmitInput/SubmitInput";
+import {
+  FormContainer,
+  FormBackground,
+  Form,
+} from "./RegisterFormTemplate.style";
 
 const RegisterFormTemplate = ({
   registerHandler,
@@ -9,80 +17,57 @@ const RegisterFormTemplate = ({
   lastName,
   password,
   repeatedPassword,
-  birthDate,
   email,
 }: RegisterFormTemplProps): JSX.Element => {
   return (
-    <>
-      <form onSubmit={registerHandler}>
-        <div>
-          <input
-            type="text"
-            placeholder="First name"
-            name="firstName"
-            onChange={onChangeHandler}
+    <FormBackground>
+      <FormContainer>
+        <Form onSubmit={registerHandler}>
+          <FormInput
+            type={"text"}
+            placeholder={"First name"}
+            name={"firstName"}
+            onChangeHandler={onChangeHandler}
             value={firstName}
           />
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Last name"
-            name="lastName"
-            onChange={onChangeHandler}
+          <FormInput
+            type={"text"}
+            placeholder={"Last name"}
+            name={"lastName"}
+            onChangeHandler={onChangeHandler}
             value={lastName}
           />
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="User name"
-            name="userName"
-            onChange={onChangeHandler}
+          <FormInput
+            type={"text"}
+            placeholder={"User name"}
+            name={"userName"}
+            onChangeHandler={onChangeHandler}
             value={userName}
           />
-        </div>
-        <div>
-          <input
-            type="email"
-            placeholder="E-mail"
-            name="email"
-            onChange={onChangeHandler}
+          <FormInput
+            type={"email"}
+            placeholder={"E-mail"}
+            name={"email"}
+            onChangeHandler={onChangeHandler}
             value={email}
           />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            onChange={onChangeHandler}
+          <BirthDateInput onChangeHandler={onChangeHandler} />
+          <PasswordInput
+            name={"password"}
             value={password}
+            placeholder={"Password"}
+            onChangeHandler={onChangeHandler}
           />
-        </div>
-        <div>
-          <label htmlFor="birthDate">Birth date</label>
-          <input
-            type="date"
-            id="birthDate"
-            name="birthDate"
-            onChange={onChangeHandler}
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Repeat your password"
-            name="repeatedPassword"
-            onChange={onChangeHandler}
+          <PasswordInput
+            name={"repeatedPassword"}
             value={repeatedPassword}
+            placeholder={"Repeat your password"}
+            onChangeHandler={onChangeHandler}
           />
-        </div>
-        <div>
-          <input type="submit" value="Sign up" />
-        </div>
-      </form>
-    </>
+          <SubInput value={"Sign up"} />
+        </Form>
+      </FormContainer>
+    </FormBackground>
   );
 };
 
