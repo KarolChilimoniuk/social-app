@@ -27,3 +27,8 @@ export type InputProps = {
   value?: string;
   type?: string;
 };
+
+export type SwitcherProps = {
+  accountStatus: boolean;
+  onClickHandler?(e: React.SyntheticEvent): void;
+};

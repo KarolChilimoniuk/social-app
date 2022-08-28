@@ -6,6 +6,7 @@ export const SubmitInput = styled.input`
   border-radius: 5px;
   color: rgb(255, 255, 255);
   cursor: pointer;
+  margin-bottom: 10px;
   margin-top: 10px;
   padding: 10px;
 

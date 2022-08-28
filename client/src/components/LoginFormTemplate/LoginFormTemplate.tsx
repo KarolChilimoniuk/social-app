@@ -1,5 +1,14 @@
 import GoogleLoginComp from "../GoogleLoginComp/GoogleLoginComp";
 import { LoginFormTemplateProps } from "../../services/types/types";
+import FormInput from "../TextFormInput/TextFormInput";
+import PasswordInput from "../PasswordInput/PasswordInput";
+import SubInput from "../SubmitInput/SubmitInput";
+import {
+  FormBackground,
+  FormContainer,
+  Form,
+  SubmitContainer,
+} from "./LoginFormTemplate.style";
 
 const LoginFormTemplate = ({
   loginHandler,
@@ -8,32 +17,29 @@ const LoginFormTemplate = ({
   password,
 }: LoginFormTemplateProps): JSX.Element => {
   return (
-    <>
-      <form onSubmit={loginHandler}>
-        <div>
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
+    <FormBackground>
+      <FormContainer>
+        <Form onSubmit={loginHandler}>
+          <FormInput
+            type={"email"}
+            placeholder={"Email"}
+            name={"email"}
             value={email}
-            onChange={onChangeHandler}
+            onChangeHandler={onChangeHandler}
           />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
+          <PasswordInput
+            name={"password"}
             value={password}
-            onChange={onChangeHandler}
+            placeholder={"Password"}
+            onChangeHandler={onChangeHandler}
           />
-        </div>
-        <div>
-          <input type="submit" value="Log in" />
-        </div>
-      </form>
-      <GoogleLoginComp />
-    </>
+          <SubmitContainer>
+            <SubInput value={"Log in"} />
+          </SubmitContainer>
+        </Form>
+        <GoogleLoginComp />
+      </FormContainer>
+    </FormBackground>
   );
 };
 

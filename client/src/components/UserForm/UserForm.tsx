@@ -1,6 +1,7 @@
 import { useState } from "react";
 import RegisterFormTemplate from "../RegisterFormTemplate/RegisterFormTemplate";
 import LoginFormTemplate from "../LoginFormTemplate/LoginFormTemplate";
+import LoginSignupSwitcher from "../LoginSignupSwitcher/LoginSignupSwitcher";
 import { signUp, login } from "../../services/api/auth";
 import { IFormData } from "../../services/interfaces/interfaces";
 
@@ -16,7 +17,7 @@ const UserForm = (): JSX.Element => {
     email: "",
   });
 
-  const accountStatus = (): void => {
+  const accountStatusSwitcher = (): void => {
     setAccountStatus(!haveAccount);
   };
   const registerHandler = (e: React.SyntheticEvent): void => {
@@ -50,9 +51,10 @@ const UserForm = (): JSX.Element => {
             birthDate={formData.birthDate}
             email={formData.email}
           />
-          <button onClick={accountStatus}>
-            Do you have an account? Log in!
-          </button>
+          <LoginSignupSwitcher
+            onClickHandler={() => accountStatusSwitcher()}
+            accountStatus={haveAccount}
+          />
         </>
       )}
       {haveAccount && (
@@ -63,9 +65,10 @@ const UserForm = (): JSX.Element => {
             email={formData.email}
             password={formData.password}
           />
-          <button onClick={accountStatus}>
-            Don't you have an account? Sign up!
-          </button>
+          <LoginSignupSwitcher
+            onClickHandler={() => accountStatusSwitcher()}
+            accountStatus={haveAccount}
+          />
         </>
       )}
     </>

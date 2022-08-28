@@ -18,6 +18,7 @@ export const Input = styled.input`
 `;
 
 export const FormImageContainer = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
