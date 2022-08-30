@@ -1,4 +1,9 @@
-export interface IInitState {
+export interface IRootState {
+  appData: IMainInitState;
+  userData: IUserInitState;
+}
+
+export interface IUserInitState {
   logged: boolean;
   _id: string;
   firstName: string;
@@ -11,6 +16,10 @@ export interface IInitState {
   posts: Array<string>;
   friendsList: Array<string>;
   groups: Array<string>;
+}
+
+export interface IMainInitState {
+  hasAccount: boolean;
 }
 
 export interface IFormData {

@@ -22,6 +22,14 @@ export const HomeHeader = styled.h2`
 export const HomeLink = styled(NavLink)`
   cursor: pointer;
   text-decoration: none;
+
+  :hover {
+    color: rgb(90, 0, 0);
+    text-decoration: underline;
+  }
+`;
+
+export const HomeParagraph = styled.p`
   @media (min-width: 700px) {
     font-size: 1.2rem;
   }

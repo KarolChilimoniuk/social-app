@@ -1,4 +1,10 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { IRootState } from "../../services/interfaces/interfaces";
+import {
+  hasAccountTrue,
+  hasAccountFalse,
+} from "../../services/actions/appDataAction";
 import RegisterFormTemplate from "../RegisterFormTemplate/RegisterFormTemplate";
 import LoginFormTemplate from "../LoginFormTemplate/LoginFormTemplate";
 import LoginSignupSwitcher from "../LoginSignupSwitcher/LoginSignupSwitcher";
@@ -6,7 +12,11 @@ import { signUp, login } from "../../services/api/auth";
 import { IFormData } from "../../services/interfaces/interfaces";
 
 const UserForm = (): JSX.Element => {
-  const [haveAccount, setAccountStatus] = useState<boolean>(false);
+  const hasAccountStatus = useSelector(
+    (state: IRootState) => state.appData.hasAccount
+  );
+  const dispatch = useDispatch();
+
   const [formData, newFormData] = useState<IFormData>({
     userName: "",
     firstName: "",
@@ -17,9 +27,6 @@ const UserForm = (): JSX.Element => {
     email: "",
   });
 
-  const accountStatusSwitcher = (): void => {
-    setAccountStatus(!haveAccount);
-  };
   const registerHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
     console.log("Sign up process");
@@ -38,7 +45,7 @@ const UserForm = (): JSX.Element => {
 
   return (
     <>
-      {!haveAccount && (
+      {!hasAccountStatus && (
         <>
           <RegisterFormTemplate
             registerHandler={registerHandler}
@@ -52,12 +59,12 @@ const UserForm = (): JSX.Element => {
             email={formData.email}
           />
           <LoginSignupSwitcher
-            onClickHandler={() => accountStatusSwitcher()}
-            accountStatus={haveAccount}
+            onClickHandler={() => dispatch(hasAccountTrue())}
+            accountStatus={hasAccountStatus}
           />
         </>
       )}
-      {haveAccount && (
+      {hasAccountStatus && (
         <>
           <LoginFormTemplate
             loginHandler={loginHandler}
@@ -66,8 +73,8 @@ const UserForm = (): JSX.Element => {
             password={formData.password}
           />
           <LoginSignupSwitcher
-            onClickHandler={() => accountStatusSwitcher()}
-            accountStatus={haveAccount}
+            onClickHandler={() => dispatch(hasAccountFalse())}
+            accountStatus={hasAccountStatus}
           />
         </>
       )}

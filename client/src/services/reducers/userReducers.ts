@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
-import { IInitState } from "../interfaces/interfaces";
+import { IUserInitState } from "../interfaces/interfaces";
 
-const initialState: IInitState = {
+const initialState: IUserInitState = {
   logged: false,
   _id: "",
   firstName: "",
