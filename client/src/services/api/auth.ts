@@ -5,7 +5,10 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const signUp = async (userData: any): Promise<void> => {
+export const signUp = async (
+  userData: any,
+  errorMethod: (a: string) => void
+): Promise<void> => {
   try {
     await instance
       .post(`/auth/signUp`, {
@@ -17,22 +20,37 @@ export const signUp = async (userData: any): Promise<void> => {
         email: userData.email,
         repeatedPassword: userData.repeatedPassword,
       })
-      .then((response) => console.log(response.data))
-      .catch((err) => console.log(err.response.data));
+      .then((response) => {
+        console.log(response.data);
+        errorMethod("");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        errorMethod(err.response.data);
+      });
   } catch (err) {
     console.error(`Request can't be executed`);
   }
 };
 
-export const login = async (userData: any): Promise<void> => {
+export const login = async (
+  userData: any,
+  errorMethod: (a: string) => void
+): Promise<void> => {
   try {
     await instance
       .post(`/auth/login`, {
         email: userData.email,
         password: userData.password,
       })
-      .then((response) => console.log(response.data.message))
-      .catch((err) => console.log(err.response.data));
+      .then((response) => {
+        console.log(response.data.message);
+        errorMethod("");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        errorMethod(err.response.data);
+      });
   } catch (err) {
     console.error(`Request can't be executed`);
   }

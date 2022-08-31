@@ -24,6 +24,8 @@ const GoogleLoginComp = (): JSX.Element => {
         type="standard"
         auto_select={false}
         useOneTap={false}
+        theme="filled_black"
+        size="medium"
       />
     </>
   );
