@@ -1,14 +1,17 @@
 import axios from "axios";
+import {
+  userLogin,
+  loginFailure,
+  signupSuccess,
+  signupFailure,
+} from "../actions/userActions";
 
 const instance = axios.create({
   baseURL: `http://localhost:4000`,
   withCredentials: true,
 });
 
-export const signUp = async (
-  userData: any,
-  errorMethod: (a: string) => void
-): Promise<void> => {
+export const signUp = async (userData: any, dispatch: any): Promise<void> => {
   try {
     await instance
       .post(`/auth/signUp`, {
@@ -22,21 +25,18 @@ export const signUp = async (
       })
       .then((response) => {
         console.log(response.data);
-        errorMethod("");
+        dispatch(signupSuccess(""));
       })
       .catch((err) => {
         console.log(err.response.data);
-        errorMethod(err.response.data);
+        dispatch(signupFailure(err.response.data));
       });
   } catch (err) {
     console.error(`Request can't be executed`);
   }
 };
 
-export const login = async (
-  userData: any,
-  errorMethod: (a: string) => void
-): Promise<void> => {
+export const login = async (userData: any, dispatch: any): Promise<void> => {
   try {
     await instance
       .post(`/auth/login`, {
@@ -45,26 +45,35 @@ export const login = async (
       })
       .then((response) => {
         console.log(response.data.message);
-        errorMethod("");
+        dispatch(userLogin(response.data.userData));
       })
       .catch((err) => {
         console.log(err.response.data);
-        errorMethod(err.response.data);
+        dispatch(loginFailure(err.response.data));
       });
   } catch (err) {
     console.error(`Request can't be executed`);
   }
 };
 
-export const loginByGoogle = async (googleData: any): Promise<void> => {
+export const loginByGoogle = async (
+  googleData: any,
+  dispatch: any
+): Promise<void> => {
   try {
     await instance
       .post(`/auth/login/google`, {
         clientId: googleData.clientId,
         credential: googleData.credential,
       })
-      .then((response) => console.log(response.data.message))
-      .catch((err) => console.log(err.response.data));
+      .then((response) => {
+        console.log(response.data.message);
+        dispatch(userLogin(response.data.userData));
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        dispatch(loginFailure(err.response.data));
+      });
   } catch (err) {
     console.log(err);
   }

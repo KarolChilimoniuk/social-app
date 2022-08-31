@@ -1,12 +1,15 @@
 import { GoogleLogin } from "@react-oauth/google";
+import { useDispatch } from "react-redux";
 import { loginByGoogle } from "../../services/api/auth";
 
 const GoogleLoginComp = (): JSX.Element => {
+  const dispatch = useDispatch();
+
   const successResponseGoogle = async (response: any): Promise<void> => {
     try {
       console.log("Google authentication completed");
       const googleData = await Object.assign({}, response);
-      googleData && (await loginByGoogle(googleData));
+      googleData && (await loginByGoogle(googleData, dispatch));
     } catch (error) {
       console.log(error);
     }

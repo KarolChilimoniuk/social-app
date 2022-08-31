@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { IRootState } from "../../services/interfaces/interfaces";
 import {
   hasAccountTrue,
   hasAccountFalse,
 } from "../../services/actions/appDataAction";
+import { clearAuthError } from "../../services/actions/userActions";
 import RegisterFormTemplate from "../RegisterFormTemplate/RegisterFormTemplate";
 import LoginFormTemplate from "../LoginFormTemplate/LoginFormTemplate";
 import LoginSignupSwitcher from "../LoginSignupSwitcher/LoginSignupSwitcher";
 import { signUp, login } from "../../services/api/auth";
-import { IFormData } from "../../services/interfaces/interfaces";
+import { IFormData, IRootState } from "../../services/interfaces/interfaces";
 import { ErrorParagraph } from "./UserForm.style";
 
 const UserForm = (): JSX.Element => {
-  const [error, errorHandler] = useState<string>("");
   const hasAccountStatus = useSelector(
     (state: IRootState) => state.appData.hasAccount
   );
+
+  const error = useSelector((state: IRootState) => state.userData.authError);
   const dispatch = useDispatch();
 
   const [formData, newFormData] = useState<IFormData>({
@@ -29,18 +30,15 @@ const UserForm = (): JSX.Element => {
     email: "",
   });
 
-  const setError = (err: string): void => {
-    errorHandler(err);
-  };
   const registerHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
     console.log("Sign up process");
-    signUp(formData, setError);
+    signUp(formData, dispatch);
   };
   const loginHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
     console.log("Login process");
-    login(formData, setError);
+    login(formData, dispatch);
   };
 
   const onChangeHandler = (e: React.SyntheticEvent): void => {
@@ -67,7 +65,7 @@ const UserForm = (): JSX.Element => {
           <LoginSignupSwitcher
             onClickHandler={() => {
               dispatch(hasAccountTrue());
-              setError("");
+              dispatch(clearAuthError());
             }}
             accountStatus={hasAccountStatus}
           />
@@ -85,7 +83,7 @@ const UserForm = (): JSX.Element => {
           <LoginSignupSwitcher
             onClickHandler={() => {
               dispatch(hasAccountFalse());
-              setError("");
+              dispatch(clearAuthError());
             }}
             accountStatus={hasAccountStatus}
           />

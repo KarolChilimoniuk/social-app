@@ -4,6 +4,7 @@ export interface IRootState {
 }
 
 export interface IUserInitState {
+  authError: string;
   logged: boolean;
   _id: string;
   firstName: string;
