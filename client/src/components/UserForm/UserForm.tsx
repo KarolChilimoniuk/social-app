@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   hasAccountTrue,
   hasAccountFalse,
@@ -16,6 +17,7 @@ const UserForm = (): JSX.Element => {
   const hasAccountStatus = useSelector(
     (state: IRootState) => state.appData.hasAccount
   );
+  const navigate = useNavigate();
 
   const error = useSelector((state: IRootState) => state.userData.authError);
   const dispatch = useDispatch();
@@ -33,12 +35,12 @@ const UserForm = (): JSX.Element => {
   const registerHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
     console.log("Sign up process");
-    signUp(formData, dispatch);
+    signUp(formData, dispatch, navigate);
   };
   const loginHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
     console.log("Login process");
-    login(formData, dispatch);
+    login(formData, dispatch, navigate);
   };
 
   const onChangeHandler = (e: React.SyntheticEvent): void => {

@@ -11,7 +11,11 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const signUp = async (userData: any, dispatch: any): Promise<void> => {
+export const signUp = async (
+  userData: any,
+  dispatch: any,
+  navigate: any
+): Promise<void> => {
   try {
     await instance
       .post(`/auth/signUp`, {
@@ -26,6 +30,7 @@ export const signUp = async (userData: any, dispatch: any): Promise<void> => {
       .then((response) => {
         console.log(response.data);
         dispatch(signupSuccess(""));
+        navigate("/");
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -36,7 +41,11 @@ export const signUp = async (userData: any, dispatch: any): Promise<void> => {
   }
 };
 
-export const login = async (userData: any, dispatch: any): Promise<void> => {
+export const login = async (
+  userData: any,
+  dispatch: any,
+  navigate: any
+): Promise<void> => {
   try {
     await instance
       .post(`/auth/login`, {
@@ -46,6 +55,7 @@ export const login = async (userData: any, dispatch: any): Promise<void> => {
       .then((response) => {
         console.log(response.data.message);
         dispatch(userLogin(response.data.userData));
+        navigate("/");
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -58,7 +68,8 @@ export const login = async (userData: any, dispatch: any): Promise<void> => {
 
 export const loginByGoogle = async (
   googleData: any,
-  dispatch: any
+  dispatch: any,
+  navigate: any
 ): Promise<void> => {
   try {
     await instance
@@ -69,6 +80,7 @@ export const loginByGoogle = async (
       .then((response) => {
         console.log(response.data.message);
         dispatch(userLogin(response.data.userData));
+        navigate("/");
       })
       .catch((err) => {
         console.log(err.response.data);
