@@ -1,10 +1,15 @@
 import axios from "axios";
+import { NavigateFunction } from "react-router-dom";
+import { Dispatch } from "redux";
+import { ThunkDispatch } from "redux-thunk";
 import {
   userLogin,
   loginFailure,
   signupSuccess,
   signupFailure,
+  logout,
 } from "../actions/userActions";
+import { IFormData } from "../interfaces/interfaces";
 
 const instance = axios.create({
   baseURL: `http://localhost:4000`,
@@ -12,9 +17,9 @@ const instance = axios.create({
 });
 
 export const signUp = async (
-  userData: any,
-  dispatch: any,
-  navigate: any
+  userData: IFormData,
+  dispatch: Dispatch<any>,
+  navigate: NavigateFunction
 ): Promise<void> => {
   try {
     await instance
@@ -42,9 +47,9 @@ export const signUp = async (
 };
 
 export const login = async (
-  userData: any,
-  dispatch: any,
-  navigate: any
+  userData: IFormData,
+  dispatch: Dispatch<any>,
+  navigate: NavigateFunction
 ): Promise<void> => {
   try {
     await instance
@@ -55,7 +60,7 @@ export const login = async (
       .then((response) => {
         console.log(response.data.message);
         dispatch(userLogin(response.data.userData));
-        navigate("/");
+        navigate("/logged");
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -68,8 +73,8 @@ export const login = async (
 
 export const loginByGoogle = async (
   googleData: any,
-  dispatch: any,
-  navigate: any
+  dispatch: Dispatch<any>,
+  navigate: NavigateFunction
 ): Promise<void> => {
   try {
     await instance
@@ -80,7 +85,7 @@ export const loginByGoogle = async (
       .then((response) => {
         console.log(response.data.message);
         dispatch(userLogin(response.data.userData));
-        navigate("/");
+        navigate("/logged");
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -89,4 +94,28 @@ export const loginByGoogle = async (
   } catch (err) {
     console.log(err);
   }
+};
+
+export const tokenChecking = async (dispatch: Dispatch<any>) => {
+  await instance
+    .get("/auth/tokenChecking")
+    .then((response) => {
+      console.log(response);
+      dispatch(userLogin(response.data.userData));
+    })
+    .catch((err) => console.log("token not found"));
+};
+
+export const logoutUser = async (
+  dispatch: Dispatch<any>,
+  navigate: NavigateFunction
+) => {
+  await instance
+    .get("/auth/logout")
+    .then((response) => {
+      console.log(response);
+      dispatch(logout());
+      navigate("/");
+    })
+    .catch((err) => console.log(err.message));
 };

@@ -23,7 +23,7 @@ const userReducers = (state = initialState, action: AnyAction) => {
       return { ...state, authError: "" };
     case "LOGIN_SUCCESS":
       return {
-        authError: action.payloads.error,
+        authError: "",
         logged: true,
         _id: action.payloads._id,
         firstName: action.payloads.firstName,
@@ -34,7 +34,7 @@ const userReducers = (state = initialState, action: AnyAction) => {
         registerDate: action.payloads.registerDate,
         chats: action.payloads.chats,
         posts: action.payloads.posts,
-        friendsList: action.payloads.friendList,
+        friendsList: action.payloads.friendsList,
         groups: action.payloads.groups,
       };
     case "LOGIN_FAILURE":
@@ -49,7 +49,7 @@ const userReducers = (state = initialState, action: AnyAction) => {
       };
     case "LOGOUT":
       return {
-        ...state,
+        ...initialState,
       };
     default:
       return { ...state };

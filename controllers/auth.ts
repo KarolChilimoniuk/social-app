@@ -1,8 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import jwt_decode from "jwt-decode";
 import bcrypt from "bcrypt";
 import { UserModel, signUpValidation, loginValidation } from "../models/User";
-import { IUser } from "../services/interfaces";
+import { IUser, IDecodedUserData } from "../services/interfaces";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -124,4 +125,23 @@ export const googleLogin = async (req: Request, res: Response) => {
   } else {
     res.status(404).send("User with email is not found");
   }
+};
+
+export const tokenChecking = async (req: Request, res: Response) => {
+  const { token } = req.cookies;
+  console.log(token);
+  if (!token) {
+    res.status(200).send("token does not exist");
+  } else {
+    const data: IDecodedUserData = await jwt_decode(token);
+    console.log(data);
+    const user: IUser = await UserModel.findOne({ eMail: data.email });
+    console.log(user);
+    res.status(200).send({ message: "Token exists", userData: user });
+  }
+};
+
+export const logout = (req: Request, res: Response) => {
+  res.clearCookie("token");
+  res.status(200).send("Cookie cleared");
 };

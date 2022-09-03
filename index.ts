@@ -2,6 +2,7 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import mainRouter from "./routes/main";
 import authRouter from "./routes/auth";
 
@@ -31,6 +32,7 @@ const main = async (): Promise<void> => {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use("/", mainRouter);
 app.use("/auth", authRouter);
 

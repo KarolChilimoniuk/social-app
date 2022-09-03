@@ -19,3 +19,11 @@ export interface IUser {
     password: string
   ) => Promise<any>;
 }
+
+export interface IDecodedUserData {
+  id: string;
+  email: string;
+  password: string;
+  iat: number;
+  exp: number;
+}
