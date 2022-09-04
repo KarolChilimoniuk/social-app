@@ -1,0 +1,14 @@
+.activeBar1 {
+  transform: translateY(15px) rotateZ(45deg);
+  transition: 0.3s ease;
+}
+
+.activeBar2 {
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+.activeBar3 {
+  transform: translateY(-15px) rotateZ(-45deg);
+  transition: 0.3s ease;
+}
