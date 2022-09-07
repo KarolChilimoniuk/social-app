@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, NavigateFunction } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { IRootState } from "./services/interfaces/interfaces";
 import { tokenChecking } from "./services/api/auth";
@@ -12,8 +12,10 @@ import { AppContainer, MainDiv } from "./App.style";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
-  const loginStatus = useSelector((state: IRootState) => state.userData.logged);
-  const navigate = useNavigate();
+  const loginStatus: boolean = useSelector(
+    (state: IRootState) => state.userData.logged
+  );
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     tokenChecking(dispatch);

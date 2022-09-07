@@ -8,6 +8,7 @@ export type LoginFormTemplateProps = {
   email: string;
   password: string;
 };
+
 export type RegisterFormTemplProps = {
   registerHandler(e: React.SyntheticEvent): void;
   onChangeHandler(e: React.SyntheticEvent): void;
@@ -31,4 +32,16 @@ export type InputProps = {
 export type SwitcherProps = {
   accountStatus: boolean;
   onClickHandler?(e: React.SyntheticEvent): void;
+};
+
+export type UserBarProps = {
+  NavHandler: () => void;
+};
+
+export type NavProps = {
+  active: boolean;
+};
+
+export type BurgerBarProps = {
+  onClickNavHandler: () => void;
 };

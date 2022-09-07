@@ -24,6 +24,11 @@ export const BarHeader = styled.h2`
   text-align: center;
 `;
 
+export const BarParagraph = styled.p`
+  font-size: 0.9rem;
+  margin-right: 10px;
+`;
+
 export const BarButton = styled.button`
   background-color: transparent;
   border: 0;

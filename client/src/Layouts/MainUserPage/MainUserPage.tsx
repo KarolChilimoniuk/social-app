@@ -1,9 +1,13 @@
+import { useState } from "react";
 import UserBar from "../../components/UserBar/UserBar";
+import Navigation from "../../components/Navigation/Navigation";
 
-const MainUserPage = () => {
+const MainUserPage = (): JSX.Element => {
+  const [activeNav, setActiveNav] = useState<boolean>(false);
   return (
     <section>
-      <UserBar />
+      <Navigation active={activeNav} />
+      <UserBar NavHandler={() => setActiveNav(!activeNav)} />
       <div>
         <p>user logged</p>
       </div>
