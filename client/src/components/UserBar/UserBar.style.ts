@@ -14,16 +14,6 @@ export const BarContainer1 = styled.div`
   transition: background-color 0.3s 0.2s;
 `;
 
-export const BarHeader = styled.h2`
-  align-self: center;
-  font-size: 1.2rem;
-  margin-bottom: 0;
-  margin-right: 30px;
-  margin-top: 0;
-  padding: 0;
-  text-align: center;
-`;
-
 export const BarParagraph = styled.p`
   font-size: 0.9rem;
   margin-right: 10px;

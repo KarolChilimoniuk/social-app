@@ -4,13 +4,9 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/api/auth";
 import { IRootState } from "../../services/interfaces/interfaces";
 import Burger from "../Burger/Burger";
+import UserNavDropdown from "../UserNavDropdown/UserNavDropdown";
 import { UserBarProps } from "../../services/types/types";
-import {
-  BarContainer1,
-  BarHeader,
-  BarParagraph,
-  BarButton,
-} from "./UserBar.style";
+import { BarContainer1, BarParagraph, BarButton } from "./UserBar.style";
 import styles from "./UserBar.module.scss";
 
 const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
@@ -30,7 +26,7 @@ const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
     <BarContainer1 className={scroll >= 5 ? styles.scrolledBar : undefined}>
       <Burger onClickNavHandler={() => NavHandler()} />
       <BarParagraph>Welcome</BarParagraph>
-      <BarHeader>{userData.userName}</BarHeader>
+      <UserNavDropdown userName={userData.userName} />
       <BarButton
         onClick={() => {
           logoutUser(dispatch, navigate);

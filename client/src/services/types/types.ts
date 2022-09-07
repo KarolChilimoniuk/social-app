@@ -45,3 +45,7 @@ export type NavProps = {
 export type BurgerBarProps = {
   onClickNavHandler: () => void;
 };
+
+export type UserNavDropdownProps = {
+  userName: string;
+};

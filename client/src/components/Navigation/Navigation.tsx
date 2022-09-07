@@ -7,7 +7,9 @@ const Navigation = ({ active }: NavProps): JSX.Element => {
     <NavContainer className={active === true ? styles.activeNav : undefined}>
       <nav>
         <ul>
-          <li>fdsf</li>
+          <li>Board</li>
+          <li>Friends</li>
+          <li>Chat</li>
         </ul>
       </nav>
     </NavContainer>
