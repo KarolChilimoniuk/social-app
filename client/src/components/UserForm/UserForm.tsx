@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -18,7 +18,7 @@ const UserForm = (): JSX.Element => {
     (state: IRootState) => state.appData.hasAccount
   );
   const navigate = useNavigate();
-
+  const loginStatus = useSelector((state: IRootState) => state.userData.logged);
   const error = useSelector((state: IRootState) => state.userData.authError);
   const dispatch = useDispatch();
 
@@ -42,11 +42,14 @@ const UserForm = (): JSX.Element => {
     console.log("Login process");
     login(formData, dispatch, navigate);
   };
-
   const onChangeHandler = (e: React.SyntheticEvent): void => {
     const target = e.target as HTMLTextAreaElement;
     newFormData({ ...formData, [target.name]: target.value });
   };
+
+  useEffect(() => {
+    loginStatus === true && navigate("/logged");
+  }, [loginStatus]);
 
   return (
     <>

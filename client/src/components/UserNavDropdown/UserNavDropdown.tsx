@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { UserNavDropdownProps } from "../../services/types/types";
 import DropDownImg from "../../images/dropdown.png";
 import {
@@ -20,7 +21,9 @@ const UserNavDropdown = ({ userName }: UserNavDropdownProps): JSX.Element => {
         <UserNavImg src={DropDownImg}></UserNavImg>
       </UserNavButton>
       <UserNavMenu className={showMenu ? styles.activeUserMenu : undefined}>
-        <p>fdgfdg</p>
+        <NavLink to="/user" className={styles.userNavLink}>
+          User profile
+        </NavLink>
       </UserNavMenu>
     </NavDropdownContainer>
   );

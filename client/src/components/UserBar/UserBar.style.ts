@@ -12,6 +12,7 @@ export const BarContainer1 = styled.div`
   top: 0;
   width: 100vw;
   transition: background-color 0.3s 0.2s;
+  z-index: 4;
 `;
 
 export const BarParagraph = styled.p`

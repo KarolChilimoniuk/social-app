@@ -1,7 +1,6 @@
 import axios from "axios";
 import { NavigateFunction } from "react-router-dom";
 import { Dispatch } from "redux";
-import { ThunkDispatch } from "redux-thunk";
 import {
   userLogin,
   loginFailure,

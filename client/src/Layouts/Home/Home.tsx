@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainImg from "../../components/MainImg/MainImg";
 import { HomeSection, HomeHeader, HomeLink, HomeParagraph } from "./Home.style";
@@ -13,6 +14,10 @@ const Home = (): JSX.Element => {
   const dispatch = useDispatch();
   const stateData = useSelector((state: IRootState) => state.userData);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    stateData.logged === true && navigate("/");
+  }, [stateData.logged]);
 
   return (
     <HomeSection>

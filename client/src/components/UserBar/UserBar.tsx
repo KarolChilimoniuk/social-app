@@ -25,7 +25,7 @@ const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
   return (
     <BarContainer1 className={scroll >= 5 ? styles.scrolledBar : undefined}>
       <Burger onClickNavHandler={() => NavHandler()} />
-      <BarParagraph>Welcome</BarParagraph>
+      {/* <BarParagraph>Welcome</BarParagraph> */}
       <UserNavDropdown userName={userData.userName} />
       <BarButton
         onClick={() => {
