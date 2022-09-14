@@ -12,6 +12,7 @@ const FormInput = ({
     <InputContainer>
       <>
         <Input
+          onFocus={(e) => e.target.setAttribute("autocomplete", "nope")}
           type={type}
           placeholder={placeholder}
           name={name}

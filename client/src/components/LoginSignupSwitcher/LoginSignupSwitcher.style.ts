@@ -7,6 +7,8 @@ export const Switcher = styled.button`
   color: rgb(0, 0, 0);
   padding: 10px;
   cursor: pointer;
+  margin-bottom: 50px;
+  margin-top: 30px;
 
   :hover {
     background-color: rgb(5, 41, 63);

@@ -1,5 +1,12 @@
 import styled from "styled-components";
 
+export const FormsContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 30px;
+`;
 export const ErrorParagraph = styled.p`
   background-color: rgb(116, 150, 169);
   border: 0;

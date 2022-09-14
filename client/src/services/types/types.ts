@@ -27,6 +27,7 @@ export type InputProps = {
   name?: string;
   value?: string;
   type?: string;
+  accept?: string;
 };
 
 export type SwitcherProps = {

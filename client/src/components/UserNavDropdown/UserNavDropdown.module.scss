@@ -3,12 +3,12 @@ div .activeUserMenu {
 }
 
 .userNavLink {
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   cursor: pointer;
   font-size: 0.8rem;
   text-decoration: none;
 
   &:hover {
-    color: rgb(255, 255, 255);
+    color: rgb(0, 90, 0);
   }
 }

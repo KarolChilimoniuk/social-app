@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export const HomeSection = styled.section`
   margin: 0;
   padding-top: 30%;
-  position: fixed;
+  position: relative;
   z-index: 5;
   @media (orientation: landscape) {
     padding-left: 50px;

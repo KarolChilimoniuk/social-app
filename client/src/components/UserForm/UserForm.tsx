@@ -11,7 +11,7 @@ import LoginFormTemplate from "../LoginFormTemplate/LoginFormTemplate";
 import LoginSignupSwitcher from "../LoginSignupSwitcher/LoginSignupSwitcher";
 import { signUp, login } from "../../services/api/auth";
 import { IFormData, IRootState } from "../../services/interfaces/interfaces";
-import { ErrorParagraph } from "./UserForm.style";
+import { FormsContainer, ErrorParagraph } from "./UserForm.style";
 
 const UserForm = (): JSX.Element => {
   const hasAccountStatus = useSelector(
@@ -54,7 +54,7 @@ const UserForm = (): JSX.Element => {
   return (
     <>
       {!hasAccountStatus && (
-        <>
+        <FormsContainer>
           {error !== "" ? <ErrorParagraph>{error}</ErrorParagraph> : null}
           <RegisterFormTemplate
             registerHandler={registerHandler}
@@ -74,10 +74,10 @@ const UserForm = (): JSX.Element => {
             }}
             accountStatus={hasAccountStatus}
           />
-        </>
+        </FormsContainer>
       )}
       {hasAccountStatus && (
-        <>
+        <FormsContainer>
           {error !== "" ? <ErrorParagraph>{error}</ErrorParagraph> : null}
           <LoginFormTemplate
             loginHandler={loginHandler}
@@ -92,7 +92,7 @@ const UserForm = (): JSX.Element => {
             }}
             accountStatus={hasAccountStatus}
           />
-        </>
+        </FormsContainer>
       )}
     </>
   );

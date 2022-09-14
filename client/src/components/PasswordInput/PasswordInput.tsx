@@ -29,7 +29,7 @@ const PasswordInput = ({
         />
         <FormImageContainer>
           <FormImage
-            src={hideStatus ? Hide : View}
+            src={hideStatus ? View : Hide}
             onClick={() => changeHideStatus(!hideStatus)}
             alt="Password visibility switcher"
             title="Click to see or hide your password"

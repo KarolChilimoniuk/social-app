@@ -29,7 +29,7 @@ export const UserNavImg = styled.img`
 `;
 
 export const UserNavMenu = styled.div`
-  background-color: rgba(43, 88, 114, 0.8);
+  background-color: rgb(0, 0, 0);
   border-radius: 5px;
   display: none;
   padding: 10px;

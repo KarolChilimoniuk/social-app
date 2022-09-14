@@ -9,7 +9,7 @@ import Navigation from "./components/Navigation/Navigation";
 import Home from "./Layouts/Home/Home";
 import RegistLogin from "./Layouts/Regiser/Login/Register/Register/RegistLogin";
 import MainUserPage from "./Layouts/MainUserPage/MainUserPage";
-import UserPanel from "./components/UserPanel/UserPanel";
+import UserPanel from "./Layouts/UserPanel/UserPanel";
 import Footer from "./components/Footer/Footer";
 import { AppContainer, MainDiv } from "./App.style";
 

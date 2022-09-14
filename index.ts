@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import mainRouter from "./routes/main";
 import authRouter from "./routes/auth";
+import userActivitiesRouter from "./routes/userActivities";
 
 dotenv.config({ path: "./.env" });
 
@@ -35,6 +36,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/", mainRouter);
 app.use("/auth", authRouter);
+app.use("/logged", userActivitiesRouter);
 
 main()
   .then(() => {
