@@ -6,9 +6,10 @@ div .activeUserMenu {
   color: rgb(255, 255, 255);
   cursor: pointer;
   font-size: 0.8rem;
+  font-weight: 700;
   text-decoration: none;
 
   &:hover {
-    color: rgb(0, 90, 0);
+    color: rgb(43, 88, 114);
   }
 }

@@ -12,7 +12,7 @@ export const BurgerContainer = styled.div`
 `;
 
 export const Bar1 = styled.div`
-  background-color: rgb(0, 90, 0);
+  background-color: rgb(0, 0, 0);
   border-radius: 5px;
   display: block;
   height: 5px;
@@ -22,7 +22,7 @@ export const Bar1 = styled.div`
 `;
 
 export const Bar2 = styled.div`
-  background-color: rgb(0, 90, 0);
+  background-color: rgb(0, 0, 0);
   border-radius: 5px;
   display: block;
   height: 5px;
@@ -32,7 +32,7 @@ export const Bar2 = styled.div`
 `;
 
 export const Bar3 = styled.div`
-  background-color: rgb(0, 90, 0);
+  background-color: rgb(0, 0, 0);
   border-radius: 5px;
   display: block;
   height: 5px;
