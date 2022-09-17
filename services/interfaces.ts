@@ -1,4 +1,4 @@
-import mongoose, { ObjectId, Types, Schema, model } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 export interface IUser {
   _id: ObjectId;
@@ -9,6 +9,7 @@ export interface IUser {
   password: string;
   birthDate: Date;
   registerDate: Date;
+  pic: string;
   chats: Array<ObjectId>;
   posts: Array<ObjectId>;
   friendsList: Array<ObjectId>;

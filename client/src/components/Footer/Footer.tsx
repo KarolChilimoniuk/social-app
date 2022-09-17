@@ -1,6 +1,6 @@
 import { FooterContainer, FooterHeader } from "./Footer.style";
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <FooterContainer>
       <FooterHeader>Karol Chilimoniuk © 2022</FooterHeader>

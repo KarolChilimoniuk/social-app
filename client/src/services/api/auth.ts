@@ -1,4 +1,3 @@
-import axios from "axios";
 import { NavigateFunction } from "react-router-dom";
 import { Dispatch } from "redux";
 import {
@@ -8,12 +7,8 @@ import {
   signupFailure,
   logout,
 } from "../actions/userActions";
+import { instance } from "./main";
 import { IFormData } from "../interfaces/interfaces";
-
-const instance = axios.create({
-  baseURL: `http://localhost:4000`,
-  withCredentials: true,
-});
 
 export const signUp = async (
   userData: IFormData,
@@ -32,12 +27,10 @@ export const signUp = async (
         repeatedPassword: userData.repeatedPassword,
       })
       .then((response) => {
-        console.log(response.data);
         dispatch(signupSuccess(""));
         navigate("/");
       })
       .catch((err) => {
-        console.log(err.response.data);
         dispatch(signupFailure(err.response.data));
       });
   } catch (err) {
@@ -57,12 +50,10 @@ export const login = async (
         password: userData.password,
       })
       .then((response) => {
-        console.log(response.data.message);
         dispatch(userLogin(response.data.userData));
         navigate("/logged");
       })
       .catch((err) => {
-        console.log(err.response.data);
         dispatch(loginFailure(err.response.data));
       });
   } catch (err) {
@@ -82,20 +73,18 @@ export const loginByGoogle = async (
         credential: googleData.credential,
       })
       .then((response) => {
-        console.log(response.data.message);
         dispatch(userLogin(response.data.userData));
         navigate("/logged");
       })
       .catch((err) => {
-        console.log(err.response.data);
         dispatch(loginFailure(err.response.data));
       });
   } catch (err) {
-    console.log(err);
+    console.error(`Request can't be executed`);
   }
 };
 
-export const tokenChecking = async (dispatch: Dispatch<any>) => {
+export const tokenChecking = async (dispatch: Dispatch<any>): Promise<void> => {
   await instance
     .get("/auth/tokenChecking")
     .then((response) => {
@@ -108,7 +97,7 @@ export const tokenChecking = async (dispatch: Dispatch<any>) => {
 export const logoutUser = async (
   dispatch: Dispatch<any>,
   navigate: NavigateFunction
-) => {
+): Promise<void> => {
   await instance
     .get("/auth/logout")
     .then((response) => {

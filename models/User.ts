@@ -13,6 +13,7 @@ const UserSchema = new Schema<IUser>({
   password: { type: String, required: true },
   birthDate: Date,
   registerDate: { type: Date, default: new Date() },
+  pic: { type: String, required: false, default: "" },
   chats: [Number],
   posts: [Number],
   friendsList: [Number],

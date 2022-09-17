@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { Dispatch } from "redux";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavigateFunction } from "react-router-dom";
 import {
   hasAccountTrue,
   hasAccountFalse,
@@ -14,13 +15,17 @@ import { IFormData, IRootState } from "../../services/interfaces/interfaces";
 import { FormsContainer, ErrorParagraph } from "./UserForm.style";
 
 const UserForm = (): JSX.Element => {
-  const hasAccountStatus = useSelector(
+  const hasAccountStatus: boolean = useSelector(
     (state: IRootState) => state.appData.hasAccount
   );
-  const navigate = useNavigate();
-  const loginStatus = useSelector((state: IRootState) => state.userData.logged);
-  const error = useSelector((state: IRootState) => state.userData.authError);
-  const dispatch = useDispatch();
+  const navigate: NavigateFunction = useNavigate();
+  const loginStatus: boolean = useSelector(
+    (state: IRootState) => state.userData.logged
+  );
+  const error: string = useSelector(
+    (state: IRootState) => state.userData.authError
+  );
+  const dispatch: Dispatch = useDispatch();
 
   const [formData, newFormData] = useState<IFormData>({
     userName: "",
@@ -34,12 +39,10 @@ const UserForm = (): JSX.Element => {
 
   const registerHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    console.log("Sign up process");
     signUp(formData, dispatch, navigate);
   };
   const loginHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    console.log("Login process");
     login(formData, dispatch, navigate);
   };
   const onChangeHandler = (e: React.SyntheticEvent): void => {

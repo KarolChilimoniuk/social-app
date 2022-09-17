@@ -5,7 +5,7 @@ import styles from "./Burger.module.scss";
 
 const Burger = ({ onClickNavHandler }: BurgerBarProps): JSX.Element => {
   const [active, setActive] = useState<boolean>(false);
-  const activeBarHandler = () => {
+  const activeBarHandler = (): void => {
     setActive(!active);
   };
   return (

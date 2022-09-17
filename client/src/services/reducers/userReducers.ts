@@ -47,6 +47,22 @@ const userReducers = (state = initialState, action: AnyAction) => {
         ...state,
         authError: action.payloads,
       };
+    case "UPDATE_USER_DATA_SUCCESS":
+      return {
+        ...state,
+        authError: "",
+        firstName: action.payloads.firstName,
+        lastName: action.payloads.lastName,
+        userName: action.payloads.userName,
+        eMail: action.payloads.eMail,
+        birthDate: action.payloads.birthDate,
+        registerDate: action.payloads.registerDate,
+      };
+    case "UPDATE_USER_DATA_FAILURE":
+      return {
+        ...state,
+        authError: action.payloads,
+      };
     case "LOGOUT":
       return {
         ...initialState,

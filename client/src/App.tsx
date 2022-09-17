@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Dispatch } from "redux";
 import { useSelector, useDispatch } from "react-redux";
 import { Routes, Route, useNavigate, NavigateFunction } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -15,7 +16,7 @@ import { AppContainer, MainDiv } from "./App.style";
 
 const App = (): JSX.Element => {
   const [activeNav, setActiveNav] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch: Dispatch = useDispatch();
   const loginStatus: boolean = useSelector(
     (state: IRootState) => state.userData.logged
   );

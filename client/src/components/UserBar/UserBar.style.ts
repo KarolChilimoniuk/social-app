@@ -4,6 +4,7 @@ export const BarContainer1 = styled.div`
   align-items: center;
   background-color: "transparent";
   border-bottom: 1px solid rgb(0, 0, 0);
+  box-shadow: 5px 1px 5px rgb(0, 0, 0);
   display: flex;
   flex-direction: row;
   height: 60px;

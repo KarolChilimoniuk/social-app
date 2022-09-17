@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import MainImg from "../../components/MainImg/MainImg";
 import { HomeSection, HomeHeader, HomeLink, HomeParagraph } from "./Home.style";
@@ -7,13 +8,18 @@ import {
   hasAccountFalse,
 } from "../../services/actions/appDataAction";
 import { tokenChecking, logoutUser } from "../../services/api/auth";
-import { IRootState } from "../../services/interfaces/interfaces";
-import { useNavigate } from "react-router-dom";
+import {
+  IRootState,
+  IUserInitState,
+} from "../../services/interfaces/interfaces";
+import { useNavigate, NavigateFunction } from "react-router-dom";
 
 const Home = (): JSX.Element => {
-  const dispatch = useDispatch();
-  const stateData = useSelector((state: IRootState) => state.userData);
-  const navigate = useNavigate();
+  const dispatch: Dispatch = useDispatch();
+  const stateData: IUserInitState = useSelector(
+    (state: IRootState) => state.userData
+  );
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     stateData.logged === true && navigate("/");

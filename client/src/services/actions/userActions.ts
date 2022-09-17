@@ -49,6 +49,20 @@ export const userLogin = (
   };
 };
 
+export const updateUserDataSuccess = (userData: any) => {
+  return {
+    type: "UPDATE_USER_DATA_SUCCESS",
+    payloads: userData,
+  };
+};
+
+export const updateUserDataFailure = (error: any) => {
+  return {
+    type: "UPDATE_USER_DATA_FAILURE",
+    payloads: error,
+  };
+};
+
 export const logout = () => {
   return {
     type: "LOGOUT",

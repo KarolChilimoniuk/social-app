@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
+import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/api/auth";
-import { IRootState } from "../../services/interfaces/interfaces";
+import {
+  IRootState,
+  IUserInitState,
+} from "../../services/interfaces/interfaces";
 import Burger from "../Burger/Burger";
 import UserNavDropdown from "../UserNavDropdown/UserNavDropdown";
 import { UserBarProps } from "../../services/types/types";
@@ -11,14 +15,15 @@ import styles from "./UserBar.module.scss";
 
 const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
   const [scroll, setScroll] = useState<number>(0);
-  const dispatch = useDispatch();
-  const userData = useSelector((state: IRootState) => state.userData);
+  const dispatch: Dispatch = useDispatch();
+  const userData: IUserInitState = useSelector(
+    (state: IRootState) => state.userData
+  );
   const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
       setScroll(window.scrollY);
-      console.log(scroll);
     });
   }, [scroll]);
 
