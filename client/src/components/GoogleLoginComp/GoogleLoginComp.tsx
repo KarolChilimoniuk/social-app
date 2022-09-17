@@ -1,7 +1,7 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
-import { useNavigate. NavigateFunction } from "react-router-dom";
+import { useNavigate, NavigateFunction } from "react-router-dom";
 import { loginByGoogle } from "../../services/api/auth";
 
 const GoogleLoginComp = (): JSX.Element => {
