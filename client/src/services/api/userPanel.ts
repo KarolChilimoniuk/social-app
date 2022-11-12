@@ -9,7 +9,8 @@ import { IFormData } from "../interfaces/interfaces";
 export const editData = async (
   newUserData: IFormData,
   currentMail: string,
-  dispatch: Dispatch<any>
+  dispatch: Dispatch<any>,
+  updateStatusHandler: any
 ): Promise<void> => {
   try {
     await instance
@@ -26,9 +27,13 @@ export const editData = async (
       })
       .then((response) => {
         dispatch(updateUserDataSuccess(response.data.userData));
+        updateStatusHandler(true);
+        alert("Data updated");
       })
       .catch((err) => {
         dispatch(updateUserDataFailure(err.response.data));
+        updateStatusHandler(false);
+        alert(`${err.response.data}`);
       });
   } catch (error) {
     console.error(`Request can't be executed`);

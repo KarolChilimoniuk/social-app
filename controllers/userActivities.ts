@@ -20,28 +20,35 @@ export const editUserData = async (req: Request, res: Response) => {
     let hashedPassword: string = "";
     if (password !== "" && password !== repeatedPassword) {
       res.status(406).send("Passwords are not equal");
+    } else {
+      if (password !== "" && password === repeatedPassword) {
+        hashedPassword = await bcrypt.hash(password, 10);
+      }
+      user.userName =
+        userName !== user.userName && userName !== ""
+          ? userName
+          : user.userName;
+      user.firstName =
+        firstName !== user.firstName && firstName !== ""
+          ? firstName
+          : user.firstName;
+      user.lastName =
+        lastName !== user.lastName && lastName !== ""
+          ? lastName
+          : user.lastName;
+      user.password = hashedPassword !== "" ? hashedPassword : user.password;
+      user.birthDate =
+        birthDate !== user.birthDate && birthDate !== ""
+          ? birthDate
+          : user.birthDate;
+      user.eMail = email !== user.eMail && email !== "" ? email : user.eMail;
+      user.pic = userPic !== user.pic && userPic !== "" ? userPic : user.pic;
+      user.save();
+      console.log(user);
+      const updatedUser = await UserModel.findOne({ eMail: user.eMail });
+      res.status(201).send({ message: "Data Updated", userData: updatedUser });
     }
-    if (password !== "" && password === repeatedPassword) {
-      hashedPassword = await bcrypt.hash(password, 10);
-    }
-    user.userName =
-      userName !== user.userName && userName !== "" ? userName : user.userName;
-    user.firstName =
-      firstName !== user.firstName && firstName !== ""
-        ? firstName
-        : user.firstName;
-    user.lastName =
-      lastName !== user.lastName && lastName !== "" ? lastName : user.lastName;
-    user.password = hashedPassword !== "" ? hashedPassword : user.password;
-    user.birthDate =
-      birthDate !== user.birthDate && birthDate !== ""
-        ? birthDate
-        : user.birthDate;
-    user.eMail = email !== user.eMail && email !== "" ? email : user.eMail;
-    user.pic = userPic !== user.pic && userPic !== "" ? userPic : user.pic;
-    user.save();
-    console.log(user);
-    const updatedUser = await UserModel.findOne({ eMail: user.eMail });
-    res.status(201).send({ message: "Data Updated", userData: updatedUser });
-  } catch {}
+  } catch (err) {
+    console.error(`${err.message}`);
+  }
 };

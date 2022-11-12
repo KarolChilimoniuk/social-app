@@ -9,16 +9,18 @@ import {
 } from "../../services/interfaces/interfaces";
 import Burger from "../Burger/Burger";
 import UserNavDropdown from "../UserNavDropdown/UserNavDropdown";
+import User from "../../images/user.png";
 import { UserBarProps } from "../../services/types/types";
 import { BarContainer1, BarParagraph, BarButton } from "./UserBar.style";
 import styles from "./UserBar.module.scss";
 
 const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
-  const [scroll, setScroll] = useState<number>(0);
-  const dispatch: Dispatch = useDispatch();
   const userData: IUserInitState = useSelector(
     (state: IRootState) => state.userData
   );
+  const [scroll, setScroll] = useState<number>(0);
+  const dispatch: Dispatch = useDispatch();
+
   const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
@@ -30,8 +32,8 @@ const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
   return (
     <BarContainer1 className={scroll >= 5 ? styles.scrolledBar : undefined}>
       <Burger onClickNavHandler={() => NavHandler()} />
-      {/* <BarParagraph>Welcome</BarParagraph> */}
-      <UserNavDropdown userName={userData.userName} />
+      <BarParagraph>Welcome</BarParagraph>
+      <UserNavDropdown userName={userData.firstName} />
       <BarButton
         onClick={() => {
           logoutUser(dispatch, navigate);

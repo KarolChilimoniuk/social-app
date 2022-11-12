@@ -86,6 +86,8 @@ export const nativeLogin = async (req: Request, res: Response) => {
       .cookie("token", cookieToken, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 3,
+        secure: true,
+        sameSite: "none",
       })
       .send({
         message: "You're logged",
@@ -116,6 +118,8 @@ export const googleLogin = async (req: Request, res: Response) => {
         .cookie("token", cookieToken, {
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 24 * 3,
+          secure: true,
+          sameSite: "none",
         })
         .send({
           message: "You're logged",

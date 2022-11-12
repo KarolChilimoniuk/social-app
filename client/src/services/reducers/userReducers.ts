@@ -36,6 +36,7 @@ const userReducers = (state = initialState, action: AnyAction) => {
         posts: action.payloads.posts,
         friendsList: action.payloads.friendsList,
         groups: action.payloads.groups,
+        pic: action.payloads.pic,
       };
     case "LOGIN_FAILURE":
       return {
@@ -49,14 +50,20 @@ const userReducers = (state = initialState, action: AnyAction) => {
       };
     case "UPDATE_USER_DATA_SUCCESS":
       return {
-        ...state,
         authError: "",
+        logged: true,
+        _id: action.payloads._id,
         firstName: action.payloads.firstName,
         lastName: action.payloads.lastName,
         userName: action.payloads.userName,
         eMail: action.payloads.eMail,
         birthDate: action.payloads.birthDate,
         registerDate: action.payloads.registerDate,
+        chats: action.payloads.chats,
+        posts: action.payloads.posts,
+        friendsList: action.payloads.friendsList,
+        groups: action.payloads.groups,
+        pic: action.payloads.pic,
       };
     case "UPDATE_USER_DATA_FAILURE":
       return {

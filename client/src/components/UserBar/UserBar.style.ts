@@ -17,6 +17,10 @@ export const BarContainer1 = styled.div`
   z-index: 4;
 `;
 
+export const UserImg = styled.img`
+  max-width: 20px;
+`;
+
 export const BarParagraph = styled.p`
   font-size: 0.9rem;
   margin-right: 10px;

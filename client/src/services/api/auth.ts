@@ -1,6 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 import { Dispatch } from "redux";
 import {
+  clearAuthError,
   userLogin,
   loginFailure,
   signupSuccess,
@@ -28,6 +29,8 @@ export const signUp = async (
       })
       .then((response) => {
         dispatch(signupSuccess(""));
+        dispatch(clearAuthError());
+        alert("User registered");
         navigate("/");
       })
       .catch((err) => {

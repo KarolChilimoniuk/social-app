@@ -23,9 +23,13 @@ export const UserNavHeader = styled.h2`
   text-align: center;
 `;
 
+export const UserImg = styled.img`
+  max-width: 15px;
+`;
+
 export const UserNavImg = styled.img`
   padding-top: 5px;
-  width: 0.7rem;
+  width: 10px;
 `;
 
 export const UserNavMenu = styled.div`
