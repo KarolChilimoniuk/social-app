@@ -1,9 +1,10 @@
 import { InputProps } from "../../services/types/types";
 import { InputContainer, Input } from "./FileInput.style";
 
-const FileInput = ({
+const FormFileInput = ({
   name,
   accept,
+  enctype,
   onChangeHandler,
 }: InputProps): JSX.Element => {
   return (
@@ -20,4 +21,4 @@ const FileInput = ({
   );
 };
 
-export default FileInput;
+export default FormFileInput;

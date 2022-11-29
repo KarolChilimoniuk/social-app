@@ -1,5 +1,23 @@
 import styled from "styled-components";
 
+export const SectionContainer = styled.div`
+  align-items: flex-start;
+
+  background-color: rgba(43, 88, 114, 0.8);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  padding-left: 40px;
+  padding-top: 80px;
+  width: 100vw;
+  @media (min-width: 650px) and (orientation: landscape) {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+`;
+
 export const ErrorParagraph = styled.p`
   background-color: transparent;
   border: 0;
@@ -20,18 +38,9 @@ export const UpdateParagraph = styled.p`
   padding: 10px;
 `;
 
-export const FormContainer = styled.section`
-  align-items: flex-start;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  justify-content: center;
-  padding-top: 100px;
-  width: 100%;
-`;
+export const FormContainer = styled.section``;
 
 export const Form = styled.form`
-  background-color: rgba(43, 88, 114, 0.8);
   border-radius: 5px;
   align-items: start;
   display: flex;

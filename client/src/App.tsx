@@ -12,7 +12,7 @@ import RegistLogin from "./Layouts/Regiser/Login/Register/Register/RegistLogin";
 import MainUserPage from "./Layouts/MainUserPage/MainUserPage";
 import UserPanel from "./Layouts/UserPanel/UserPanel";
 import Footer from "./components/Footer/Footer";
-import { AppContainer, MainDiv } from "./App.style";
+import { AppContainer, MainDiv, MainDiv2 } from "./App.style";
 
 const App = (): JSX.Element => {
   const [activeNav, setActiveNav] = useState<boolean>(false);
@@ -30,20 +30,46 @@ const App = (): JSX.Element => {
   return (
     <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_ID}`}>
       <AppContainer>
-        <MainDiv>
-          {loginStatus && (
-            <>
-              <UserBar NavHandler={() => setActiveNav(!activeNav)} />
-              <Navigation active={activeNav} />
-            </>
-          )}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/auth" element={<RegistLogin />} />
-            <Route path="/logged" element={<MainUserPage />} />
-            <Route path="/user" element={<UserPanel />} />
-          </Routes>
-        </MainDiv>
+        {loginStatus && (
+          <>
+            <UserBar NavHandler={() => setActiveNav(!activeNav)} />
+            <Navigation active={activeNav} />
+          </>
+        )}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <MainDiv>
+                <Home />
+              </MainDiv>
+            }
+          />
+          <Route
+            path="/auth"
+            element={
+              <MainDiv>
+                <RegistLogin />
+              </MainDiv>
+            }
+          />
+          <Route
+            path="/logged"
+            element={
+              <MainDiv2>
+                <MainUserPage />
+              </MainDiv2>
+            }
+          />
+          <Route
+            path="/user"
+            element={
+              <MainDiv2>
+                <UserPanel />
+              </MainDiv2>
+            }
+          />
+        </Routes>
         <Footer />
       </AppContainer>
     </GoogleOAuthProvider>

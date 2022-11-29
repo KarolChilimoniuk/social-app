@@ -28,6 +28,7 @@ export type InputProps = {
   value?: string;
   type?: string;
   accept?: string;
+  enctype?: string;
 };
 
 export type SwitcherProps = {
@@ -50,3 +51,13 @@ export type BurgerBarProps = {
 export type UserNavDropdownProps = {
   userName: string;
 };
+
+export type UploadedUserImgProps = {
+  imgId: string | undefined;
+};
+
+export type UserPic = File | null;
+
+export type ImgToPreview = string | ArrayBuffer | null;
+
+export type UploadedImg = string | null;

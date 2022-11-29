@@ -31,5 +31,9 @@ export interface IFormData {
   repeatedPassword: string;
   birthDate: string;
   email: string;
-  userPic?: File | null;
+  // userPic?: File | null;
+}
+
+export interface IUserPic {
+  userPic: File | null;
 }

@@ -1,10 +1,11 @@
 import { Dispatch } from "redux";
-import { instance } from "./main";
+import { instance, cloudUri } from "./main";
 import {
   updateUserDataSuccess,
   updateUserDataFailure,
 } from "../actions/userActions";
-import { IFormData } from "../interfaces/interfaces";
+import { IFormData, IUserPic } from "../interfaces/interfaces";
+import { ImgToPreview } from "../types/types";
 
 export const editData = async (
   newUserData: IFormData,
@@ -23,7 +24,7 @@ export const editData = async (
         repeatedPassword: newUserData.repeatedPassword,
         birthDate: newUserData.birthDate,
         email: newUserData.email,
-        userPic: newUserData.userPic,
+        // userPic: newUserData.userPic,
       })
       .then((response) => {
         dispatch(updateUserDataSuccess(response.data.userData));
@@ -35,6 +36,22 @@ export const editData = async (
         updateStatusHandler(false);
         alert(`${err.response.data}`);
       });
+  } catch (error) {
+    console.error(`Request can't be executed`);
+  }
+};
+
+export const editUserPic = async (
+  userPic: ImgToPreview
+): Promise<string | void> => {
+  try {
+    let result = await instance
+      .post("/logged/editUserPic", { userPic: userPic })
+      .then((res) => {
+        return res.data.public_id;
+      })
+      .catch((err) => console.log(err));
+    return result;
   } catch (error) {
     console.error(`Request can't be executed`);
   }
