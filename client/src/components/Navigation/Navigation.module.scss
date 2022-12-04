@@ -1,6 +1,10 @@
 div .activeNav {
   display: flex;
   height: 200vh;
+  left: 0;
   transition: 0.3s ease;
-  width: 400px;
+  width: 40%;
+  @media (min-width: 400px) {
+    width: 20%;
+  }
 }

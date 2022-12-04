@@ -17,6 +17,7 @@ export interface IUserInitState {
   posts: Array<string>;
   friendsList: Array<string>;
   groups: Array<string>;
+  pic: string | undefined;
 }
 
 export interface IMainInitState {
@@ -31,9 +32,8 @@ export interface IFormData {
   repeatedPassword: string;
   birthDate: string;
   email: string;
-  // userPic?: File | null;
 }
 
 export interface IUserPic {
-  userPic: File | null;
+  userPic: string | undefined;
 }

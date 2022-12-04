@@ -10,9 +10,14 @@ import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 
 import { UploadedUserImgProps } from "../../services/types/types";
-import { UploadedUserImgContainer } from "./UserUploadedImg.style";
+import { UploadedUserImgContainer } from "./UserProfileImg.style";
 
-const UploadedUserImg = ({ imgId }: UploadedUserImgProps): JSX.Element => {
+const UserProfileImg = ({
+  imgId,
+  width,
+  height,
+  radius,
+}: UploadedUserImgProps): JSX.Element => {
   const cld = new Cloudinary({
     cloud: {
       cloudName: `${process.env.REACT_APP_CLOUDINARY_NAME}`,
@@ -21,8 +26,10 @@ const UploadedUserImg = ({ imgId }: UploadedUserImgProps): JSX.Element => {
 
   const myImage = cld.image(imgId);
   myImage
-    .resize(thumbnail().width(280).height(280).gravity(focusOn(FocusOn.face())))
-    .roundCorners(byRadius(150));
+    .resize(
+      thumbnail().width(width).height(height).gravity(focusOn(FocusOn.face()))
+    )
+    .roundCorners(byRadius(radius));
 
   return (
     <UploadedUserImgContainer>
@@ -31,4 +38,4 @@ const UploadedUserImg = ({ imgId }: UploadedUserImgProps): JSX.Element => {
   );
 };
 
-export default UploadedUserImg;
+export default UserProfileImg;

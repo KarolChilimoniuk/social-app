@@ -15,6 +15,7 @@ const initialState: IUserInitState = {
   posts: [],
   friendsList: [],
   groups: [],
+  pic: "",
 };
 
 const userReducers = (state = initialState, action: AnyAction) => {

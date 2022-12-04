@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { MainPageContainer } from "./MainUserPage.style";
 
 const MainUserPage = (): JSX.Element => {
   const [activeNav, setActiveNav] = useState<boolean>(false);
   return (
-    <section>
+    <MainPageContainer>
       <div>
         <p>user logged</p>
       </div>
-    </section>
+    </MainPageContainer>
   );
 };
 

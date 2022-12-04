@@ -9,7 +9,7 @@ export const SectionContainer = styled.div`
   flex-direction: column;
   min-height: 100vh;
   justify-content: center;
-  padding-left: 40px;
+  padding-left: 50px;
   padding-top: 80px;
   width: 100vw;
   @media (min-width: 650px) and (orientation: landscape) {
@@ -54,4 +54,9 @@ export const Form = styled.form`
 export const FormHeader = styled.h2`
   margin: 0;
   margin-bottom: 10px;
+`;
+
+export const FormParagraph = styled.p`
+  color: rgb(255, 255, 255);
+  font-weight: 600;
 `;

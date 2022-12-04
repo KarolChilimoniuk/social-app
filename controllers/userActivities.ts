@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import cloud from "../services/cloudinary";
 import { UserModel } from "../models/User";
 
 export const editUserData = async (req: Request, res: Response) => {
@@ -12,7 +13,6 @@ export const editUserData = async (req: Request, res: Response) => {
     repeatedPassword,
     birthDate,
     email,
-    userPic,
   } = req.body;
   try {
     console.log(currentMail);
@@ -42,13 +42,64 @@ export const editUserData = async (req: Request, res: Response) => {
           ? birthDate
           : user.birthDate;
       user.eMail = email !== user.eMail && email !== "" ? email : user.eMail;
-      user.pic = userPic !== user.pic && userPic !== "" ? userPic : user.pic;
-      user.save();
+      await user.save();
       console.log(user);
       const updatedUser = await UserModel.findOne({ eMail: user.eMail });
       res.status(201).send({ message: "Data Updated", userData: updatedUser });
     }
   } catch (err) {
     console.error(`${err.message}`);
+  }
+};
+
+export const editUserPic = async (req: Request, res: Response) => {
+  const { userPic, email } = req.body;
+  console.log(
+    process.env.CLOUDINARY_NAME,
+    process.env.CLOUDINARY_APIKEY,
+    process.env.CLOUDINARY_SECRET
+  );
+  if (email) {
+    try {
+      if (userPic) {
+        const user = await UserModel.findOne({ eMail: email });
+        console.log(user.pic);
+        const uploadedImage = await cloud.uploader.upload(
+          userPic,
+          {
+            upload_preset: "socialAppPhotos",
+            allowed_formats: [
+              "jpg",
+              "jpeg",
+              "png",
+              "svg",
+              "ico",
+              "webp",
+              "jfif",
+            ],
+          },
+          (error, result) => {
+            error && res.json(error.message);
+            try {
+              user.pic = result.public_id;
+              user.save();
+            } catch (err) {
+              res.json(err);
+            }
+          }
+        );
+      }
+      const updatedUser = await UserModel.findOne({ eMail: email });
+      console.log(updatedUser.pic);
+      !userPic && res.status(400).send({ message: "Choose an image" });
+      userPic &&
+        res.status(201).send({
+          message: "Data updated",
+          userData: updatedUser,
+        });
+    } catch (error) {
+      console.log(error);
+      res.json(error);
+    }
   }
 };

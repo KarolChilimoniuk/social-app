@@ -24,7 +24,6 @@ export const editData = async (
         repeatedPassword: newUserData.repeatedPassword,
         birthDate: newUserData.birthDate,
         email: newUserData.email,
-        // userPic: newUserData.userPic,
       })
       .then((response) => {
         dispatch(updateUserDataSuccess(response.data.userData));
@@ -42,15 +41,21 @@ export const editData = async (
 };
 
 export const editUserPic = async (
-  userPic: ImgToPreview
+  userPic: ImgToPreview,
+  userEmail: string,
+  dispatch: Dispatch
 ): Promise<string | void> => {
   try {
     let result = await instance
-      .post("/logged/editUserPic", { userPic: userPic })
-      .then((res) => {
-        return res.data.public_id;
+      .post("/logged/editUserPic", { userPic: userPic, email: userEmail })
+      .then((response) => {
+        dispatch(updateUserDataSuccess(response.data.userData));
+        alert("Data updated");
+        return response.data.userData.pic;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        alert(`${err.response.data.message}`);
+      });
     return result;
   } catch (error) {
     console.error(`Request can't be executed`);

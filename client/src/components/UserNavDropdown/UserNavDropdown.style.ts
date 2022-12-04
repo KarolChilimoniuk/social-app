@@ -28,6 +28,7 @@ export const UserImg = styled.img`
 `;
 
 export const UserNavImg = styled.img`
+  margin-left: 5px;
   padding-top: 5px;
   width: 10px;
 `;

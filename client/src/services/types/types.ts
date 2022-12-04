@@ -54,9 +54,14 @@ export type UserNavDropdownProps = {
 
 export type UploadedUserImgProps = {
   imgId: string | undefined;
+  width: number;
+  height: number;
+  radius: number;
 };
 
 export type UserPic = File | null;
+
+export type UserProfilePic = string | undefined;
 
 export type ImgToPreview = string | ArrayBuffer | null;
 
