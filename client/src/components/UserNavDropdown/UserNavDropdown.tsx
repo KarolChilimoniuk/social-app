@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import {
-  UserNavDropdownProps,
-  UserProfilePic,
-} from "../../services/types/types";
+import { useState } from "react";
+import { Dispatch } from "redux";
+import { useSelector, useDispatch } from "react-redux";
+import { NavLink, useNavigate, NavigateFunction } from "react-router-dom";
+import { logoutUser } from "../../services/api/auth";
+import { UserNavDropdownProps } from "../../services/types/types";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import {
   IRootState,
@@ -13,11 +12,13 @@ import {
 import DropDownImg from "../../images/dropdown.png";
 import User from "../../images/user.png";
 import {
+  LogoutButton,
   NavDropdownContainer,
   UserNavButton,
   UserNavHeader,
   UserNavImg,
   UserImg,
+  UserImgContainer,
   UserNavMenu,
 } from "./UserNavDropdown.style";
 import styles from "./UserNavDropdown.module.scss";
@@ -27,21 +28,26 @@ const UserNavDropdown = ({ userName }: UserNavDropdownProps): JSX.Element => {
     (state: IRootState) => state.userData
   );
 
+  const dispatch: Dispatch = useDispatch();
+
+  const navigate: NavigateFunction = useNavigate();
+
   const [showMenu, menuHandler] = useState<boolean>(false);
 
   return (
     <NavDropdownContainer>
       <UserNavButton onClick={() => menuHandler(!showMenu)}>
-        {/* <UserNavHeader>{userName}</UserNavHeader> */}
         {typeof userData.pic === "string" && userData.pic !== "" ? (
           <UserProfileImg
             imgId={userData.pic}
-            width={30}
-            height={30}
+            width={40}
+            height={40}
             radius={30}
           />
         ) : (
-          <UserImg src={User} />
+          <UserImgContainer>
+            <UserImg src={User} />
+          </UserImgContainer>
         )}
         <UserNavImg src={DropDownImg}></UserNavImg>
       </UserNavButton>
@@ -49,6 +55,14 @@ const UserNavDropdown = ({ userName }: UserNavDropdownProps): JSX.Element => {
         <NavLink to="/user" className={styles.userNavLink}>
           User profile
         </NavLink>
+        <LogoutButton
+          onClick={() => {
+            logoutUser(dispatch, navigate);
+            console.log(userData);
+          }}
+        >
+          logout
+        </LogoutButton>
       </UserNavMenu>
     </NavDropdownContainer>
   );

@@ -11,3 +11,17 @@ export const NavContainer = styled.div`
   transition: 0.3s ease;
   z-index: 2;
 `;
+
+export const MenuList = styled.ul`
+  list-style: none;
+`;
+
+export const NavLi = styled.li`
+  font-weight: 700;
+`;
+
+export const MenuNav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;

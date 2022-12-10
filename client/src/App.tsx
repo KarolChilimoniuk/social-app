@@ -8,7 +8,7 @@ import { tokenChecking } from "./services/api/auth";
 import UserBar from "./components/UserBar/UserBar";
 import Navigation from "./components/Navigation/Navigation";
 import Home from "./Layouts/Home/Home";
-import RegistLogin from "./Layouts/Regiser/Login/Register/Register/RegistLogin";
+import RegistLogin from "./Layouts/Register/RegistLogin";
 import MainUserPage from "./Layouts/MainUserPage/MainUserPage";
 import UserPanel from "./Layouts/UserPanel/UserPanel";
 import Footer from "./components/Footer/Footer";
