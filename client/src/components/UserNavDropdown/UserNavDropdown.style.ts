@@ -29,32 +29,6 @@ export const UserNavButton = styled.button`
   }
 `;
 
-export const UserNavHeader = styled.h2`
-  align-self: center;
-  color: rgb(0, 90, 0);
-  font-size: 1.2rem;
-  margin-bottom: 0;
-  margin-right: 5px;
-  margin-top: 0;
-  padding: 0;
-  text-align: center;
-`;
-
-export const UserImgContainer = styled.div`
-  align-items: center;
-  background-color: rgba(200, 200, 200, 0.6);
-  border-radius: 30px;
-  display: flex;
-  flex-direction: center;
-  justify-content: center;
-  height: 40px;
-  width: 40px;
-`;
-
-export const UserImg = styled.img`
-  max-width: 15px;
-`;
-
 export const UserNavImg = styled.img`
   margin-left: 5px;
   padding-top: 5px;

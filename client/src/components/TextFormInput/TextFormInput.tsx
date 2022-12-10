@@ -7,9 +7,11 @@ const FormInput = ({
   name,
   onChangeHandler,
   value,
+  width,
+  height,
 }: InputProps): JSX.Element => {
   return (
-    <InputContainer>
+    <InputContainer theme={width || "210px"}>
       <>
         <Input
           onFocus={(e) => e.target.setAttribute("autocomplete", "nope")}
@@ -18,6 +20,7 @@ const FormInput = ({
           name={name}
           onChange={onChangeHandler}
           value={value}
+          height={height && height}
         />
       </>
     </InputContainer>

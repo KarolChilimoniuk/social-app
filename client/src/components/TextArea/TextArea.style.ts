@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const InputContainer = styled.div`
+export const TextAreaContainer = styled.div`
   background-color: rgb(116, 150, 169);
   border: 0;
   border-radius: 5px;
@@ -10,14 +10,16 @@ export const InputContainer = styled.div`
   width: ${(props) => props.theme};
 `;
 
-export const Input = styled.input`
+export const Textarea = styled.textarea`
   background-color: transparent;
   border: 0;
   color: rgb(255, 255, 255);
-  height: ${(props) => props.height};
+  height: 100%;
   padding: 10px;
   padding-bottom: 5px;
   padding-top: 5px;
+  resize: none;
+  width: 100%;
 
   &:focus {
     background-color: transparent;

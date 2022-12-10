@@ -29,6 +29,21 @@ export type InputProps = {
   type?: string;
   accept?: string;
   enctype?: string;
+  width?: string;
+  height?: string;
+  rows?: string;
+  cols?: string;
+};
+
+export type TextAreaProps = {
+  onChangeHandler?(e: React.SyntheticEvent): void;
+  placeholder?: string;
+  name?: string;
+  value?: string;
+  width?: string;
+  height?: string;
+  rows?: number;
+  cols?: number;
 };
 
 export type SwitcherProps = {
