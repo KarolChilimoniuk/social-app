@@ -9,3 +9,5 @@ export const MainPageContainer = styled.section`
   min-width: 100vw;
   padding-top: 90px;
 `;
+
+export const ThoughtsContainer = styled.section``;

@@ -11,7 +11,7 @@ export interface IUser {
   registerDate: Date;
   pic: string;
   chats: Array<ObjectId>;
-  posts: Array<ObjectId>;
+  posts: Array<IThoughtInUser>;
   friendsList: Array<ObjectId>;
   groups: Array<ObjectId>;
   genAuthToken: (
@@ -27,4 +27,26 @@ export interface IDecodedUserData {
   password: string;
   iat: number;
   exp: number;
+}
+
+export interface IThought {
+  content: string;
+  likes: { type: Array<string>; default: [] };
+  comments: { type: Array<string>; default: [] };
+  shares: { type: number; default: 0 };
+  created: Date;
+  author: {
+    id: ObjectId;
+    firstName: string;
+    lastName: string;
+    userPic: string;
+  };
+}
+
+export interface IThoughtInUser {
+  id: ObjectId;
+  // content: string;
+  // likes: { type: Array<string>; default: [] };
+  // comments: { type: Array<string>; default: [] };
+  // shares: { type: number; default: 0 };
 }

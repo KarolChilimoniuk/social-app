@@ -52,6 +52,7 @@ const UserPanel = (): JSX.Element => {
   const [uploadedImg, setUploadedImg] = useState<UploadedImg>(null);
 
   const [updateStatus, setUpdateStatus] = useState<boolean>(false);
+
   const [uploadedImgError, setError] = useState<string>("");
 
   const setPreview = (userPic: UserPic) => {

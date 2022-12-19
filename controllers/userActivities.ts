@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import cloud from "../services/cloudinary";
 import { UserModel } from "../models/User";
+import { ThoughtModel } from "../models/Thought";
 
 export const editUserData = async (req: Request, res: Response) => {
   const {
@@ -97,6 +98,33 @@ export const editUserPic = async (req: Request, res: Response) => {
           message: "Data updated",
           userData: updatedUser,
         });
+    } catch (error) {
+      console.log(error);
+      res.json(error);
+    }
+  }
+};
+
+export const addThought = async (req: Request, res: Response) => {
+  const { email, thoughtContent } = req.body;
+  if (email) {
+    try {
+      const user = await UserModel.findOne({ eMail: email });
+      const newThought = await ThoughtModel.create({
+        content: thoughtContent,
+        created: new Date(),
+        author: {
+          id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          userPic: user.pic,
+        },
+      });
+      console.log(newThought);
+      await UserModel.updateOne(
+        { eMail: email },
+        { $push: { posts: newThought._id } }
+      );
     } catch (error) {
       console.log(error);
       res.json(error);

@@ -14,7 +14,6 @@ export const Textarea = styled.textarea`
   background-color: transparent;
   border: 0;
   color: rgb(255, 255, 255);
-  height: 100%;
   padding: 10px;
   padding-bottom: 5px;
   padding-top: 5px;

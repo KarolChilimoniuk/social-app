@@ -1,4 +1,4 @@
-import mongoose, { ObjectId, Types, Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
 import { IUser } from "../services/interfaces";
@@ -14,10 +14,10 @@ const UserSchema = new Schema<IUser>({
   birthDate: Date,
   registerDate: { type: Date, default: new Date() },
   pic: { type: String, required: false, default: "" },
-  chats: [Number],
-  posts: [Number],
-  friendsList: [Number],
-  groups: [Number],
+  chats: [Object],
+  posts: [Object],
+  friendsList: [Object],
+  groups: [Object],
 });
 
 UserSchema.methods.genAuthToken = async (
