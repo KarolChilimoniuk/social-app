@@ -21,6 +21,7 @@ const TextArea = ({
           value={value}
           rows={rows}
           cols={cols}
+          onChange={onChangeHandler}
         />
       </>
     </TextAreaContainer>

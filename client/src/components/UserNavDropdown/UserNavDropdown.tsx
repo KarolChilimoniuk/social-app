@@ -47,8 +47,8 @@ const UserNavDropdown = ({ userName }: UserNavDropdownProps): JSX.Element => {
         <UserNavImg src={DropDownImg}></UserNavImg>
       </UserNavButton>
       <UserNavMenu className={showMenu ? styles.activeUserMenu : undefined}>
-        <NavLink to="/user" className={styles.userNavLink}>
-          User profile
+        <NavLink to="/editUser" className={styles.userNavLink}>
+          Edit profile
         </NavLink>
         <LogoutButton
           onClick={() => {

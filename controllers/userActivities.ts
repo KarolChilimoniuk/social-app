@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import cloud from "../services/cloudinary";
 import { UserModel } from "../models/User";
 import { ThoughtModel } from "../models/Thought";
+import { IUser } from "services/interfaces";
 
 export const editUserData = async (req: Request, res: Response) => {
   const {
@@ -16,7 +17,6 @@ export const editUserData = async (req: Request, res: Response) => {
     email,
   } = req.body;
   try {
-    console.log(currentMail);
     const user = await UserModel.findOne({ eMail: currentMail });
     let hashedPassword: string = "";
     if (password !== "" && password !== repeatedPassword) {
@@ -44,8 +44,7 @@ export const editUserData = async (req: Request, res: Response) => {
           : user.birthDate;
       user.eMail = email !== user.eMail && email !== "" ? email : user.eMail;
       await user.save();
-      console.log(user);
-      const updatedUser = await UserModel.findOne({ eMail: user.eMail });
+      const updatedUser: IUser = await UserModel.findOne({ eMail: user.eMail });
       res.status(201).send({ message: "Data Updated", userData: updatedUser });
     }
   } catch (err) {
@@ -64,7 +63,6 @@ export const editUserPic = async (req: Request, res: Response) => {
     try {
       if (userPic) {
         const user = await UserModel.findOne({ eMail: email });
-        console.log(user.pic);
         const uploadedImage = await cloud.uploader.upload(
           userPic,
           {
@@ -91,7 +89,6 @@ export const editUserPic = async (req: Request, res: Response) => {
         );
       }
       const updatedUser = await UserModel.findOne({ eMail: email });
-      console.log(updatedUser.pic);
       !userPic && res.status(400).send({ message: "Choose an image" });
       userPic &&
         res.status(201).send({
@@ -99,7 +96,6 @@ export const editUserPic = async (req: Request, res: Response) => {
           userData: updatedUser,
         });
     } catch (error) {
-      console.log(error);
       res.json(error);
     }
   }
@@ -107,12 +103,12 @@ export const editUserPic = async (req: Request, res: Response) => {
 
 export const addThought = async (req: Request, res: Response) => {
   const { email, thoughtContent } = req.body;
+  let listOfThoughts;
   if (email) {
     try {
       const user = await UserModel.findOne({ eMail: email });
       const newThought = await ThoughtModel.create({
-        content: thoughtContent,
-        created: new Date(),
+        textContent: thoughtContent,
         author: {
           id: user._id,
           firstName: user.firstName,
@@ -120,14 +116,32 @@ export const addThought = async (req: Request, res: Response) => {
           userPic: user.pic,
         },
       });
-      console.log(newThought);
       await UserModel.updateOne(
         { eMail: email },
         { $push: { posts: newThought._id } }
       );
+      const updatedUser = await UserModel.findOne({ eMail: email });
+      if (user.posts.length > 0) {
+        listOfThoughts = await Promise.all(
+          updatedUser.posts.map(async (id) => {
+            try {
+              return await ThoughtModel.findOne({ _id: id }).exec();
+            } catch (err) {
+              console.log(err.message);
+            }
+          })
+        );
+      }
+      if (user.posts.length === 0) {
+        listOfThoughts = user.posts;
+      }
+      res.status(201).send({
+        message: "Thought added",
+        userData: listOfThoughts,
+      });
     } catch (error) {
       console.log(error);
-      res.json(error);
+      res.json(error.message);
     }
   }
 };

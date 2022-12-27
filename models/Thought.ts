@@ -1,12 +1,12 @@
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IThought } from "../services/interfaces";
 
 const ThoughtSchema = new Schema<IThought>({
-  content: String,
-  likes: [String],
-  comments: [String],
-  shares: Number,
-  created: Date,
+  likes: { type: [String], default: [] },
+  textContent: { type: String, default: "" },
+  comments: { type: [Object], default: [] },
+  shares: { type: Number, default: 0 },
+  created: { type: Date, default: new Date() },
   author: Object,
 });
 

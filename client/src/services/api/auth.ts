@@ -91,7 +91,7 @@ export const tokenChecking = async (dispatch: Dispatch<any>): Promise<void> => {
   await instance
     .get("/auth/tokenChecking")
     .then((response) => {
-      console.log(response);
+      console.log(response.data.userData);
       dispatch(userLogin(response.data.userData));
     })
     .catch((err) => console.log("token not found"));
@@ -104,7 +104,6 @@ export const logoutUser = async (
   await instance
     .get("/auth/logout")
     .then((response) => {
-      console.log(response);
       dispatch(logout());
       navigate("/");
     })

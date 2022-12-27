@@ -1,21 +1,28 @@
 import { Dispatch } from "redux";
-import { instance, cloudUri } from "./main";
+import { instance } from "./main";
 import {
-  updateUserDataSuccess,
-  updateUserDataFailure,
+  updateUserPostsSuccess,
+  updateUserPostsFailure,
 } from "../actions/userActions";
-import { IFormData, IUserPic } from "../interfaces/interfaces";
-import { ImgToPreview } from "../types/types";
 
 export const addThought = async (
   email: string,
-  thoughtContent: string
+  thoughtContent: string,
+  dispatch: Dispatch
 ): Promise<void> => {
   try {
-    instance.post("/logged/newThought", {
-      email: email,
-      textContent: thoughtContent,
-    });
+    instance
+      .post("/logged/newThought", {
+        email: email,
+        thoughtContent: thoughtContent,
+      })
+      .then((response) => {
+        dispatch(updateUserPostsSuccess(response.data.userData));
+      })
+      .catch((err) => {
+        dispatch(updateUserPostsFailure(err.response.data));
+        alert(`${err.response.data}`);
+      });
   } catch (error) {
     console.log("Request can't be executed");
   }

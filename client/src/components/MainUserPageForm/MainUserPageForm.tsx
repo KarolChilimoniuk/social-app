@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { Dispatch } from "redux";
+import { useDispatch, useSelector } from "react-redux";
 import TextArea from "../TextArea/TextArea";
 import SubInput from "../SubmitInput/SubmitInput";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
@@ -22,14 +23,23 @@ const MainUserPageForm = (): JSX.Element => {
     (state: IRootState) => state.userData
   );
 
+  const dispatch: Dispatch = useDispatch();
+
   const [thoughtContent, newThoughtContent] = useState<string>("");
 
   const userThoughts = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if (thoughtContent === "") {
+      alert("Your thought is empty :/ Write something.");
+    }
+    if (thoughtContent !== "") {
+      addThought(userData.eMail, thoughtContent, dispatch);
+    }
+  };
+
+  const changeThoughtValue = async (e: React.SyntheticEvent) => {
     const target = e.currentTarget as HTMLTextAreaElement;
     newThoughtContent(target.value);
-    addThought(userData.eMail, thoughtContent);
-    console.log("user Thoughts");
   };
 
   return (
@@ -50,8 +60,10 @@ const MainUserPageForm = (): JSX.Element => {
             placeholder="What's in your head..."
             name="thoughts"
             width={"60%"}
-            rows={5}
-            cols={5}
+            rows={3}
+            cols={3}
+            value={thoughtContent}
+            onChangeHandler={changeThoughtValue}
           />
         </InputContainer>
         <SubmitContainer>

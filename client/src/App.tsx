@@ -62,7 +62,7 @@ const App = (): JSX.Element => {
             }
           />
           <Route
-            path="/user"
+            path="/editUser"
             element={
               <MainDiv2>
                 <UserPanel />

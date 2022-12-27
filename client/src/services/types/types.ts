@@ -1,5 +1,6 @@
 import React from "react";
 import rootReducer from "../reducers";
+import { IComment, ILike } from "../interfaces/interfaces";
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type LoginFormTemplateProps = {
@@ -72,6 +73,16 @@ export type UploadedUserImgProps = {
   width: number;
   height: number;
   radius: number;
+};
+
+export type ThoughtProps = {
+  authorFirstName: string;
+  authorLastName: string;
+  authorPic: string;
+  date: string;
+  content: string;
+  comments?: [IComment];
+  likes?: [ILike];
 };
 
 export type UserPic = File | null;

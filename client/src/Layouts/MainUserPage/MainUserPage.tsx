@@ -1,13 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import MainUserPageForm from "../../components/MainUserPageForm/MainUserPageForm";
+import Thought from "../../components/Thought/Thought";
+import {
+  IRootState,
+  IUserInitState,
+} from "../../services/interfaces/interfaces";
 import { MainPageContainer, ThoughtsContainer } from "./MainUserPage.style";
 
 const MainUserPage = (): JSX.Element => {
-  const [activeNav, setActiveNav] = useState<boolean>(false);
+  const userData: IUserInitState = useSelector(
+    (state: IRootState) => state.userData
+  );
+  // const [activeNav, setActiveNav] = useState<boolean>(false);
+
+  // useEffect(() => {
+  //   console.log(userData.posts.length);
+  //   console.log(userData.posts);
+  // }, [userData.posts]);
+
   return (
     <MainPageContainer>
+      <button onClick={() => console.log(`posts`, userData.posts)} />
       <MainUserPageForm />
-      <ThoughtsContainer />
+      <ThoughtsContainer>
+        {userData.posts.length >= 1 && userData.logged
+          ? userData.posts.map((el) => (
+              <Thought
+                authorFirstName={el.author.firstName}
+                authorLastName={el.author.lastName}
+                authorPic={el.author.userPic}
+                date={el.created}
+                content={el.textContent}
+              />
+            ))
+          : null}
+      </ThoughtsContainer>
     </MainPageContainer>
   );
 };

@@ -3,8 +3,6 @@ import jwt from "jsonwebtoken";
 import Joi from "joi";
 import { IUser } from "../services/interfaces";
 
-// types in interface are mainly taken from mongoose types in node_modules
-
 const UserSchema = new Schema<IUser>({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -14,10 +12,10 @@ const UserSchema = new Schema<IUser>({
   birthDate: Date,
   registerDate: { type: Date, default: new Date() },
   pic: { type: String, required: false, default: "" },
-  chats: [Object],
-  posts: [Object],
-  friendsList: [Object],
-  groups: [Object],
+  chats: { type: [String], default: [] },
+  posts: { type: [Object], default: [] },
+  friendsList: { type: [Object], default: [] },
+  groups: { type: [String], default: [] },
 });
 
 UserSchema.methods.genAuthToken = async (

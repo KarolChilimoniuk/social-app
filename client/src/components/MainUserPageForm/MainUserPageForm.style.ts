@@ -6,14 +6,12 @@ export const FormContainer = styled.div`
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  height: 170px;
+  height: 150px;
   justify-content: flex-start;
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
   padding-top: 20px;
   padding-right: 10px;
+  width: 85%;
+  min-width: 260px;
 `;
 
 export const Form = styled.form`

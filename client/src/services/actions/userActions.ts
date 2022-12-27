@@ -63,6 +63,20 @@ export const updateUserDataFailure = (error: any) => {
   };
 };
 
+export const updateUserPostsSuccess = (posts: any) => {
+  return {
+    type: "UPDATE_USER_POSTS_SUCCESS",
+    payloads: posts,
+  };
+};
+
+export const updateUserPostsFailure = (error: any) => {
+  return {
+    type: "UPDATE_USER_POSTS_FAILURE",
+    payloads: error,
+  };
+};
+
 export const logout = () => {
   return {
     type: "LOGOUT",

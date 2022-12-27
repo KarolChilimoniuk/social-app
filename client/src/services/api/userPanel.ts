@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
-import { instance, cloudUri } from "./main";
+import { instance } from "./main";
 import {
   updateUserDataSuccess,
   updateUserDataFailure,
 } from "../actions/userActions";
-import { IFormData, IUserPic } from "../interfaces/interfaces";
+import { IFormData } from "../interfaces/interfaces";
 import { ImgToPreview } from "../types/types";
 
 export const editData = async (
@@ -46,7 +46,7 @@ export const editUserPic = async (
   dispatch: Dispatch
 ): Promise<string | void> => {
   try {
-    let result = await instance
+    let result: string = await instance
       .post("/logged/editUserPic", { userPic: userPic, email: userEmail })
       .then((response) => {
         dispatch(updateUserDataSuccess(response.data.userData));
