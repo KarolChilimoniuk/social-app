@@ -49,7 +49,7 @@ const UserPanel = (): JSX.Element => {
 
   const [imgToPreview, setImagePreview] = useState<ImgToPreview>(null);
 
-  const [uploadedImg, setUploadedImg] = useState<UploadedImg>(null);
+  const [uploadedImg, setUploadedImg] = useState<UploadedImg>(userData.pic);
 
   const [updateStatus, setUpdateStatus] = useState<boolean>(false);
 
@@ -164,7 +164,7 @@ const UserPanel = (): JSX.Element => {
         </Form>
       </FormContainer>
 
-      {typeof uploadedImg === "string" && (
+      {typeof uploadedImg === "string" && uploadedImg !== "" && (
         <UploadedUserImg
           imgId={uploadedImg}
           width={280}

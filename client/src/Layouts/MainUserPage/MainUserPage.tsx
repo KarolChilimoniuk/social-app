@@ -12,12 +12,6 @@ const MainUserPage = (): JSX.Element => {
   const userData: IUserInitState = useSelector(
     (state: IRootState) => state.userData
   );
-  // const [activeNav, setActiveNav] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   console.log(userData.posts.length);
-  //   console.log(userData.posts);
-  // }, [userData.posts]);
 
   return (
     <MainPageContainer>

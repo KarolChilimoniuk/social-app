@@ -62,7 +62,6 @@ export const editUserPic = async (req: Request, res: Response) => {
   if (email) {
     try {
       if (userPic) {
-        const user = await UserModel.findOne({ eMail: email });
         const uploadedImage = await cloud.uploader.upload(
           userPic,
           {
@@ -77,24 +76,26 @@ export const editUserPic = async (req: Request, res: Response) => {
               "jfif",
             ],
           },
-          (error, result) => {
+          async (error, result) => {
             error && res.json(error.message);
             try {
-              user.pic = result.public_id;
-              user.save();
+              const user = await UserModel.findOneAndUpdate(
+                { eMail: email },
+                { pic: result.public_id }
+              );
             } catch (err) {
               res.json(err);
             }
           }
         );
+        const updatedUser = await UserModel.findOne({ eMail: email });
+        updatedUser &&
+          res.status(201).send({
+            message: "Data updated",
+            userData: updatedUser,
+          });
       }
-      const updatedUser = await UserModel.findOne({ eMail: email });
       !userPic && res.status(400).send({ message: "Choose an image" });
-      userPic &&
-        res.status(201).send({
-          message: "Data updated",
-          userData: updatedUser,
-        });
     } catch (error) {
       res.json(error);
     }

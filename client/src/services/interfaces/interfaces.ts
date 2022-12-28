@@ -17,7 +17,7 @@ export interface IUserInitState {
   posts: Array<IThought>;
   friendsList: Array<string>;
   groups: Array<string>;
-  pic: string | undefined;
+  pic: string;
 }
 
 export interface IMainInitState {

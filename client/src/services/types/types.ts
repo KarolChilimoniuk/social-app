@@ -91,4 +91,4 @@ export type UserProfilePic = string | undefined;
 
 export type ImgToPreview = string | ArrayBuffer | null;
 
-export type UploadedImg = string | null;
+export type UploadedImg = string;
