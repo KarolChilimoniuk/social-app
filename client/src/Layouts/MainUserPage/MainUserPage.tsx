@@ -30,7 +30,7 @@ const MainUserPage = (): JSX.Element => {
                 authorFirstName={el.author.firstName}
                 authorLastName={el.author.lastName}
                 authorPic={el.author.userPic}
-                date={el.created}
+                date={new Date(el.created).toDateString()}
                 content={el.textContent}
               />
             ))

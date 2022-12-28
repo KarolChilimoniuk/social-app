@@ -44,7 +44,7 @@ export interface IThought {
   likes: Array<ILike>;
   comments: Array<IComment>;
   shares: number;
-  created: string;
+  created: Date;
   author: {
     id: string;
     firstName: string;

@@ -3,7 +3,8 @@ import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import { ThoughtProps } from "../../services/types/types";
 import {
   ThoughtContainer,
-  ImgNameContainer,
+  ImgNameDateContainer,
+  NameDateContainer,
   ThoughtHeader,
   ThoughtContent,
   ThoughtDate,
@@ -20,7 +21,7 @@ const Thought = ({
 }: ThoughtProps): JSX.Element => {
   return (
     <ThoughtContainer>
-      <ImgNameContainer>
+      <ImgNameDateContainer>
         {authorPic !== "" ? (
           <UserProfileImg
             imgId={authorPic}
@@ -31,9 +32,11 @@ const Thought = ({
         ) : (
           <NoImgAvatar />
         )}
-        <ThoughtHeader>{`${authorFirstName} ${authorLastName}`}</ThoughtHeader>
-        <ThoughtDate>{date}</ThoughtDate>
-      </ImgNameContainer>
+        <NameDateContainer>
+          <ThoughtHeader>{`${authorFirstName} ${authorLastName}`}</ThoughtHeader>
+          <ThoughtDate>{`${date}`}</ThoughtDate>
+        </NameDateContainer>
+      </ImgNameDateContainer>
       <ThoughtContent>{content}</ThoughtContent>
     </ThoughtContainer>
   );
