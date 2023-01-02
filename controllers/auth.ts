@@ -92,6 +92,7 @@ export const nativeLogin = async (req: Request, res: Response) => {
     if (user.posts.length === 0) {
       listOfThoughts = user.posts;
     }
+    console.log(user._id);
     res
       .status(202)
       .cookie("token", cookieToken, {
@@ -103,6 +104,7 @@ export const nativeLogin = async (req: Request, res: Response) => {
       .send({
         message: "You're logged",
         userData: {
+          _id: user._id,
           firstName: user.firstName,
           lastName: user.lastName,
           userName: user.userName,
@@ -162,6 +164,7 @@ export const googleLogin = async (req: Request, res: Response) => {
         .send({
           message: "You're logged",
           userData: {
+            _id: appUser._id,
             firstName: appUser.firstName,
             lastName: appUser.lastName,
             userName: appUser.userName,
@@ -210,6 +213,7 @@ export const tokenChecking = async (
     res.status(200).send({
       message: "Token exists",
       userData: {
+        _id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
         userName: user.userName,

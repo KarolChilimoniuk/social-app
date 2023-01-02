@@ -4,10 +4,11 @@ import cloud from "../services/cloudinary";
 import { UserModel } from "../models/User";
 import { ThoughtModel } from "../models/Thought";
 import { IUser } from "services/interfaces";
+import { urlencoded } from "body-parser";
 
 export const editUserData = async (req: Request, res: Response) => {
   const {
-    currentMail,
+    userId,
     userName,
     firstName,
     lastName,
@@ -16,8 +17,9 @@ export const editUserData = async (req: Request, res: Response) => {
     birthDate,
     email,
   } = req.body;
+  console.log(userId);
   try {
-    const user = await UserModel.findOne({ eMail: currentMail });
+    const user = await UserModel.findOne({ _id: userId });
     let hashedPassword: string = "";
     if (password !== "" && password !== repeatedPassword) {
       res.status(406).send("Passwords are not equal");
@@ -44,7 +46,7 @@ export const editUserData = async (req: Request, res: Response) => {
           : user.birthDate;
       user.eMail = email !== user.eMail && email !== "" ? email : user.eMail;
       await user.save();
-      const updatedUser: IUser = await UserModel.findOne({ eMail: user.eMail });
+      const updatedUser: IUser = await UserModel.findOne({ _id: user._id });
       res.status(201).send({ message: "Data Updated", userData: updatedUser });
     }
   } catch (err) {
@@ -53,13 +55,13 @@ export const editUserData = async (req: Request, res: Response) => {
 };
 
 export const editUserPic = async (req: Request, res: Response) => {
-  const { userPic, email } = req.body;
+  const { userPic, userId } = req.body;
   console.log(
     process.env.CLOUDINARY_NAME,
     process.env.CLOUDINARY_APIKEY,
     process.env.CLOUDINARY_SECRET
   );
-  if (email) {
+  if (userId) {
     try {
       if (userPic) {
         const uploadedImage = await cloud.uploader.upload(
@@ -80,7 +82,7 @@ export const editUserPic = async (req: Request, res: Response) => {
             error && res.json(error.message);
             try {
               const user = await UserModel.findOneAndUpdate(
-                { eMail: email },
+                { _id: userId },
                 { pic: result.public_id }
               );
             } catch (err) {
@@ -88,7 +90,7 @@ export const editUserPic = async (req: Request, res: Response) => {
             }
           }
         );
-        const updatedUser = await UserModel.findOne({ eMail: email });
+        const updatedUser = await UserModel.findOne({ _id: userId });
         updatedUser &&
           res.status(201).send({
             message: "Data updated",

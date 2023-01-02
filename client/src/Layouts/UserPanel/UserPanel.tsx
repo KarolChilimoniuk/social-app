@@ -77,7 +77,7 @@ const UserPanel = (): JSX.Element => {
 
   const textSubmitHandler = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault();
-    await editData(formData, userData.eMail, dispatch, setUpdateStatus);
+    await editData(formData, userData._id, dispatch, setUpdateStatus);
   };
 
   const imgSubmitHandler = async (e: React.SyntheticEvent): Promise<void> => {
@@ -85,7 +85,7 @@ const UserPanel = (): JSX.Element => {
     try {
       const uploadedImageData = await editUserPic(
         imgToPreview,
-        userData.eMail,
+        userData._id,
         dispatch
       );
       typeof uploadedImageData === "string" &&
@@ -99,6 +99,7 @@ const UserPanel = (): JSX.Element => {
   return (
     <SectionContainer>
       <FormContainer>
+        <button onClick={() => console.log(userData._id)} />
         <Form onSubmit={textSubmitHandler}>
           {error !== "" && updateStatus === false ? (
             <ErrorParagraph>{error}</ErrorParagraph>

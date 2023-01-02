@@ -9,14 +9,14 @@ import { ImgToPreview } from "../types/types";
 
 export const editData = async (
   newUserData: IFormData,
-  currentMail: string,
+  userId: string,
   dispatch: Dispatch<any>,
   updateStatusHandler: any
 ): Promise<void> => {
   try {
     await instance
       .post(`/logged/editProfile`, {
-        currentMail: currentMail,
+        userId: userId,
         userName: newUserData.userName,
         firstName: newUserData.firstName,
         lastName: newUserData.lastName,
@@ -42,12 +42,12 @@ export const editData = async (
 
 export const editUserPic = async (
   userPic: ImgToPreview,
-  userEmail: string,
+  userId: string,
   dispatch: Dispatch
 ): Promise<string | void> => {
   try {
     let result: string = await instance
-      .post("/logged/editUserPic", { userPic: userPic, email: userEmail })
+      .post("/logged/editUserPic", { userPic: userPic, userId: userId })
       .then((response) => {
         dispatch(updateUserDataSuccess(response.data.userData));
         alert("Data updated");
