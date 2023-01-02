@@ -10,10 +10,10 @@ export interface IUser {
   birthDate: Date;
   registerDate: Date;
   pic: string;
-  chats: Array<ObjectId>;
+  chats: Array<string>;
   posts: Array<string>;
-  friendsList: Array<ObjectId>;
-  groups: Array<ObjectId>;
+  friendsList: Array<string>;
+  groups: Array<string>;
   genAuthToken: (
     id: mongoose.Schema.Types.ObjectId,
     email: string,
@@ -37,20 +37,14 @@ export interface IThought {
   shares: number;
   created: Date;
   author: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    userPic: string;
+    _id: string;
   };
 }
 
 export interface IComment {
-  id: string;
+  _id: string;
   author: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    img: string;
+    _id: ObjectId;
   };
   content: string;
   date: Date;

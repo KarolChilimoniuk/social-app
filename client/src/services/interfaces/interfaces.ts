@@ -39,17 +39,14 @@ export interface IUserPic {
 }
 
 export interface IThought {
-  id: string;
+  _id: string;
   textContent: string;
-  likes: Array<ILike>;
+  likes: Array<string>;
   comments: Array<IComment>;
   shares: number;
   created: Date;
   author: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    userPic: string;
+    _id: string;
   };
 }
 
@@ -63,25 +60,22 @@ export interface IThoughtAuthor {
 }
 
 export interface IComment {
-  id: string;
+  _id: string;
   author: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    img: string;
+    _id: string;
   };
   content: string;
   date: Date;
 }
 
-export interface ILike {
-  id: string;
-  author: {
-    author: {
-      id: string;
-      firstName: string;
-      lastName: string;
-      img: string;
-    };
-  };
-}
+// export interface ILike {
+//   _id: string;
+//   author: {
+//     author: {
+//       id: string;
+//       firstName: string;
+//       lastName: string;
+//       img: string;
+//     };
+//   };
+// }

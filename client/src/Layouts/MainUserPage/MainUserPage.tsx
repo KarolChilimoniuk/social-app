@@ -20,13 +20,14 @@ const MainUserPage = (): JSX.Element => {
       <ThoughtsContainer>
         {userData.posts.length >= 1 && userData.logged
           ? userData.posts.map((el) => (
-              <Thought
-                authorFirstName={el.author.firstName}
-                authorLastName={el.author.lastName}
-                authorPic={el.author.userPic}
-                date={new Date(el.created).toDateString()}
-                content={el.textContent}
-              />
+              // <Thought
+              //   authorFirstName={el.author.firstName}
+              //   authorLastName={el.author.lastName}
+              //   authorPic={el.author.userPic}
+              //   date={new Date(el.created).toDateString()}
+              //   content={el.textContent}
+              // />
+              <div>post</div>
             ))
           : null}
       </ThoughtsContainer>

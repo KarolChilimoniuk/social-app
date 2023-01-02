@@ -2,6 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
 import { IUser } from "../services/interfaces";
+import { ObjectId } from "mongodb";
 
 const UserSchema = new Schema<IUser>({
   firstName: { type: String, required: true },
@@ -13,8 +14,8 @@ const UserSchema = new Schema<IUser>({
   registerDate: { type: Date, default: new Date() },
   pic: { type: String, required: false, default: "" },
   chats: { type: [String], default: [] },
-  posts: { type: [Object], default: [] },
-  friendsList: { type: [Object], default: [] },
+  posts: { type: [String], default: [] },
+  friendsList: { type: [String], default: [] },
   groups: { type: [String], default: [] },
 });
 

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { ObjectId } from "mongodb";
 import jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
 import bcrypt from "bcrypt";
@@ -56,7 +57,7 @@ export const register = async (req: Request, res: Response) => {
 
 export const nativeLogin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  let listOfThoughts: Array<IThought> | Array<string>;
+  let listOfThoughts: Array<string> | Array<IThought>;
   try {
     const { error } = loginValidation(req.body);
     if (error) {
