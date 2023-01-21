@@ -37,10 +37,7 @@ export interface IThought {
   shares: number;
   created: Date;
   author: {
-    userPic: any;
-    lastName: any;
-    firstName: any;
-    _id: string;
+    _id: ObjectId;
   };
 }
 

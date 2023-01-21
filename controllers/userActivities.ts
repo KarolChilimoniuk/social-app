@@ -24,6 +24,9 @@ export const editUserData = async (req: Request, res: Response) => {
     email,
   } = req.body;
   try {
+    let listOfFriends: Array<IUser> = [];
+    let userPosts: Array<IThoughtInPushMethod> = [];
+    let thoughtsToShow: Array<IThoughtInPushMethod> = [];
     const user = await UserModel.findOne({ _id: userId });
     let hashedPassword: string = "";
     if (password !== "" && password !== repeatedPassword) {
@@ -52,7 +55,27 @@ export const editUserData = async (req: Request, res: Response) => {
       user.eMail = email !== user.eMail && email !== "" ? email : user.eMail;
       await user.save();
       const updatedUser: IUser = await UserModel.findOne({ _id: user._id });
-      res.status(201).send({ message: "Data Updated", userData: updatedUser });
+      listOfFriends = await getUserFriends(updatedUser);
+      userPosts = await getUserPosts(updatedUser);
+      thoughtsToShow = await getPostsToShow(listOfFriends, updatedUser);
+      res.status(201).send({
+        message: "Data Updated",
+        userData: {
+          _id: updatedUser._id,
+          firstName: updatedUser.firstName,
+          lastName: updatedUser.lastName,
+          userName: updatedUser.userName,
+          eMail: updatedUser.eMail,
+          birthDate: updatedUser.birthDate,
+          registerDate: updatedUser.registerDate,
+          pic: updatedUser.pic,
+          chats: updatedUser.chats,
+          allPostsToShow: thoughtsToShow,
+          userPosts: userPosts,
+          friendsList: listOfFriends,
+          groups: updatedUser.groups,
+        },
+      });
     }
   } catch (err) {
     res.json(err.message);
@@ -71,6 +94,9 @@ export const editUserPic = async (req: Request, res: Response) => {
   if (userId) {
     try {
       if (userPic) {
+        let listOfFriends: Array<IUser> = [];
+        let userPosts: Array<IThoughtInPushMethod> = [];
+        let thoughtsToShow: Array<IThoughtInPushMethod> = [];
         const uploadedImage = await cloud.uploader.upload(
           userPic,
           {
@@ -98,10 +124,27 @@ export const editUserPic = async (req: Request, res: Response) => {
           }
         );
         const updatedUser = await UserModel.findOne({ _id: userId });
+        listOfFriends = await getUserFriends(updatedUser);
+        userPosts = await getUserPosts(updatedUser);
+        thoughtsToShow = await getPostsToShow(listOfFriends, updatedUser);
         updatedUser &&
           res.status(201).send({
             message: "Data updated",
-            userData: updatedUser,
+            userData: {
+              _id: updatedUser._id,
+              firstName: updatedUser.firstName,
+              lastName: updatedUser.lastName,
+              userName: updatedUser.userName,
+              eMail: updatedUser.eMail,
+              birthDate: updatedUser.birthDate,
+              registerDate: updatedUser.registerDate,
+              pic: updatedUser.pic,
+              chats: updatedUser.chats,
+              allPostsToShow: thoughtsToShow,
+              userPosts: userPosts,
+              friendsList: listOfFriends,
+              groups: updatedUser.groups,
+            },
           });
       }
       !userPic && res.status(400).send({ message: "Choose an image" });

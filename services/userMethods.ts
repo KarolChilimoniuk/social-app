@@ -81,6 +81,9 @@ export const getFriendsPosts = async (
       try {
         const thought = await ThoughtModel.findOne({ _id: postId }).exec();
         if (thought) {
+          const postAuthor = await UserModel.findOne({
+            _id: thought.author._id,
+          }).exec();
           return {
             _id: postId,
             textContent: thought.textContent,
@@ -90,9 +93,9 @@ export const getFriendsPosts = async (
             created: thought.created,
             author: {
               _id: `${thought.author._id}`,
-              firstName: thought.author.firstName,
-              lastName: thought.author.lastName,
-              pic: thought.author.userPic,
+              firstName: postAuthor.firstName,
+              lastName: postAuthor.lastName,
+              pic: postAuthor.pic,
             },
           };
         }
