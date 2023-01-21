@@ -78,7 +78,8 @@ const userReducers = (state = initialState, action: AnyAction) => {
     case "UPDATE_USER_POSTS_SUCCESS":
       return {
         ...state,
-        posts: action.payloads,
+        allPostsToShow: action.payloads.allPostsToShow,
+        userPosts: action.payloads.userPosts,
       };
     case "UPDATE_USER_POSTS_FAILURE":
       return {

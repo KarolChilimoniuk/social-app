@@ -3,7 +3,12 @@ import bcrypt from "bcrypt";
 import cloud from "../services/cloudinary";
 import { UserModel } from "../models/User";
 import { ThoughtModel } from "../models/Thought";
-import { IUser } from "services/interfaces";
+import {
+  getUserFriends,
+  getUserPosts,
+  getPostsToShow,
+} from "../services/userMethods";
+import { IUser, IThoughtInPushMethod } from "services/interfaces";
 import { urlencoded } from "body-parser";
 
 export const editUserData = async (req: Request, res: Response) => {
@@ -106,7 +111,9 @@ export const editUserPic = async (req: Request, res: Response) => {
 
 export const addThought = async (req: Request, res: Response) => {
   const { email, thoughtContent } = req.body;
-  let listOfThoughts;
+  let listOfFriends: Array<IUser> = [];
+  let userPosts: Array<IThoughtInPushMethod> = [];
+  let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   if (email) {
     try {
       const user = await UserModel.findOne({ eMail: email });
@@ -124,23 +131,15 @@ export const addThought = async (req: Request, res: Response) => {
         { $push: { posts: newThought._id } }
       );
       const updatedUser = await UserModel.findOne({ eMail: email });
-      if (user.posts.length > 0) {
-        listOfThoughts = await Promise.all(
-          updatedUser.posts.map(async (id) => {
-            try {
-              return await ThoughtModel.findOne({ _id: id }).exec();
-            } catch (err) {
-              console.log(err.message);
-            }
-          })
-        );
-      }
-      if (user.posts.length === 0) {
-        listOfThoughts = user.posts;
-      }
+      listOfFriends = await getUserFriends(updatedUser);
+      userPosts = await getUserPosts(updatedUser);
+      thoughtsToShow = await getPostsToShow(listOfFriends, updatedUser);
       res.status(201).send({
         message: "Thought added",
-        userData: listOfThoughts,
+        userData: {
+          allPostsToShow: thoughtsToShow,
+          userPosts: userPosts,
+        },
       });
     } catch (error) {
       console.log(error);

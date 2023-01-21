@@ -1,6 +1,7 @@
 import { IThought, IThoughtInPushMethod, IUser } from "./interfaces";
 import { UserModel } from "../models/User";
 import { ThoughtModel } from "../models/Thought";
+import { date } from "joi";
 
 export const getUserFriends = async (user: IUser): Promise<Array<IUser>> => {
   let result: Array<IUser> = [];
@@ -91,6 +92,12 @@ export const getFriendsPosts = async (
   return result;
 };
 
+const sortMethod = (
+  dateA: IThoughtInPushMethod,
+  dateB: IThoughtInPushMethod
+) => {
+  return dateB.created.getTime() - dateA.created.getTime();
+};
 export const getPostsToShow = async (
   listOfFriends: Array<IUser>,
   user: IUser
@@ -100,58 +107,6 @@ export const getPostsToShow = async (
   let result: Array<IThoughtInPushMethod> = [];
   friendsPosts = await getFriendsPosts(listOfFriends);
   userPosts = await getUserPosts(user);
-  result = userPosts.concat(friendsPosts);
+  result = userPosts.concat(friendsPosts).sort(sortMethod);
   return result;
-
-  // if (listOfFriends.length > 0) {
-  //   listOfFriends.forEach(async (el) => {
-  //     el.posts.forEach(async (post) => {
-  //       try {
-  //         const thought = await ThoughtModel.findOne({ _id: post }).exec();
-  //         if (thought) {
-  //           result.push({
-  //             _id: post,
-  //             textContent: thought.textContent,
-  //             likes: thought.likes,
-  //             comments: thought.comments,
-  //             shares: thought.shares,
-  //             created: thought.created,
-  //             author: {
-  //               firstName: el.firstName,
-  //               lastName: el.lastName,
-  //               pic: el.pic,
-  //             },
-  //           });
-  //         }
-  //       } catch (err) {
-  //         console.log(err.message);
-  //       }
-  //     });
-  //   });
-  // }
-  // if (user.posts.length > 0) {
-  //   user.posts.forEach(async (postId) => {
-  //     try {
-  //       const thought = await ThoughtModel.findOne({ _id: postId }).exec();
-  //       if (thought) {
-  //         result.push({
-  //           _id: postId,
-  //           textContent: thought.textContent,
-  //           likes: thought.likes,
-  //           comments: thought.comments,
-  //           shares: thought.shares,
-  //           created: thought.created,
-  //           author: {
-  //             firstName: user.firstName,
-  //             lastName: user.lastName,
-  //             pic: user.pic,
-  //           },
-  //         });
-  //       }
-  //     } catch (err) {
-  //       console.log(err.message);
-  //     }
-  //   });
-  // }
-  // return result
 };

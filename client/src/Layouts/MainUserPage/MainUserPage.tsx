@@ -20,14 +20,14 @@ const MainUserPage = (): JSX.Element => {
       <ThoughtsContainer>
         {userData.allPostsToShow.length >= 1 && userData.logged
           ? userData.allPostsToShow.map((el) => (
-              // <Thought
-              //   authorFirstName={el.author.firstName}
-              //   authorLastName={el.author.lastName}
-              //   authorPic={el.author.userPic}
-              //   date={new Date(el.created).toDateString()}
-              //   content={el.textContent}
-              // />
-              <div>post</div>
+              <Thought
+                authorFirstName={el.author.firstName}
+                authorLastName={el.author.lastName}
+                authorPic={el.author.pic}
+                date={new Date(el.created).toDateString()}
+                content={el.textContent}
+              />
+              // <div>post</div>
             ))
           : null}
       </ThoughtsContainer>
