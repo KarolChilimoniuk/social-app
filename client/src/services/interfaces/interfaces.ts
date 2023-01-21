@@ -14,7 +14,8 @@ export interface IUserInitState {
   birthDate: Date;
   registerDate: Date;
   chats: Array<string>;
-  posts: Array<IThought>;
+  allPostsToShow: Array<IThought>;
+  userPosts: Array<IThought>;
   friendsList: Array<string>;
   groups: Array<string>;
   pic: string;
@@ -47,6 +48,9 @@ export interface IThought {
   created: Date;
   author: {
     _id: string;
+    firstName: string;
+    lastName: string;
+    pic: string;
   };
 }
 

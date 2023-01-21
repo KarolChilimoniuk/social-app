@@ -54,6 +54,7 @@ export const login = async (
       })
       .then((response) => {
         dispatch(userLogin(response.data.userData));
+        console.log(userData);
         navigate("/logged");
       })
       .catch((err) => {

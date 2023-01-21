@@ -15,11 +15,11 @@ const MainUserPage = (): JSX.Element => {
 
   return (
     <MainPageContainer>
-      <button onClick={() => console.log(`posts`, userData.posts)} />
+      <button onClick={() => console.log(`posts`, userData.allPostsToShow)} />
       <MainUserPageForm />
       <ThoughtsContainer>
-        {userData.posts.length >= 1 && userData.logged
-          ? userData.posts.map((el) => (
+        {userData.allPostsToShow.length >= 1 && userData.logged
+          ? userData.allPostsToShow.map((el) => (
               // <Thought
               //   authorFirstName={el.author.firstName}
               //   authorLastName={el.author.lastName}

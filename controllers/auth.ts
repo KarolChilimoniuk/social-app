@@ -5,7 +5,17 @@ import jwt_decode from "jwt-decode";
 import bcrypt from "bcrypt";
 import { ThoughtModel } from "../models/Thought";
 import { UserModel, signUpValidation, loginValidation } from "../models/User";
-import { IUser, IDecodedUserData, IThought } from "../services/interfaces";
+import {
+  getUserFriends,
+  getUserPosts,
+  getPostsToShow,
+} from "../services/userMethods";
+import {
+  IUser,
+  IDecodedUserData,
+  IThought,
+  IThoughtInPushMethod,
+} from "../services/interfaces";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -57,7 +67,9 @@ export const register = async (req: Request, res: Response) => {
 
 export const nativeLogin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  let listOfThoughts: Array<string> | Array<IThought>;
+  let listOfFriends: Array<IUser> = [];
+  let userPosts: Array<IThoughtInPushMethod> = [];
+  let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   try {
     const { error } = loginValidation(req.body);
     if (error) {
@@ -79,20 +91,39 @@ export const nativeLogin = async (req: Request, res: Response) => {
       user.eMail,
       user.password
     );
-    if (user.posts.length > 0) {
-      listOfThoughts = await Promise.all(
-        user.posts.map(async (id) => {
-          try {
-            return await ThoughtModel.findOne({ _id: id }).exec();
-          } catch (err) {
-            console.log(err.message);
-          }
-        })
-      );
-    }
-    if (user.posts.length === 0) {
-      listOfThoughts = user.posts;
-    }
+    listOfFriends = await getUserFriends(user);
+    userPosts = await getUserPosts(user);
+    thoughtsToShow = await getPostsToShow(listOfFriends, user);
+
+    // if (user.friendsList.length > 0) {
+    //   listOfFriends = await Promise.all(
+    //     user.friendsList.map(async (id) => {
+    //       try {
+    //         return await UserModel.findOne({ _id: id }).exec();
+    //       } catch (err) {
+    //         console.log(err.message);
+    //       }
+    //     })
+    //   );
+    // }
+    // if (user.friendsList.length === 0) {
+    //   listOfFriends = user.friendsList;
+    // }
+    // console.log(listOfFriends);
+    // if (user.posts.length > 0) {
+    //   listOfThoughts = await Promise.all(
+    //     user.posts.map(async (id) => {
+    //       try {
+    //         return await ThoughtModel.findOne({ _id: id }).exec();
+    //       } catch (err) {
+    //         console.log(err.message);
+    //       }
+    //     })
+    //   );
+    // }
+    // if (user.posts.length === 0) {
+    //   listOfThoughts = user.posts;
+    // }
     console.log(user._id);
     res
       .status(202)
@@ -114,8 +145,9 @@ export const nativeLogin = async (req: Request, res: Response) => {
           registerDate: user.registerDate,
           pic: user.pic,
           chats: user.chats,
-          posts: listOfThoughts,
-          friendsList: user.friendsList,
+          allPostsToShow: thoughtsToShow,
+          userPosts: userPosts,
+          friendsList: listOfFriends,
           groups: user.groups,
         },
       });
@@ -191,26 +223,32 @@ export const tokenChecking = async (
   next: NextFunction
 ) => {
   const { token } = req.cookies;
-  let listOfThoughts: Array<IThought> | Array<string>;
+  // let listOfThoughts: Array<IThought> | Array<string>;
+  let listOfFriends: Array<IUser> = [];
+  let userPosts: Array<IThoughtInPushMethod> = [];
+  let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   if (!token) {
     res.status(200).send("token does not exist");
   } else {
     const data: IDecodedUserData = await jwt_decode(token);
     const user: IUser = await UserModel.findOne({ eMail: data.email });
-    if (user.posts.length > 0) {
-      listOfThoughts = await Promise.all(
-        user.posts.map(async (id) => {
-          try {
-            return await ThoughtModel.findOne({ _id: id }).exec();
-          } catch (err) {
-            console.log(err.message);
-          }
-        })
-      );
-    }
-    if (user.posts.length === 0) {
-      listOfThoughts = user.posts;
-    }
+    listOfFriends = await getUserFriends(user);
+    userPosts = await getUserPosts(user);
+    thoughtsToShow = await getPostsToShow(listOfFriends, user);
+    // if (user.posts.length > 0) {
+    //   listOfThoughts = await Promise.all(
+    //     user.posts.map(async (id) => {
+    //       try {
+    //         return await ThoughtModel.findOne({ _id: id }).exec();
+    //       } catch (err) {
+    //         console.log(err.message);
+    //       }
+    //     })
+    //   );
+    // }
+    // if (user.posts.length === 0) {
+    //   listOfThoughts = user.posts;
+    // }
     res.status(200).send({
       message: "Token exists",
       userData: {
@@ -223,8 +261,9 @@ export const tokenChecking = async (
         registerDate: user.registerDate,
         pic: user.pic,
         chats: user.chats,
-        posts: listOfThoughts,
-        friendsList: user.friendsList,
+        allPostsToShow: thoughtsToShow,
+        userPosts: userPosts,
+        friendsList: listOfFriends,
         groups: user.groups,
       },
     });
