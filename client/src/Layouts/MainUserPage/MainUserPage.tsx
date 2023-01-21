@@ -27,6 +27,8 @@ const MainUserPage = (): JSX.Element => {
                 date={new Date(el.created).toDateString()}
                 content={el.textContent}
                 key={el._id}
+                likes={el.likes.length}
+                likeStatus={el.likes.includes(userData._id) ? true : false}
               />
             ))
           : null}

@@ -32,5 +32,10 @@ export const ThoughtDate = styled.div`
 `;
 
 export const ThoughtContent = styled.div`
+  margin-bottom: 20px;
   padding-left: 20px;
+`;
+
+export const LikesContent = styled.div`
+  display: flex;
 `;

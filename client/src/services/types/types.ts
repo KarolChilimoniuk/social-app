@@ -82,9 +82,14 @@ export type ThoughtProps = {
   date: string;
   content: string;
   comments?: [IComment];
-  likes?: [string];
+  likes?: number;
+  likeStatus: boolean;
 };
 
+export type LikesSectionProps = {
+  likes: number | undefined;
+  likeStatus: boolean;
+};
 export type UserPic = File | null;
 
 export type UserProfilePic = string | undefined;

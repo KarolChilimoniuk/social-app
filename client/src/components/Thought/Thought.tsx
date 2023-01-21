@@ -1,5 +1,6 @@
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
+import LikesSection from "../LikesContent/LikesContent";
 import { ThoughtProps } from "../../services/types/types";
 import {
   ThoughtContainer,
@@ -18,6 +19,7 @@ const Thought = ({
   content,
   comments,
   likes,
+  likeStatus,
 }: ThoughtProps): JSX.Element => {
   return (
     <ThoughtContainer>
@@ -38,6 +40,7 @@ const Thought = ({
         </NameDateContainer>
       </ImgNameDateContainer>
       <ThoughtContent>{content}</ThoughtContent>
+      <LikesSection likeStatus={likeStatus} likes={likes} />
     </ThoughtContainer>
   );
 };
