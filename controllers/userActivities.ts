@@ -9,7 +9,8 @@ import {
   getPostsToShow,
 } from "../services/userMethods";
 import { IUser, IThoughtInPushMethod } from "services/interfaces";
-import { urlencoded } from "body-parser";
+
+// Edit user data controller
 
 export const editUserData = async (req: Request, res: Response) => {
   const {
@@ -22,7 +23,6 @@ export const editUserData = async (req: Request, res: Response) => {
     birthDate,
     email,
   } = req.body;
-  console.log(userId);
   try {
     const user = await UserModel.findOne({ _id: userId });
     let hashedPassword: string = "";
@@ -55,9 +55,11 @@ export const editUserData = async (req: Request, res: Response) => {
       res.status(201).send({ message: "Data Updated", userData: updatedUser });
     }
   } catch (err) {
-    console.error(`${err.message}`);
+    res.json(err.message);
   }
 };
+
+// Edit user profile pic controller
 
 export const editUserPic = async (req: Request, res: Response) => {
   const { userPic, userId } = req.body;
@@ -103,11 +105,13 @@ export const editUserPic = async (req: Request, res: Response) => {
           });
       }
       !userPic && res.status(400).send({ message: "Choose an image" });
-    } catch (error) {
-      res.json(error);
+    } catch (err) {
+      res.json(err.message);
     }
   }
 };
+
+// Add new thought(post) controller
 
 export const addThought = async (req: Request, res: Response) => {
   const { email, thoughtContent } = req.body;
@@ -141,9 +145,8 @@ export const addThought = async (req: Request, res: Response) => {
           userPosts: userPosts,
         },
       });
-    } catch (error) {
-      console.log(error);
-      res.json(error.message);
+    } catch (err) {
+      res.json(err.message);
     }
   }
 };

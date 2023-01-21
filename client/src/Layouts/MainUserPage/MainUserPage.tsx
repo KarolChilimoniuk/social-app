@@ -26,8 +26,8 @@ const MainUserPage = (): JSX.Element => {
                 authorPic={el.author.pic}
                 date={new Date(el.created).toDateString()}
                 content={el.textContent}
+                key={el._id}
               />
-              // <div>post</div>
             ))
           : null}
       </ThoughtsContainer>

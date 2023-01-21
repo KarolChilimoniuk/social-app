@@ -1,7 +1,17 @@
-import { IThought, IThoughtInPushMethod, IUser } from "./interfaces";
+import { IThoughtInPushMethod, IUser } from "./interfaces";
 import { UserModel } from "../models/User";
 import { ThoughtModel } from "../models/Thought";
-import { date } from "joi";
+
+// Sorting method for posts dates
+
+const sortMethod = (
+  dateA: IThoughtInPushMethod,
+  dateB: IThoughtInPushMethod
+) => {
+  return dateB.created.getTime() - dateA.created.getTime();
+};
+
+// Fetch user list of friends
 
 export const getUserFriends = async (user: IUser): Promise<Array<IUser>> => {
   let result: Array<IUser> = [];
@@ -11,7 +21,7 @@ export const getUserFriends = async (user: IUser): Promise<Array<IUser>> => {
         try {
           return await UserModel.findOne({ _id: id }).exec();
         } catch (err) {
-          console.log(err.message, 1);
+          console.log(err.message);
         }
       })
     );
@@ -19,6 +29,8 @@ export const getUserFriends = async (user: IUser): Promise<Array<IUser>> => {
   console.log(result);
   return result;
 };
+
+// Fetch user posts
 
 export const getUserPosts = async (
   user: IUser
@@ -46,7 +58,7 @@ export const getUserPosts = async (
             };
           }
         } catch (err) {
-          console.log(err.message, 2);
+          console.log(err.message);
         }
       })
     );
@@ -54,50 +66,46 @@ export const getUserPosts = async (
   return result;
 };
 
+// Fetch user friends posts
+
 export const getFriendsPosts = async (
   listOfFriends: Array<IUser>
 ): Promise<Array<IThoughtInPushMethod>> => {
   let result: Array<IThoughtInPushMethod> = [];
-  if (listOfFriends.length > 0) {
-    result = await Promise.all(
-      listOfFriends.map(async (el) => {
-        let friendsPosts: Array<IThoughtInPushMethod> = [];
-        el.posts.forEach(async (post) => {
-          try {
-            const thought = await ThoughtModel.findOne({ _id: post }).exec();
-            if (thought) {
-              friendsPosts.push({
-                _id: post,
-                textContent: thought.textContent,
-                likes: thought.likes,
-                comments: thought.comments,
-                shares: thought.shares,
-                created: thought.created,
-                author: {
-                  _id: `${el._id}`,
-                  firstName: el.firstName,
-                  lastName: el.lastName,
-                  pic: el.pic,
-                },
-              });
-            }
-            return friendsPosts;
-          } catch (err) {
-            console.log(err.message, 3);
-          }
-        });
-      })
-    );
-  }
+  let postsIds: Array<string> = [];
+  listOfFriends.forEach((el) => {
+    postsIds = postsIds.concat(el.posts);
+  });
+  result = await Promise.all(
+    postsIds.map(async (postId) => {
+      try {
+        const thought = await ThoughtModel.findOne({ _id: postId }).exec();
+        if (thought) {
+          return {
+            _id: postId,
+            textContent: thought.textContent,
+            likes: thought.likes,
+            comments: thought.comments,
+            shares: thought.shares,
+            created: thought.created,
+            author: {
+              _id: `${thought.author._id}`,
+              firstName: thought.author.firstName,
+              lastName: thought.author.lastName,
+              pic: thought.author.userPic,
+            },
+          };
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    })
+  );
   return result;
 };
 
-const sortMethod = (
-  dateA: IThoughtInPushMethod,
-  dateB: IThoughtInPushMethod
-) => {
-  return dateB.created.getTime() - dateA.created.getTime();
-};
+// Call above methods for set posts to show
+
 export const getPostsToShow = async (
   listOfFriends: Array<IUser>,
   user: IUser

@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { ObjectId } from "mongodb";
 import jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
 import bcrypt from "bcrypt";
-import { ThoughtModel } from "../models/Thought";
 import { UserModel, signUpValidation, loginValidation } from "../models/User";
 import {
   getUserFriends,
@@ -13,7 +11,6 @@ import {
 import {
   IUser,
   IDecodedUserData,
-  IThought,
   IThoughtInPushMethod,
 } from "../services/interfaces";
 
@@ -25,6 +22,8 @@ export const getUsers = async (req: Request, res: Response) => {
     res.status(400).json(err.message);
   }
 };
+
+// Register user controller
 
 export const register = async (req: Request, res: Response) => {
   const {
@@ -61,9 +60,11 @@ export const register = async (req: Request, res: Response) => {
     });
     res.status(201).send("User registered");
   } catch (err) {
-    console.error(`${err.message}`);
+    res.json(err.message);
   }
 };
+
+// Native log in (no Google) controller
 
 export const nativeLogin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -94,37 +95,6 @@ export const nativeLogin = async (req: Request, res: Response) => {
     listOfFriends = await getUserFriends(user);
     userPosts = await getUserPosts(user);
     thoughtsToShow = await getPostsToShow(listOfFriends, user);
-
-    // if (user.friendsList.length > 0) {
-    //   listOfFriends = await Promise.all(
-    //     user.friendsList.map(async (id) => {
-    //       try {
-    //         return await UserModel.findOne({ _id: id }).exec();
-    //       } catch (err) {
-    //         console.log(err.message);
-    //       }
-    //     })
-    //   );
-    // }
-    // if (user.friendsList.length === 0) {
-    //   listOfFriends = user.friendsList;
-    // }
-    // console.log(listOfFriends);
-    // if (user.posts.length > 0) {
-    //   listOfThoughts = await Promise.all(
-    //     user.posts.map(async (id) => {
-    //       try {
-    //         return await ThoughtModel.findOne({ _id: id }).exec();
-    //       } catch (err) {
-    //         console.log(err.message);
-    //       }
-    //     })
-    //   );
-    // }
-    // if (user.posts.length === 0) {
-    //   listOfThoughts = user.posts;
-    // }
-    console.log(user._id);
     res
       .status(202)
       .cookie("token", cookieToken, {
@@ -152,13 +122,17 @@ export const nativeLogin = async (req: Request, res: Response) => {
         },
       });
   } catch (err) {
-    console.error(`${err.message}`);
+    res.json(err.message);
   }
 };
 
+// Log in via Google controller
+
 export const googleLogin = async (req: Request, res: Response) => {
   const { credential } = req.body;
-  let listOfThoughts: Array<IThought> | Array<string>;
+  let listOfFriends: Array<IUser> = [];
+  let userPosts: Array<IThoughtInPushMethod> = [];
+  let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   if (credential) {
     const googleUserInfo: any = jwt.decode(credential);
     const appUser: IUser = await UserModel.findOne({
@@ -172,20 +146,9 @@ export const googleLogin = async (req: Request, res: Response) => {
         appUser.eMail,
         appUser.password
       );
-      if (appUser.posts.length > 0) {
-        listOfThoughts = await Promise.all(
-          appUser.posts.map(async (el) => {
-            try {
-              return await ThoughtModel.findOne({ _id: el }).exec();
-            } catch (err) {
-              console.log(err.message);
-            }
-          })
-        );
-      }
-      if (appUser.posts.length === 0) {
-        listOfThoughts = appUser.posts;
-      }
+      listOfFriends = await getUserFriends(appUser);
+      userPosts = await getUserPosts(appUser);
+      thoughtsToShow = await getPostsToShow(listOfFriends, appUser);
       res
         .status(202)
         .cookie("token", cookieToken, {
@@ -206,8 +169,9 @@ export const googleLogin = async (req: Request, res: Response) => {
             registerDate: appUser.registerDate,
             pic: appUser.pic,
             chats: appUser.chats,
-            posts: listOfThoughts,
-            friendsList: appUser.friendsList,
+            allPostsToShow: thoughtsToShow,
+            userPosts: userPosts,
+            friendsList: listOfFriends,
             groups: appUser.groups,
           },
         });
@@ -217,13 +181,14 @@ export const googleLogin = async (req: Request, res: Response) => {
   }
 };
 
+// Token verification
+
 export const tokenChecking = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const { token } = req.cookies;
-  // let listOfThoughts: Array<IThought> | Array<string>;
   let listOfFriends: Array<IUser> = [];
   let userPosts: Array<IThoughtInPushMethod> = [];
   let thoughtsToShow: Array<IThoughtInPushMethod> = [];
@@ -235,20 +200,6 @@ export const tokenChecking = async (
     listOfFriends = await getUserFriends(user);
     userPosts = await getUserPosts(user);
     thoughtsToShow = await getPostsToShow(listOfFriends, user);
-    // if (user.posts.length > 0) {
-    //   listOfThoughts = await Promise.all(
-    //     user.posts.map(async (id) => {
-    //       try {
-    //         return await ThoughtModel.findOne({ _id: id }).exec();
-    //       } catch (err) {
-    //         console.log(err.message);
-    //       }
-    //     })
-    //   );
-    // }
-    // if (user.posts.length === 0) {
-    //   listOfThoughts = user.posts;
-    // }
     res.status(200).send({
       message: "Token exists",
       userData: {
@@ -269,6 +220,8 @@ export const tokenChecking = async (
     });
   }
 };
+
+// Logout controller
 
 export const logout = (req: Request, res: Response) => {
   res.clearCookie("token");
