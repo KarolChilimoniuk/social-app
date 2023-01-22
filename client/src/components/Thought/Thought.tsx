@@ -20,6 +20,8 @@ const Thought = ({
   comments,
   likes,
   likeStatus,
+  userId,
+  postId,
 }: ThoughtProps): JSX.Element => {
   return (
     <ThoughtContainer>
@@ -40,7 +42,7 @@ const Thought = ({
         </NameDateContainer>
       </ImgNameDateContainer>
       <ThoughtContent>{content}</ThoughtContent>
-      <LikesSection likeStatus={likeStatus} likes={likes} />
+      <LikesSection likeStatus={likeStatus} likes={likes} postId={postId} />
     </ThoughtContainer>
   );
 };

@@ -84,11 +84,14 @@ export type ThoughtProps = {
   comments?: [IComment];
   likes?: number;
   likeStatus: boolean;
+  userId: string;
+  postId: string;
 };
 
 export type LikesSectionProps = {
   likes: number | undefined;
   likeStatus: boolean;
+  postId: string;
 };
 export type UserPic = File | null;
 

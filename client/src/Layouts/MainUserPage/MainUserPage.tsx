@@ -29,6 +29,8 @@ const MainUserPage = (): JSX.Element => {
                 key={el._id}
                 likes={el.likes.length}
                 likeStatus={el.likes.includes(userData._id) ? true : false}
+                userId={userData._id}
+                postId={el._id}
               />
             ))
           : null}

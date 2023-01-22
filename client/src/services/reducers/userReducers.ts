@@ -85,6 +85,16 @@ const userReducers = (state = initialState, action: AnyAction) => {
       return {
         ...state,
       };
+    case "UPDATE_USER_POST_LIKES_SUCCESS":
+      return {
+        ...state,
+        allPostsToShow: action.payloads.allPostsToShow,
+        userPosts: action.payloads.userPosts,
+      };
+    case "UPDATE_USER_POST_LIKES_FAILURE":
+      return {
+        ...state,
+      };
     case "LOGOUT":
       return {
         ...initialState,

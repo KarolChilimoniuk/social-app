@@ -3,7 +3,9 @@ import { instance } from "./main";
 import {
   updateUserPostsSuccess,
   updateUserPostsFailure,
+  updateUserPostLikes,
 } from "../actions/userActions";
+import { IThought } from "../interfaces/interfaces";
 
 export const addThought = async (
   email: string,
@@ -25,5 +27,51 @@ export const addThought = async (
       });
   } catch (error) {
     console.log("Request can't be executed");
+  }
+};
+
+export const addLike = async (
+  userId: string,
+  thoughtId: string,
+  postsToShow: Array<IThought>,
+  userPosts: Array<IThought>,
+  dispatch: Dispatch<any>
+): Promise<void> => {
+  try {
+    instance
+      .patch("/logged/addLike", { userId: userId, thoughtId: thoughtId })
+      .then((response) => {
+        dispatch(
+          updateUserPostLikes(response.data.thoughtData, postsToShow, userPosts)
+        );
+      })
+      .catch((err) => {
+        alert(`${err.response.data.message}`);
+      });
+  } catch (error) {
+    console.error("Request cant't be executed");
+  }
+};
+
+export const removeLike = async (
+  userId: string,
+  thoughtId: string,
+  postsToShow: Array<IThought>,
+  userPosts: Array<IThought>,
+  dispatch: Dispatch<any>
+): Promise<void> => {
+  try {
+    instance
+      .patch("/logged/addLike", { userId: userId, thoughtId: thoughtId })
+      .then((response) => {
+        dispatch(
+          updateUserPostLikes(response.data.thoughtData, postsToShow, userPosts)
+        );
+      })
+      .catch((err) => {
+        alert(`${err.response.data.message}`);
+      });
+  } catch (error) {
+    console.error("Request cant't be executed");
   }
 };

@@ -1,5 +1,6 @@
 import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
+import _ from "lodash";
 import { RootState } from "../types/types";
 
 export const loginSuccess = (userData: any, error: any) => {
@@ -45,6 +46,7 @@ export const userLogin = (
       dispatch(loginSuccess(userData, ""));
     } catch (err) {
       console.log(err);
+      dispatch(loginFailure(err));
     }
   };
 };
@@ -74,6 +76,50 @@ export const updateUserPostsFailure = (error: any) => {
   return {
     type: "UPDATE_USER_POSTS_FAILURE",
     payloads: error,
+  };
+};
+
+export const updateUserPostLikesSuccess = (
+  allPostsToShow: any,
+  userPosts: any
+) => {
+  return {
+    type: "UPDATE_USER_POST_LIKES_SUCCESS",
+    payloads: { allPostsToShow: allPostsToShow, userPosts: userPosts },
+  };
+};
+
+export const updateUserPostLikesFailure = (error: any) => {
+  return {
+    type: "UPDATE_USER_POST_LIKES_FAILURE",
+    payloads: error,
+  };
+};
+
+export const updateUserPostLikes = (
+  updatedPost: any,
+  postsToShow: any,
+  userPosts: any
+): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return (dispatch) => {
+    try {
+      const allPosts = _.cloneDeep(postsToShow);
+      const onlyUserPosts = _.cloneDeep(userPosts);
+      allPosts.forEach((post: any) => {
+        if (post._id === updatedPost._id) {
+          post.likes = updatedPost.likes;
+        }
+      });
+      onlyUserPosts.forEach((post: any) => {
+        if (post._id === updatedPost._id) {
+          post.likes = updatedPost.likes;
+        }
+      });
+      dispatch(updateUserPostLikesSuccess(allPosts, onlyUserPosts));
+    } catch (err) {
+      dispatch(updateUserPostLikesFailure(err));
+      console.error(err);
+    }
   };
 };
 
