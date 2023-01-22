@@ -44,6 +44,7 @@ export const addLike = async (
         dispatch(
           updateUserPostLikes(response.data.thoughtData, postsToShow, userPosts)
         );
+        console.log("add");
       })
       .catch((err) => {
         alert(`${err.response.data.message}`);
@@ -62,11 +63,12 @@ export const removeLike = async (
 ): Promise<void> => {
   try {
     instance
-      .patch("/logged/addLike", { userId: userId, thoughtId: thoughtId })
+      .patch("/logged/removeLike", { userId: userId, thoughtId: thoughtId })
       .then((response) => {
         dispatch(
           updateUserPostLikes(response.data.thoughtData, postsToShow, userPosts)
         );
+        console.log("remove");
       })
       .catch((err) => {
         alert(`${err.response.data.message}`);

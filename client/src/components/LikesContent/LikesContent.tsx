@@ -14,14 +14,16 @@ const LikesSection = ({
   postId,
 }: LikesSectionProps): JSX.Element => {
   const userData = useSelector((state: IRootState) => state.userData);
+
   const [likeStat, setLikeStatus] = useState<boolean>(likeStatus);
+  const [postLikes, setLike] = useState<number>(likes!);
 
   const dispatch: Dispatch = useDispatch();
 
   const likeHandler = async () => {
     try {
       if (likeStat) {
-        const updatedThought = await removeLike(
+        await removeLike(
           userData._id,
           postId,
           userData.allPostsToShow,
@@ -29,9 +31,10 @@ const LikesSection = ({
           dispatch
         );
         setLikeStatus(!likeStat);
+        setLike(postLikes! - 1);
       }
       if (!likeStat) {
-        const updatedThought = await addLike(
+        await addLike(
           userData._id,
           postId,
           userData.allPostsToShow,
@@ -39,7 +42,9 @@ const LikesSection = ({
           dispatch
         );
         setLikeStatus(!likeStat);
+        setLike(postLikes! + 1);
       }
+      console.log(userData.allPostsToShow);
     } catch (err) {
       console.error(err);
     }
@@ -52,7 +57,7 @@ const LikesSection = ({
       ) : (
         <LikeImg src={notLike} onClick={likeHandler} />
       )}
-      <LikesSpan>{likes}</LikesSpan>
+      <LikesSpan>{postLikes}</LikesSpan>
     </LikesContent>
   );
 };
