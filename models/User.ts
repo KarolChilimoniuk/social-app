@@ -15,7 +15,8 @@ const UserSchema = new Schema<IUser>({
   pic: { type: String, required: false, default: "" },
   chats: { type: [String], default: [] },
   posts: { type: [String], default: [] },
-  friendsList: { type: [String], default: [] },
+  followed: { type: [String], default: [] },
+  followers: { type: [String], default: [] },
   groups: { type: [String], default: [] },
 });
 

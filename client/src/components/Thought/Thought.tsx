@@ -1,12 +1,12 @@
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import LikesSection from "../LikesContent/LikesContent";
-import { ThoughtProps } from "../../services/types/types";
+import UserHeader from "../UserHeader/UserHeader";
+import { ThoughtProps } from "../../types/types";
 import {
   ThoughtContainer,
   ImgNameDateContainer,
   NameDateContainer,
-  ThoughtHeader,
   ThoughtContent,
   ThoughtDate,
 } from "./Thought.style";
@@ -20,7 +20,7 @@ const Thought = ({
   comments,
   likes,
   likeStatus,
-  userId,
+  authorId,
   postId,
 }: ThoughtProps): JSX.Element => {
   return (
@@ -37,7 +37,11 @@ const Thought = ({
           <NoImgAvatar />
         )}
         <NameDateContainer>
-          <ThoughtHeader>{`${authorFirstName} ${authorLastName}`}</ThoughtHeader>
+          <UserHeader
+            name={authorFirstName}
+            lastName={authorLastName}
+            userId={authorId}
+          ></UserHeader>
           <ThoughtDate>{`${date}`}</ThoughtDate>
         </NameDateContainer>
       </ImgNameDateContainer>

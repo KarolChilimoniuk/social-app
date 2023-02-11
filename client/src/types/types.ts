@@ -1,8 +1,47 @@
 import React from "react";
 import rootReducer from "../reducers";
-import { IComment } from "../interfaces/interfaces";
+import { IComment, IUserInfo } from "../interfaces/interfaces";
 
 export type RootState = ReturnType<typeof rootReducer>;
+
+export type HasAccountAction = {
+  type: string;
+  payloads: boolean;
+};
+
+export type SetIdToFilterUserAction = {
+  type: string;
+  payloads: string;
+};
+
+export type LoginAction = {
+  type: string;
+  payloads: IUserInfo | string | unknown;
+};
+
+export type SignupAction = {
+  type: string;
+  payloads: string | unknown;
+};
+
+export type ClearAuthAction = {
+  type: string;
+};
+
+export type UpdateUserInfoAction = {
+  type: string;
+  payloads: IUserInfo | string | unknown;
+};
+
+export type UpdateUserPostsAction = {
+  type: string;
+  payloads: IUserInfo | string | unknown;
+};
+
+export type LogoutAction = {
+  type: string;
+};
+
 export type LoginFormTemplateProps = {
   loginHandler(e: React.SyntheticEvent): void;
   onChangeHandler(e: React.SyntheticEvent): void;
@@ -78,13 +117,13 @@ export type UploadedUserImgProps = {
 export type ThoughtProps = {
   authorFirstName: string;
   authorLastName: string;
+  authorId: string;
   authorPic: string;
   date: string;
   content: string;
   comments?: [IComment];
   likes?: number;
   likeStatus: boolean;
-  userId: string;
   postId: string;
 };
 
@@ -93,6 +132,7 @@ export type LikesSectionProps = {
   likeStatus: boolean;
   postId: string;
 };
+
 export type UserPic = File | null;
 
 export type UserProfilePic = string | undefined;
@@ -100,3 +140,9 @@ export type UserProfilePic = string | undefined;
 export type ImgToPreview = string | ArrayBuffer | null;
 
 export type UploadedImg = string;
+
+export type UserHeaderProps = {
+  name: string;
+  lastName: string;
+  userId: string;
+};

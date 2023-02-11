@@ -1,5 +1,5 @@
 import { InputContainer, InputLabel, Input } from "./BirthDate.style";
-import { InputProps } from "../../services/types/types";
+import { InputProps } from "../../types/types";
 
 const BirthDateInput = ({ onChangeHandler }: InputProps): JSX.Element => {
   return (

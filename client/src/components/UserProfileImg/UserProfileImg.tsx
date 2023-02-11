@@ -9,7 +9,7 @@ import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 
-import { UploadedUserImgProps } from "../../services/types/types";
+import { UploadedUserImgProps } from "../../types/types";
 import { UploadedUserImgContainer } from "./UserProfileImg.style";
 
 const UserProfileImg = ({

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InputProps } from "../../services/types/types";
+import { InputProps } from "../../types/types";
 import View from "../../images/view.png";
 import Hide from "../../images/hide.png";
 import {

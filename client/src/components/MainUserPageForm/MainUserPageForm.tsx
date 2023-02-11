@@ -6,10 +6,7 @@ import SubInput from "../SubmitInput/SubmitInput";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import { addThought } from "../../services/api/userMainPage";
-import {
-  IUserInitState,
-  IRootState,
-} from "../../services/interfaces/interfaces";
+import { IUserDataState, IRootState } from "../../interfaces/interfaces";
 import {
   FormContainer,
   Form,
@@ -19,7 +16,7 @@ import {
 import React from "react";
 
 const MainUserPageForm = (): JSX.Element => {
-  const userData: IUserInitState = useSelector(
+  const userData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
   );
 
@@ -60,7 +57,7 @@ const MainUserPageForm = (): JSX.Element => {
             placeholder="What's in your head..."
             name="thoughts"
             width={"60%"}
-            rows={3}
+            rows={5}
             cols={3}
             value={thoughtContent}
             onChangeHandler={changeThoughtValue}

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Dispatch } from "redux";
 import { useSelector, useDispatch } from "react-redux";
 import {
   IRootState,
   IFormData,
-  IUserInitState,
-} from "../../services/interfaces/interfaces";
-import { UserPic, ImgToPreview, UploadedImg } from "../../services/types/types";
+  IUserDataState,
+} from "../../interfaces/interfaces";
+import { UserPic, ImgToPreview, UploadedImg } from "../../types/types";
 import TextFormInput from "../../components/TextFormInput/TextFormInput";
 import BirthDateInput from "../../components/BirthDateInput/BirthDate";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
@@ -25,7 +25,7 @@ import {
 } from "./UserPanel.style";
 
 const UserPanel = (): JSX.Element => {
-  const userData: IUserInitState = useSelector(
+  const userData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
   );
 
@@ -52,8 +52,6 @@ const UserPanel = (): JSX.Element => {
   const [uploadedImg, setUploadedImg] = useState<UploadedImg>(userData.pic);
 
   const [updateStatus, setUpdateStatus] = useState<boolean>(false);
-
-  const [uploadedImgError, setError] = useState<string>("");
 
   const setPreview = (userPic: UserPic) => {
     const reader = new FileReader();
@@ -99,7 +97,6 @@ const UserPanel = (): JSX.Element => {
   return (
     <SectionContainer>
       <FormContainer>
-        <button onClick={() => console.log(userData._id)} />
         <Form onSubmit={textSubmitHandler}>
           {error !== "" && updateStatus === false ? (
             <ErrorParagraph>{error}</ErrorParagraph>

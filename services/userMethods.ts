@@ -11,13 +11,31 @@ const sortMethod = (
   return dateB.created.getTime() - dateA.created.getTime();
 };
 
-// Fetch user list of friends
+// Fetch user list of followed
 
-export const getUserFriends = async (user: IUser): Promise<Array<IUser>> => {
+export const getUserFollowed = async (user: IUser): Promise<Array<IUser>> => {
   let result: Array<IUser> = [];
-  if (user.friendsList.length > 0) {
+  if (user.followed.length > 0) {
     result = await Promise.all(
-      user.friendsList.map(async (id) => {
+      user.followed.map(async (id) => {
+        try {
+          return await UserModel.findOne({ _id: id }).exec();
+        } catch (err) {
+          console.log(err.message);
+        }
+      })
+    );
+  }
+  return result;
+};
+
+// Fetch user list of followers
+
+export const getUserFollowers = async (user: IUser): Promise<Array<IUser>> => {
+  let result: Array<IUser> = [];
+  if (user.followers.length > 0) {
+    result = await Promise.all(
+      user.followers.map(async (id) => {
         try {
           return await UserModel.findOne({ _id: id }).exec();
         } catch (err) {
@@ -63,17 +81,17 @@ export const getUserPosts = async (
       })
     );
   }
-  return result;
+  return result.sort(sortMethod);
 };
 
 // Fetch user friends posts
 
-export const getFriendsPosts = async (
-  listOfFriends: Array<IUser>
+export const getFollowedPosts = async (
+  listOfFollowed: Array<IUser>
 ): Promise<Array<IThoughtInPushMethod>> => {
   let result: Array<IThoughtInPushMethod> = [];
   let postsIds: Array<string> = [];
-  listOfFriends.forEach((el) => {
+  listOfFollowed.forEach((el) => {
     postsIds = postsIds.concat(el.posts);
   });
   result = await Promise.all(
@@ -110,14 +128,15 @@ export const getFriendsPosts = async (
 // Call above methods for set posts to show
 
 export const getPostsToShow = async (
-  listOfFriends: Array<IUser>,
+  listOfFollowed: Array<IUser>,
   user: IUser
 ): Promise<Array<IThoughtInPushMethod>> => {
-  let friendsPosts: Array<IThoughtInPushMethod> = [];
-  let userPosts: Array<IThoughtInPushMethod> = [];
-  let result: Array<IThoughtInPushMethod> = [];
-  friendsPosts = await getFriendsPosts(listOfFriends);
-  userPosts = await getUserPosts(user);
-  result = userPosts.concat(friendsPosts).sort(sortMethod);
+  let postsOfFollowed: Array<IThoughtInPushMethod> = await getFollowedPosts(
+    listOfFollowed
+  );
+  let userPosts: Array<IThoughtInPushMethod> = await getUserPosts(user);
+  let result: Array<IThoughtInPushMethod> = userPosts
+    .concat(postsOfFollowed)
+    .sort(sortMethod);
   return result;
 };

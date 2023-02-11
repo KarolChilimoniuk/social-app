@@ -1,5 +1,5 @@
 import { NavContainer, MenuNav, MenuList, NavLi } from "./Navigation.style";
-import { NavProps } from "../../services/types/types";
+import { NavProps } from "../../types/types";
 import styles from "./Navigation.module.scss";
 
 const Navigation = ({ active }: NavProps): JSX.Element => {

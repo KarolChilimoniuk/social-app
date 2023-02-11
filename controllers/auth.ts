@@ -4,7 +4,8 @@ import jwt_decode from "jwt-decode";
 import bcrypt from "bcrypt";
 import { UserModel, signUpValidation, loginValidation } from "../models/User";
 import {
-  getUserFriends,
+  getUserFollowed,
+  getUserFollowers,
   getUserPosts,
   getPostsToShow,
 } from "../services/userMethods";
@@ -68,7 +69,8 @@ export const register = async (req: Request, res: Response) => {
 
 export const nativeLogin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  let listOfFriends: Array<IUser> = [];
+  let listOfFollowed: Array<IUser> = [];
+  let listOfFollowers: Array<IUser> = [];
   let userPosts: Array<IThoughtInPushMethod> = [];
   let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   try {
@@ -92,9 +94,10 @@ export const nativeLogin = async (req: Request, res: Response) => {
       user.eMail,
       user.password
     );
-    listOfFriends = await getUserFriends(user);
+    listOfFollowed = await getUserFollowed(user);
+    listOfFollowers = await getUserFollowers(user);
     userPosts = await getUserPosts(user);
-    thoughtsToShow = await getPostsToShow(listOfFriends, user);
+    thoughtsToShow = await getPostsToShow(listOfFollowed, user);
     res
       .status(202)
       .cookie("token", cookieToken, {
@@ -117,7 +120,8 @@ export const nativeLogin = async (req: Request, res: Response) => {
           chats: user.chats,
           allPostsToShow: thoughtsToShow,
           userPosts: userPosts,
-          friendsList: listOfFriends,
+          followed: listOfFollowed,
+          followers: listOfFollowers,
           groups: user.groups,
         },
       });
@@ -130,7 +134,8 @@ export const nativeLogin = async (req: Request, res: Response) => {
 
 export const googleLogin = async (req: Request, res: Response) => {
   const { credential } = req.body;
-  let listOfFriends: Array<IUser> = [];
+  let listOfFollowed: Array<IUser> = [];
+  let listOfFollowers: Array<IUser> = [];
   let userPosts: Array<IThoughtInPushMethod> = [];
   let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   if (credential) {
@@ -146,9 +151,10 @@ export const googleLogin = async (req: Request, res: Response) => {
         appUser.eMail,
         appUser.password
       );
-      listOfFriends = await getUserFriends(appUser);
+      listOfFollowed = await getUserFollowed(appUser);
+      listOfFollowers = await getUserFollowers(appUser);
       userPosts = await getUserPosts(appUser);
-      thoughtsToShow = await getPostsToShow(listOfFriends, appUser);
+      thoughtsToShow = await getPostsToShow(listOfFollowed, appUser);
       res
         .status(202)
         .cookie("token", cookieToken, {
@@ -171,7 +177,8 @@ export const googleLogin = async (req: Request, res: Response) => {
             chats: appUser.chats,
             allPostsToShow: thoughtsToShow,
             userPosts: userPosts,
-            friendsList: listOfFriends,
+            followed: listOfFollowed,
+            followers: listOfFollowers,
             groups: appUser.groups,
           },
         });
@@ -189,17 +196,19 @@ export const tokenChecking = async (
   next: NextFunction
 ) => {
   const { token } = req.cookies;
-  let listOfFriends: Array<IUser> = [];
+  let listOfFollowed: Array<IUser> = [];
+  let listOfFollowers: Array<IUser> = [];
   let userPosts: Array<IThoughtInPushMethod> = [];
   let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   if (!token) {
-    res.status(200).send("token does not exist");
+    res.status(401).send("token does not exist");
   } else {
     const data: IDecodedUserData = await jwt_decode(token);
     const user: IUser = await UserModel.findOne({ eMail: data.email });
-    listOfFriends = await getUserFriends(user);
+    listOfFollowed = await getUserFollowed(user);
+    listOfFollowers = await getUserFollowers(user);
     userPosts = await getUserPosts(user);
-    thoughtsToShow = await getPostsToShow(listOfFriends, user);
+    thoughtsToShow = await getPostsToShow(listOfFollowed, user);
     res.status(200).send({
       message: "Token exists",
       userData: {
@@ -214,7 +223,8 @@ export const tokenChecking = async (
         chats: user.chats,
         allPostsToShow: thoughtsToShow,
         userPosts: userPosts,
-        friendsList: listOfFriends,
+        followed: listOfFollowed,
+        followers: listOfFollowers,
         groups: user.groups,
       },
     });

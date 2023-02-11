@@ -1,4 +1,4 @@
-import { RegisterFormTemplProps } from "../../services/types/types";
+import { RegisterFormTemplProps } from "../../types/types";
 import FormInput from "../TextFormInput/TextFormInput";
 import PasswordInput from "../PasswordInput/PasswordInput";
 import BirthDateInput from "../BirthDateInput/BirthDate";

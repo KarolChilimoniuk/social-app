@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
-import Home from "../Layouts/Home/Home";
+import Home from "../pages/Home/Home";
 
 describe("Home layout tests", () => {
   test("Home component rendering test", () => {

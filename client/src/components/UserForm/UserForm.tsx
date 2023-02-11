@@ -2,16 +2,13 @@ import { useState, useEffect } from "react";
 import { Dispatch } from "redux";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, NavigateFunction } from "react-router-dom";
-import {
-  hasAccountTrue,
-  hasAccountFalse,
-} from "../../services/actions/appDataAction";
-import { clearAuthError } from "../../services/actions/userActions";
+import { hasAccountTrue, hasAccountFalse } from "../../actions/appDataAction";
+import { clearAuthError } from "../../actions/userActions";
 import RegisterFormTemplate from "../RegisterFormTemplate/RegisterFormTemplate";
 import LoginFormTemplate from "../LoginFormTemplate/LoginFormTemplate";
 import LoginSignupSwitcher from "../LoginSignupSwitcher/LoginSignupSwitcher";
 import { signUp, login } from "../../services/api/auth";
-import { IFormData, IRootState } from "../../services/interfaces/interfaces";
+import { IFormData, IRootState } from "../../interfaces/interfaces";
 import { FormsContainer, ErrorParagraph } from "./UserForm.style";
 
 const UserForm = (): JSX.Element => {
@@ -56,9 +53,10 @@ const UserForm = (): JSX.Element => {
 
   return (
     <>
+      {error !== "" ? <ErrorParagraph>{error}</ErrorParagraph> : null}
       {!hasAccountStatus && (
         <FormsContainer>
-          {error !== "" ? <ErrorParagraph>{error}</ErrorParagraph> : null}
+          <button onClick={() => console.log(error)}>ggg</button>
           <RegisterFormTemplate
             registerHandler={registerHandler}
             onChangeHandler={onChangeHandler}
@@ -81,7 +79,6 @@ const UserForm = (): JSX.Element => {
       )}
       {hasAccountStatus && (
         <FormsContainer>
-          {error !== "" ? <ErrorParagraph>{error}</ErrorParagraph> : null}
           <LoginFormTemplate
             loginHandler={loginHandler}
             onChangeHandler={onChangeHandler}

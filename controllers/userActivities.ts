@@ -4,7 +4,8 @@ import cloud from "../services/cloudinary";
 import { UserModel } from "../models/User";
 import { ThoughtModel } from "../models/Thought";
 import {
-  getUserFriends,
+  getUserFollowed,
+  getUserFollowers,
   getUserPosts,
   getPostsToShow,
 } from "../services/userMethods";
@@ -24,7 +25,8 @@ export const editUserData = async (req: Request, res: Response) => {
     email,
   } = req.body;
   try {
-    let listOfFriends: Array<IUser> = [];
+    let listOfFollowed: Array<IUser> = [];
+    let listOfFollowers: Array<IUser> = [];
     let userPosts: Array<IThoughtInPushMethod> = [];
     let thoughtsToShow: Array<IThoughtInPushMethod> = [];
     const user = await UserModel.findOne({ _id: userId });
@@ -55,9 +57,10 @@ export const editUserData = async (req: Request, res: Response) => {
       user.eMail = email !== user.eMail && email !== "" ? email : user.eMail;
       await user.save();
       const updatedUser: IUser = await UserModel.findOne({ _id: user._id });
-      listOfFriends = await getUserFriends(updatedUser);
+      listOfFollowed = await getUserFollowed(updatedUser);
+      listOfFollowers = await getUserFollowers(updatedUser);
       userPosts = await getUserPosts(updatedUser);
-      thoughtsToShow = await getPostsToShow(listOfFriends, updatedUser);
+      thoughtsToShow = await getPostsToShow(listOfFollowed, updatedUser);
       res.status(201).send({
         message: "Data Updated",
         userData: {
@@ -72,7 +75,8 @@ export const editUserData = async (req: Request, res: Response) => {
           chats: updatedUser.chats,
           allPostsToShow: thoughtsToShow,
           userPosts: userPosts,
-          friendsList: listOfFriends,
+          followed: listOfFollowed,
+          followers: listOfFollowers,
           groups: updatedUser.groups,
         },
       });
@@ -94,7 +98,8 @@ export const editUserPic = async (req: Request, res: Response) => {
   if (userId) {
     try {
       if (userPic) {
-        let listOfFriends: Array<IUser> = [];
+        let listOfFollowed: Array<IUser> = [];
+        let listOfFollowers: Array<IUser> = [];
         let userPosts: Array<IThoughtInPushMethod> = [];
         let thoughtsToShow: Array<IThoughtInPushMethod> = [];
         const uploadedImage = await cloud.uploader.upload(
@@ -124,9 +129,10 @@ export const editUserPic = async (req: Request, res: Response) => {
           }
         );
         const updatedUser = await UserModel.findOne({ _id: userId });
-        listOfFriends = await getUserFriends(updatedUser);
+        listOfFollowed = await getUserFollowed(updatedUser);
+        listOfFollowers = await getUserFollowers(updatedUser);
         userPosts = await getUserPosts(updatedUser);
-        thoughtsToShow = await getPostsToShow(listOfFriends, updatedUser);
+        thoughtsToShow = await getPostsToShow(listOfFollowed, updatedUser);
         updatedUser &&
           res.status(201).send({
             message: "Data updated",
@@ -142,7 +148,8 @@ export const editUserPic = async (req: Request, res: Response) => {
               chats: updatedUser.chats,
               allPostsToShow: thoughtsToShow,
               userPosts: userPosts,
-              friendsList: listOfFriends,
+              followed: listOfFollowed,
+              followers: listOfFollowers,
               groups: updatedUser.groups,
             },
           });
@@ -158,7 +165,7 @@ export const editUserPic = async (req: Request, res: Response) => {
 
 export const addThought = async (req: Request, res: Response) => {
   const { email, thoughtContent } = req.body;
-  let listOfFriends: Array<IUser> = [];
+  let listOfFollowed: Array<IUser> = [];
   let userPosts: Array<IThoughtInPushMethod> = [];
   let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   if (email) {
@@ -167,10 +174,7 @@ export const addThought = async (req: Request, res: Response) => {
       const newThought = await ThoughtModel.create({
         textContent: thoughtContent,
         author: {
-          id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          userPic: user.pic,
+          _id: user._id,
         },
       });
       await UserModel.updateOne(
@@ -178,15 +182,67 @@ export const addThought = async (req: Request, res: Response) => {
         { $push: { posts: newThought._id } }
       );
       const updatedUser = await UserModel.findOne({ eMail: email });
-      listOfFriends = await getUserFriends(updatedUser);
+      listOfFollowed = await getUserFollowed(updatedUser);
       userPosts = await getUserPosts(updatedUser);
-      thoughtsToShow = await getPostsToShow(listOfFriends, updatedUser);
+      thoughtsToShow = await getPostsToShow(listOfFollowed, updatedUser);
       res.status(201).send({
         message: "Thought added",
         userData: {
           allPostsToShow: thoughtsToShow,
           userPosts: userPosts,
         },
+      });
+    } catch (err) {
+      res.json(err.message);
+    }
+  }
+};
+
+// Add like to the post
+
+export const addLike = async (req: Request, res: Response) => {
+  const { thoughtId, userId } = req.body;
+  if (thoughtId) {
+    try {
+      const thought = await ThoughtModel.findOneAndUpdate(
+        { _id: thoughtId },
+        { $push: { likes: userId } }
+      );
+      if (!thought) {
+        res.status(404).send({
+          message: "Thought not found :(",
+        });
+      }
+      const updatedThought = await ThoughtModel.findById(thoughtId);
+      res.status(200).send({
+        message: "Like removed",
+        thoughtData: updatedThought,
+      });
+    } catch (err) {
+      res.json(err.message);
+    }
+  }
+};
+
+// Remove like from the post
+
+export const removeLike = async (req: Request, res: Response) => {
+  const { thoughtId, userId } = req.body;
+  if (thoughtId) {
+    try {
+      const thought = await ThoughtModel.findOneAndUpdate(
+        { _id: thoughtId },
+        { $pull: { likes: userId } }
+      );
+      if (!thought) {
+        res.status(404).send({
+          message: "Thought not found :(",
+        });
+      }
+      const updatedThought = await ThoughtModel.findById(thoughtId);
+      res.status(200).send({
+        message: "Like removed",
+        thoughtData: updatedThought,
       });
     } catch (err) {
       res.json(err.message);

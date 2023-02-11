@@ -1,5 +1,5 @@
 import { InputContainer, Input } from "./TextFormInput.style";
-import { InputProps } from "../../services/types/types";
+import { InputProps } from "../../types/types";
 
 const FormInput = ({
   type,

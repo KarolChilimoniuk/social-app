@@ -1,5 +1,5 @@
 import { TextAreaContainer, Textarea } from "./TextArea.style";
-import { TextAreaProps } from "../../services/types/types";
+import { TextAreaProps } from "../../types/types";
 
 const TextArea = ({
   placeholder,

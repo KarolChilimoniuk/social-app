@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
-import { IUserInitState } from "../interfaces/interfaces";
+import { IUserDataState } from "../interfaces/interfaces";
 
-const initialState: IUserInitState = {
+const initialState: IUserDataState = {
   authError: "",
   logged: false,
   _id: "",
@@ -14,12 +14,16 @@ const initialState: IUserInitState = {
   chats: [],
   allPostsToShow: [],
   userPosts: [],
-  friendsList: [],
+  followed: [],
+  followers: [],
   groups: [],
   pic: "",
 };
 
-const userReducers = (state = initialState, action: AnyAction) => {
+const userReducers = (
+  state = initialState,
+  action: AnyAction
+): IUserDataState => {
   switch (action.type) {
     case "CLEAR_AUTH_ERROR":
       return { ...state, authError: "" };
@@ -37,13 +41,15 @@ const userReducers = (state = initialState, action: AnyAction) => {
         chats: action.payloads.chats,
         allPostsToShow: action.payloads.allPostsToShow,
         userPosts: action.payloads.userPosts,
-        friendsList: action.payloads.friendsList,
+        followed: action.payloads.followed,
+        followers: action.payloads.followers,
         groups: action.payloads.groups,
         pic: action.payloads.pic,
       };
     case "LOGIN_FAILURE":
       return {
         ...state,
+        logged: false,
         authError: action.payloads,
       };
     case "SIGNUP_FAILURE":
@@ -65,7 +71,8 @@ const userReducers = (state = initialState, action: AnyAction) => {
         chats: action.payloads.chats,
         allPostsToShow: action.payloads.allPostsToShow,
         userPosts: action.payloads.userPosts,
-        friendsList: action.payloads.friendsList,
+        followed: action.payloads.followed,
+        followers: action.payloads.followers,
         groups: action.payloads.groups,
         pic: action.payloads.pic,
       };
@@ -82,16 +89,6 @@ const userReducers = (state = initialState, action: AnyAction) => {
         userPosts: action.payloads.userPosts,
       };
     case "UPDATE_USER_POSTS_FAILURE":
-      return {
-        ...state,
-      };
-    case "UPDATE_USER_POST_LIKES_SUCCESS":
-      return {
-        ...state,
-        allPostsToShow: action.payloads.allPostsToShow,
-        userPosts: action.payloads.userPosts,
-      };
-    case "UPDATE_USER_POST_LIKES_FAILURE":
       return {
         ...state,
       };

@@ -1,9 +1,9 @@
 export interface IRootState {
-  appData: IMainInitState;
-  userData: IUserInitState;
+  appData: IAppMainDataState;
+  userData: IUserDataState;
 }
 
-export interface IUserInitState {
+export interface IUserDataState {
   authError: string;
   logged: boolean;
   _id: string;
@@ -16,13 +16,32 @@ export interface IUserInitState {
   chats: Array<string>;
   allPostsToShow: Array<IThought>;
   userPosts: Array<IThought>;
-  friendsList: Array<string>;
+  followed: Array<string>;
+  followers: Array<string>;
   groups: Array<string>;
   pic: string;
 }
 
-export interface IMainInitState {
+export interface IUserInfo {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  eMail: string;
+  birthDate: string;
+  registerDate: string;
+  pic: string;
+  chats: Array<string>;
+  allPostsToShow: Array<IThought>;
+  userPosts: Array<IThought>;
+  followed: Array<string>;
+  followers: Array<String>;
+  groups: Array<string>;
+}
+
+export interface IAppMainDataState {
   hasAccount: boolean;
+  idToFilterUser: string;
 }
 
 export interface IFormData {
@@ -72,14 +91,16 @@ export interface IComment {
   date: Date;
 }
 
-// export interface ILike {
-//   _id: string;
-//   author: {
-//     author: {
-//       id: string;
-//       firstName: string;
-//       lastName: string;
-//       img: string;
-//     };
-//   };
-// }
+export interface IFilteredUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  eMail: string;
+  birthDate: string;
+  registerDate: string;
+  pic: string;
+  userPosts: Array<IThought>;
+  followed: Array<IUserInfo>;
+  followers: Array<IUserInfo>;
+}

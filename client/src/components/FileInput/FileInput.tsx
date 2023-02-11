@@ -1,4 +1,4 @@
-import { InputProps } from "../../services/types/types";
+import { InputProps } from "../../types/types";
 import { InputContainer, Input } from "./FileInput.style";
 
 const FormFileInput = ({

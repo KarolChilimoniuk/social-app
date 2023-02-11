@@ -1,8 +1,9 @@
 import { AnyAction } from "redux";
-import { IMainInitState } from "../interfaces/interfaces";
+import { IAppMainDataState } from "../interfaces/interfaces";
 
-const initialState: IMainInitState = {
+const initialState: IAppMainDataState = {
   hasAccount: false,
+  idToFilterUser: "",
 };
 
 const appReducers = (state = initialState, action: AnyAction) => {
@@ -11,6 +12,8 @@ const appReducers = (state = initialState, action: AnyAction) => {
       return { ...state, hasAccount: action.payloads };
     case "HAS_ACCOUNT_STATUS_FALSE":
       return { ...state, hasAccount: action.payloads };
+    case "SET_ID_TO_FILTER_USER":
+      return { ...state, idToFilterUser: action.payloads };
     default:
       return { ...state };
   }

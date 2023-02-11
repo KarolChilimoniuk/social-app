@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BurgerBarProps } from "../../services/types/types";
+import { BurgerBarProps } from "../../types/types";
 import { BurgerContainer, Bar1, Bar2, Bar3 } from "./Burger.style";
 import styles from "./Burger.module.scss";
 

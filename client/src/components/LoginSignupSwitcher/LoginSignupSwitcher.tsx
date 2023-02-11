@@ -1,4 +1,4 @@
-import { SwitcherProps } from "../../services/types/types";
+import { SwitcherProps } from "../../types/types";
 import { Switcher } from "./LoginSignupSwitcher.style";
 
 const LoginSignupSwitcher = ({

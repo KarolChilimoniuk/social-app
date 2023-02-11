@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import like from "../../images/like.png";
 import notLike from "../../images/notLike.png";
-import { LikesSectionProps } from "../../services/types/types";
-import { IRootState } from "../../services/interfaces/interfaces";
-import { addLike, removeLike } from "../../services/api/userMainPage";
+import { LikesSectionProps } from "../../types/types";
+import { IRootState } from "../../interfaces/interfaces";
+import { addLike, removeLike } from "../../services/api/likesContent";
 import { LikesContent, LikeImg, LikesSpan } from "./LikesContent.style";
 
 const LikesSection = ({
@@ -23,24 +23,12 @@ const LikesSection = ({
   const likeHandler = async () => {
     try {
       if (likeStat) {
-        await removeLike(
-          userData._id,
-          postId,
-          userData.allPostsToShow,
-          userData.userPosts,
-          dispatch
-        );
+        await removeLike(userData._id, postId);
         setLikeStatus(!likeStat);
         setLike(postLikes! - 1);
       }
       if (!likeStat) {
-        await addLike(
-          userData._id,
-          postId,
-          userData.allPostsToShow,
-          userData.userPosts,
-          dispatch
-        );
+        await addLike(userData._id, postId);
         setLikeStatus(!likeStat);
         setLike(postLikes! + 1);
       }

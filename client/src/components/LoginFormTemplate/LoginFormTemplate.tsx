@@ -1,5 +1,5 @@
 import GoogleLoginComp from "../GoogleLoginComp/GoogleLoginComp";
-import { LoginFormTemplateProps } from "../../services/types/types";
+import { LoginFormTemplateProps } from "../../types/types";
 import FormInput from "../TextFormInput/TextFormInput";
 import PasswordInput from "../PasswordInput/PasswordInput";
 import SubInput from "../SubmitInput/SubmitInput";

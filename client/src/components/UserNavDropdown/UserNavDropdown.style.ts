@@ -43,6 +43,13 @@ export const UserNavMenu = styled.div`
   padding: 10px;
   right: 30px;
   position: absolute;
-  width: 70px;
+  width: 100px;
   z-index: 3;
+`;
+
+export const OptionImg = styled.img`
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-top: 5px;
+  width: 15px;
 `;

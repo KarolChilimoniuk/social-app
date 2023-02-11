@@ -12,7 +12,8 @@ export interface IUser {
   pic: string;
   chats: Array<string>;
   posts: Array<string>;
-  friendsList: Array<string>;
+  followed: Array<string>;
+  followers: Array<string>;
   groups: Array<string>;
   genAuthToken: (
     id: mongoose.Schema.Types.ObjectId,

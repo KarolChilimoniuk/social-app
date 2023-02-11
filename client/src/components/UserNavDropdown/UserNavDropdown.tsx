@@ -3,13 +3,12 @@ import { Dispatch } from "redux";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate, NavigateFunction } from "react-router-dom";
 import { logoutUser } from "../../services/api/auth";
-import { UserNavDropdownProps } from "../../services/types/types";
+import { UserNavDropdownProps } from "../../types/types";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
+import EditImg from "../../images/edit.png";
+import LogOutImg from "../../images/log-out.png";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
-import {
-  IRootState,
-  IUserInitState,
-} from "../../services/interfaces/interfaces";
+import { IRootState, IUserDataState } from "../../interfaces/interfaces";
 import DropDownImg from "../../images/dropdown.png";
 import {
   LogoutButton,
@@ -17,11 +16,12 @@ import {
   UserNavButton,
   UserNavImg,
   UserNavMenu,
+  OptionImg,
 } from "./UserNavDropdown.style";
 import styles from "./UserNavDropdown.module.scss";
 
 const UserNavDropdown = ({ userName }: UserNavDropdownProps): JSX.Element => {
-  const userData: IUserInitState = useSelector(
+  const userData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
   );
 
@@ -47,8 +47,8 @@ const UserNavDropdown = ({ userName }: UserNavDropdownProps): JSX.Element => {
         <UserNavImg src={DropDownImg}></UserNavImg>
       </UserNavButton>
       <UserNavMenu className={showMenu ? styles.activeUserMenu : undefined}>
-        <NavLink to="/editUser" className={styles.userNavLink}>
-          Edit profile
+        <NavLink to="/logged/editUser" className={styles.userNavLink}>
+          <OptionImg src={EditImg}></OptionImg>Edit profile
         </NavLink>
         <LogoutButton
           onClick={() => {
@@ -56,7 +56,7 @@ const UserNavDropdown = ({ userName }: UserNavDropdownProps): JSX.Element => {
             console.log(userData);
           }}
         >
-          logout
+          <OptionImg src={LogOutImg}></OptionImg>logout
         </LogoutButton>
       </UserNavMenu>
     </NavDropdownContainer>

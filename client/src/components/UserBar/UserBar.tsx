@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import {
-  IRootState,
-  IUserInitState,
-} from "../../services/interfaces/interfaces";
+import { IRootState, IUserDataState } from "../../interfaces/interfaces";
 import Burger from "../Burger/Burger";
 import UserNavDropdown from "../UserNavDropdown/UserNavDropdown";
-import { UserBarProps } from "../../services/types/types";
+import { UserBarProps } from "../../types/types";
 import { BarContainer1, BarParagraph } from "./UserBar.style";
 
 const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
-  const userData: IUserInitState = useSelector(
+  const userData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
   );
 

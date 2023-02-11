@@ -21,19 +21,17 @@ export const NameDateContainer = styled.div`
   padding-top: 20px;
 `;
 
-export const ThoughtHeader = styled.div`
-  font-weight: 700;
-`;
-
-export const ThoughtDate = styled.div`
+export const ThoughtDate = styled.span`
   color: rgb(255, 255, 255);
   font-size: 0.7rem;
   font-weight: 600;
 `;
 
-export const ThoughtContent = styled.div`
+export const ThoughtContent = styled.p`
   margin-bottom: 20px;
+  margin-top: 0;
   padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export const LikesContent = styled.div`

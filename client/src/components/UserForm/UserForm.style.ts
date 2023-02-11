@@ -8,7 +8,6 @@ export const FormsContainer = styled.div`
   padding-top: 30px;
 `;
 export const ErrorParagraph = styled.p`
-  background-color: rgb(116, 150, 169);
   border: 0;
   border-radius: 5px;
   color: rgb(120, 0, 0);

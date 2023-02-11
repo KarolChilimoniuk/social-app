@@ -1,0 +1,8 @@
+.UserHeaderLink {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  :hover {
+    color: rgb(43, 88, 114);
+    transition: color 0.1s 0.1s;
+  }
+}
