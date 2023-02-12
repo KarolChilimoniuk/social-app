@@ -1,7 +1,6 @@
 import { UserHeaderProps } from "../../types/types";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { SetIdToFilterUserAction } from "../../types/types";
 import { useSelector } from "react-redux";
 import { setIdToFilterUser } from "../../actions/appDataAction";
 import { IRootState } from "../../interfaces/interfaces";
@@ -17,7 +16,7 @@ const UserHeader = ({
   const appData = useSelector((state: IRootState) => state.appData);
   return (
     <NavLink
-      to={`/logged/userInfoPage/${userId}`}
+      to={`/logged/userInfo`}
       className={styles.UserHeaderLink}
       onClick={() => dispatch(setIdToFilterUser(userId))}
     >

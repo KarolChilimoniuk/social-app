@@ -2,13 +2,16 @@ import styled from "styled-components";
 
 export const BurgerContainer = styled.div`
   cursor: pointer;
-  display: flex;
+  display: none;
   flex-direction: column;
   height: 34px;
   justify-content: space-between;
   left: 20px;
   position: fixed;
   width: 40px;
+  @media (max-width: 899px) {
+    display: flex;
+  }
 `;
 
 export const Bar1 = styled.div`

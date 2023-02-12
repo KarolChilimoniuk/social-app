@@ -1,20 +1,15 @@
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 import MainUserPageForm from "../../components/MainUserPageForm/MainUserPageForm";
 import Thought from "../../components/Thought/Thought";
-import UserHeader from "../../components/UserHeader/UserHeader";
 import UserProfileImg from "../../components/UserProfileImg/UserProfileImg";
 import NoImgAvatar from "../../components/NoImgAvatar/NoImgAvatar";
+import DesktopNav from "../../components/DesktopNav/DesktopNav";
 import { IRootState, IUserDataState } from "../../interfaces/interfaces";
 import {
   MainPageContainer,
   ThoughtsContainer,
   UserInfoContainer,
   UserMainInfo,
-  UserMainInfoHeader,
-  UserMainDetails,
-  UserFollowingInfo,
-  UserFollowingSpan,
 } from "./MainUserPage.style";
 
 const MainUserPage = (): JSX.Element => {
@@ -56,22 +51,7 @@ const MainUserPage = (): JSX.Element => {
           ) : (
             <NoImgAvatar />
           )}
-          <UserMainDetails>
-            <UserHeader
-              name={userData.firstName}
-              lastName={userData.lastName}
-              userId={userData._id}
-            />
-            <UserFollowingInfo>
-              Followers{" "}
-              <UserFollowingSpan>{userData.followers.length}</UserFollowingSpan>{" "}
-              |{""}
-              <UserFollowingSpan>
-                {userData.followed.length}
-              </UserFollowingSpan>{" "}
-              Followed
-            </UserFollowingInfo>
-          </UserMainDetails>
+          <DesktopNav />
         </UserMainInfo>
       </UserInfoContainer>
     </MainPageContainer>

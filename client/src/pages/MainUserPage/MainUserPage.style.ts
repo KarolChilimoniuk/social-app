@@ -46,31 +46,3 @@ export const UserMainInfo = styled.div`
   flex-direction: row;
   margin-left: 20px;
 `;
-
-export const UserMainDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 20px;
-  padding-top: 30px;
-`;
-
-export const UserInfo = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-`;
-export const UserMainInfoHeader = styled.h3`
-  margin: 0;
-`;
-
-export const UserFollowingInfo = styled.p`
-  cursor: pointer;
-  margin-top: 10px;
-`;
-
-export const UserFollowingSpan = styled.span`
-  color: rgb(255, 255, 255);
-  font-weight: 800;
-  margin-left: 10px;
-  margin-right: 10px;
-`;

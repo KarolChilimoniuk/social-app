@@ -6,7 +6,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { IRootState } from "./interfaces/interfaces";
 import { tokenChecking } from "./services/api/auth";
 import UserBar from "./components/UserBar/UserBar";
-import Navigation from "./components/Navigation/Navigation";
+import MobileNav from "./components/MobileNav/MobileNav";
 import Home from "./pages/Home/Home";
 import RegistLogin from "./pages/Register/RegistLogin";
 import MainUserPage from "./pages/MainUserPage/MainUserPage";
@@ -38,7 +38,7 @@ const App = (): JSX.Element => {
         {loginStatus && (
           <>
             <UserBar NavHandler={() => setActiveNav(!activeNav)} />
-            <Navigation active={activeNav} />
+            <MobileNav active={activeNav} />
           </>
         )}
         <Routes>
@@ -59,7 +59,7 @@ const App = (): JSX.Element => {
             }
           />
           <Route
-            path={`/logged/userInfoPage/${idToFilterUser}`}
+            path={`/logged/userInfo`}
             element={
               <MainDiv2>
                 <UserInfoPage />
