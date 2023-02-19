@@ -15,7 +15,6 @@ const TextArea = ({
     <TextAreaContainer theme={width || "210px"}>
       <>
         <Textarea
-          //   onFocus={(e) => e.target.setAttribute("autocomplete", "nope")}
           placeholder={placeholder}
           name={name}
           value={value}

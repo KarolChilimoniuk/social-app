@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 import UserHeader from "../UserHeader/UserHeader";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
@@ -14,14 +13,16 @@ import {
   MenuList,
   NavLi,
   NavImg,
-  UserInfoContainer,
+  Link,
+  LoggedUserInfoContainer,
   UserMainInfoContainer,
   UserFollowingInfo,
+  UserFollowingParagraph,
   UserFollowingSpan,
 } from "./MobileNav.style";
 
 const MobileNav = ({ active }: NavProps): JSX.Element => {
-  const userData: IUserDataState = useSelector(
+  const loggedUserData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
   );
 
@@ -29,10 +30,10 @@ const MobileNav = ({ active }: NavProps): JSX.Element => {
     <MobileNavContainer
       className={active === true ? styles.activeNav : undefined}
     >
-      <UserInfoContainer>
-        {typeof userData.pic === "string" && userData.pic !== "" ? (
+      <LoggedUserInfoContainer>
+        {typeof loggedUserData.pic === "string" && loggedUserData.pic !== "" ? (
           <UserProfileImg
-            imgId={userData.pic}
+            imgId={loggedUserData.pic}
             width={80}
             height={80}
             radius={65}
@@ -42,34 +43,40 @@ const MobileNav = ({ active }: NavProps): JSX.Element => {
         )}
         <UserMainInfoContainer>
           <UserHeader
-            name={userData.firstName}
-            lastName={userData.lastName}
-            userId={userData._id}
+            name={loggedUserData.firstName}
+            lastName={loggedUserData.lastName}
+            userId={loggedUserData._id}
           />
           <UserFollowingInfo>
-            Followers{" "}
-            <UserFollowingSpan>{userData.followers.length}</UserFollowingSpan> |
+            <UserFollowingParagraph>
+              Followers:{" "}
+              <UserFollowingSpan>
+                {loggedUserData.followers.length}
+              </UserFollowingSpan>
+            </UserFollowingParagraph>
             {""}
-            <UserFollowingSpan>
-              {userData.followed.length}
-            </UserFollowingSpan>{" "}
-            Followed
+            <UserFollowingParagraph>
+              Followed:{" "}
+              <UserFollowingSpan>
+                {loggedUserData.followed.length}
+              </UserFollowingSpan>{" "}
+            </UserFollowingParagraph>
           </UserFollowingInfo>
         </UserMainInfoContainer>
-      </UserInfoContainer>
+      </LoggedUserInfoContainer>
       <MenuNav>
         <MenuList>
           <NavLi>
-            <NavLink to="/logged" className={styles.MobileNavLink}>
+            <Link to="/logged">
               <NavImg src={HomeIcon} />
               Home
-            </NavLink>
+            </Link>
           </NavLi>
           <NavLi>
-            <NavLink to="/logged" className={styles.MobileNavLink}>
+            <Link to="/logged">
               <NavImg src={NewsIcon} />
               News
-            </NavLink>
+            </Link>
           </NavLi>
         </MenuList>
       </MenuNav>

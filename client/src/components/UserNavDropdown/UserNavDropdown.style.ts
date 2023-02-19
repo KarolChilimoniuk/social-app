@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const NavDropdownContainer = styled.div``;
 
@@ -12,9 +13,9 @@ export const LogoutButton = styled.button`
   padding: 0;
   text-decoration: none;
   text-transform: capitalize;
+  transition: color 0.3s 0.1s;
   &:hover {
     color: rgb(43, 88, 114);
-    cursor: pointer;
   }
 `;
 
@@ -45,6 +46,14 @@ export const UserNavMenu = styled.div`
   position: absolute;
   width: 100px;
   z-index: 3;
+`;
+
+export const Link = styled(NavLink)`
+  color: rgb(255, 255, 255);
+  transition: color 0.3s 0.1s;
+  :hover {
+    color: rgb(43, 88, 114);
+  }
 `;
 
 export const OptionImg = styled.img`

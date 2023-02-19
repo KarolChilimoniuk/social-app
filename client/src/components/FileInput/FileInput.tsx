@@ -4,7 +4,6 @@ import { InputContainer, Input } from "./FileInput.style";
 const FormFileInput = ({
   name,
   accept,
-  enctype,
   onChangeHandler,
 }: InputProps): JSX.Element => {
   return (

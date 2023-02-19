@@ -4,20 +4,22 @@ import { BurgerContainer, Bar1, Bar2, Bar3 } from "./Burger.style";
 import styles from "./Burger.module.scss";
 
 const Burger = ({ onClickNavHandler }: BurgerBarProps): JSX.Element => {
-  const [active, setActive] = useState<boolean>(false);
+  const [activeStatus, setActiveStatus] = useState<boolean>(false);
+
   const activeBarHandler = (): void => {
-    setActive(!active);
+    setActiveStatus(!activeStatus);
   };
+
   return (
     <BurgerContainer
       onClick={() => {
-        activeBarHandler();
         onClickNavHandler();
+        activeBarHandler();
       }}
     >
-      <Bar1 className={active === true ? styles.activeBar1 : undefined} />
-      <Bar2 className={active === true ? styles.activeBar2 : undefined} />
-      <Bar3 className={active === true ? styles.activeBar3 : undefined} />
+      <Bar1 className={activeStatus === true ? styles.activeBar1 : undefined} />
+      <Bar2 className={activeStatus === true ? styles.activeBar2 : undefined} />
+      <Bar3 className={activeStatus === true ? styles.activeBar3 : undefined} />
     </BurgerContainer>
   );
 };

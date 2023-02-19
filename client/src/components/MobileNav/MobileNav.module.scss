@@ -2,14 +2,7 @@ div .activeNav {
   display: flex;
   height: 100vh;
   left: 0;
+  padding-left: 15px;
   transition: 0.3s ease;
   width: 100%;
-  @media (min-width: 900px) {
-    display: none;
-  }
-}
-
-.MobileNavLink {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
 }

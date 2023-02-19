@@ -5,8 +5,8 @@ export const ThoughtContainer = styled.div`
   border-radius: 20px;
   min-height: 100px;
   margin-top: 30px;
-  padding-bottom: 20px;
-  width: 100%;
+  padding: 10px 10px 20px 20px;
+  width: 90%;
 `;
 
 export const ImgNameDateContainer = styled.div`
@@ -30,8 +30,8 @@ export const ThoughtDate = styled.span`
 export const ThoughtContent = styled.p`
   margin-bottom: 20px;
   margin-top: 0;
-  padding-left: 20px;
   padding-right: 20px;
+  word-break: break-all;
 `;
 
 export const LikesContent = styled.div`

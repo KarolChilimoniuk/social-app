@@ -16,12 +16,9 @@ const UserForm = (): JSX.Element => {
     (state: IRootState) => state.appData.hasAccount
   );
   const navigate: NavigateFunction = useNavigate();
-  const loginStatus: boolean = useSelector(
-    (state: IRootState) => state.userData.logged
-  );
-  const error: string = useSelector(
-    (state: IRootState) => state.userData.authError
-  );
+
+  const loggedUserData = useSelector((state: IRootState) => state.userData);
+
   const dispatch: Dispatch = useDispatch();
 
   const [formData, newFormData] = useState<IFormData>({
@@ -48,15 +45,16 @@ const UserForm = (): JSX.Element => {
   };
 
   useEffect(() => {
-    loginStatus === true && navigate("/logged");
-  }, [loginStatus]);
+    loggedUserData.logged === true && navigate("/logged");
+  }, [loggedUserData.logged]);
 
   return (
     <>
-      {error !== "" ? <ErrorParagraph>{error}</ErrorParagraph> : null}
+      {loggedUserData.authError !== "" ? (
+        <ErrorParagraph>{loggedUserData.authError}</ErrorParagraph>
+      ) : null}
       {!hasAccountStatus && (
         <FormsContainer>
-          <button onClick={() => console.log(error)}>ggg</button>
           <RegisterFormTemplate
             registerHandler={registerHandler}
             onChangeHandler={onChangeHandler}

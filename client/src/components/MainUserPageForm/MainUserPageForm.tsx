@@ -16,7 +16,7 @@ import {
 import React from "react";
 
 const MainUserPageForm = (): JSX.Element => {
-  const userData: IUserDataState = useSelector(
+  const loggedUserData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
   );
 
@@ -30,7 +30,7 @@ const MainUserPageForm = (): JSX.Element => {
       alert("Your thought is empty :/ Write something.");
     }
     if (thoughtContent !== "") {
-      addThought(userData.eMail, thoughtContent, dispatch);
+      await addThought(loggedUserData.eMail, thoughtContent, dispatch);
     }
   };
 
@@ -43,9 +43,10 @@ const MainUserPageForm = (): JSX.Element => {
     <FormContainer>
       <Form onSubmit={userThoughts}>
         <InputContainer>
-          {typeof userData.pic === "string" && userData.pic !== "" ? (
+          {typeof loggedUserData.pic === "string" &&
+          loggedUserData.pic !== "" ? (
             <UserProfileImg
-              imgId={userData.pic}
+              imgId={loggedUserData.pic}
               width={40}
               height={40}
               radius={30}

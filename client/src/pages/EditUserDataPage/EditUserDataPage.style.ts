@@ -60,3 +60,10 @@ export const FormParagraph = styled.p`
   color: rgb(255, 255, 255);
   font-weight: 600;
 `;
+
+export const ImgContainer = styled.div`
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
+  min-height: 95vh;
+  margin-right: 30px;
+  padding-right: 30px;
+`;

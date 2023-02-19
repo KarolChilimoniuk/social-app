@@ -1,51 +1,77 @@
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 import HomeIcon from "../../images/home.png";
 import NewsIcon from "../../images/news.png";
 import UserHeader from "../UserHeader/UserHeader";
+import UserProfileImg from "../UserProfileImg/UserProfileImg";
+import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import { IUserDataState, IRootState } from "../../interfaces/interfaces";
 import {
   DesktopNavContainer,
   UserFollowingInfo,
+  UserFollowingParagraph,
   UserFollowingSpan,
+  UserInfoDetails,
+  LoggedUserInfo,
   MenuList,
   NavLi,
   MenuNav,
+  Link,
   NavImg,
 } from "./DesktopNav.style";
-import styles from "./DesktopNav.module.scss";
 
 const UserDesktopNav = (): JSX.Element => {
-  const userData: IUserDataState = useSelector(
+  const loggedUserData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
   );
 
   return (
     <DesktopNavContainer>
-      <UserHeader
-        name={userData.firstName}
-        lastName={userData.lastName}
-        userId={userData._id}
-      />
-      <UserFollowingInfo>
-        Followers{" "}
-        <UserFollowingSpan>{userData.followers.length}</UserFollowingSpan> |{""}
-        <UserFollowingSpan>{userData.followed.length}</UserFollowingSpan>{" "}
-        Followed
-      </UserFollowingInfo>
+      <LoggedUserInfo>
+        {typeof loggedUserData.pic === "string" && loggedUserData.pic !== "" ? (
+          <UserProfileImg
+            imgId={loggedUserData.pic}
+            width={80}
+            height={80}
+            radius={65}
+          />
+        ) : (
+          <NoImgAvatar />
+        )}
+        <UserInfoDetails>
+          <UserHeader
+            name={loggedUserData.firstName}
+            lastName={loggedUserData.lastName}
+            userId={loggedUserData._id}
+          />
+          <UserFollowingInfo>
+            <UserFollowingParagraph>
+              Followers:{" "}
+              <UserFollowingSpan>
+                {loggedUserData.followers.length}
+              </UserFollowingSpan>
+            </UserFollowingParagraph>{" "}
+            <UserFollowingParagraph>
+              Followed:{" "}
+              <UserFollowingSpan>
+                {loggedUserData.followed.length}
+              </UserFollowingSpan>{" "}
+            </UserFollowingParagraph>
+          </UserFollowingInfo>
+        </UserInfoDetails>
+      </LoggedUserInfo>
       <MenuNav>
         <MenuList>
           <NavLi>
-            <NavLink to="/logged" className={styles.MobileNavLink}>
+            <Link to="/logged">
               <NavImg src={HomeIcon} />
               Home
-            </NavLink>
+            </Link>
           </NavLi>
           <NavLi>
-            <NavLink to="/logged" className={styles.MobileNavLink}>
+            <Link to="/logged">
               <NavImg src={NewsIcon} />
               News
-            </NavLink>
+            </Link>
           </NavLi>
         </MenuList>
       </MenuNav>

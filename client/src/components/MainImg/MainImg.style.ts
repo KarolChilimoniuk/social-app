@@ -11,7 +11,7 @@ export const ImgContainer = styled.div`
   }
 `;
 
-export const SocialImg = styled.img`
+export const Img = styled.img`
   position: relative;
   width: 300px;
   overflow: hidden;

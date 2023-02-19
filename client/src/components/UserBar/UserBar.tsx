@@ -7,7 +7,7 @@ import { UserBarProps } from "../../types/types";
 import { BarContainer1, BarParagraph } from "./UserBar.style";
 
 const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
-  const userData: IUserDataState = useSelector(
+  const loggedUserData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
   );
 
@@ -23,11 +23,9 @@ const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
     <BarContainer1
       color={scroll > 3 ? "rgba(180, 180, 180, 1)" : "rgb(43,88,114)"}
     >
-      <Burger onClickNavHandler={() => NavHandler()} />
+      <Burger onClickNavHandler={NavHandler} />
       <BarParagraph>Welcome</BarParagraph>
-      {/* <p>{userData.pic}</p> */}
-
-      <UserNavDropdown userName={userData.firstName} />
+      <UserNavDropdown userName={loggedUserData.firstName} />
     </BarContainer1>
   );
 };

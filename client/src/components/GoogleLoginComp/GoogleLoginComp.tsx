@@ -14,12 +14,12 @@ const GoogleLoginComp = (): JSX.Element => {
       const googleData = await Object.assign({}, response);
       googleData && (await loginByGoogle(googleData, dispatch, navigate));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const failureResponseGoogle = (): void => {
-    console.log("Google authentication failed");
+    console.error("Google authentication failed");
   };
 
   return (

@@ -1,10 +1,18 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
-export const DesktopNavContainer = styled.div`
+export const LoggedUserInfo = styled.div`
   display: flex;
+`;
+export const DesktopNavContainer = styled.div`
+  align-self: flex-start;
+  display: none;
   flex-direction: column;
   margin-left: 20px;
-  padding-top: 30px;
+  width: 35%;
+  @media (min-width: 1024px) {
+    display: flex;
+  }
 `;
 
 export const MenuList = styled.ul`
@@ -18,7 +26,7 @@ export const NavLi = styled.li`
   border-radius: 30px;
   cursor: pointer;
   font-weight: 700;
-  justify-content: center;
+  justify-content: flex-start;
   text-decoration: none;
   padding: 10px;
   width: 100%;
@@ -34,6 +42,11 @@ export const MenuNav = styled.nav`
   justify-content: center;
 `;
 
+export const Link = styled(NavLink)`
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+`;
+
 export const NavImg = styled.img`
   margin-right: 10px;
   width: 20px;
@@ -45,14 +58,31 @@ export const UserInfo = styled.div`
   justify-content: center;
 `;
 
-export const UserFollowingInfo = styled.p`
-  cursor: pointer;
+export const UserInfoDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 20px;
+  padding-top: 20px;
+`;
+
+export const UserFollowingInfo = styled.div`
+  display: flex;
   margin-top: 10px;
+`;
+
+export const UserFollowingParagraph = styled.p`
+  margin: 0 20px 0 0;
 `;
 
 export const UserFollowingSpan = styled.span`
   color: rgb(255, 255, 255);
+  cursor: pointer;
   font-weight: 800;
   margin-left: 10px;
   margin-right: 10px;
+  transition: color 0.2s 0.1s;
+  :hover {
+    color: rgba(0, 0, 0, 0.7);
+  }
 `;

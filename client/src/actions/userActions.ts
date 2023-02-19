@@ -65,7 +65,6 @@ export const userLogin = (
     try {
       dispatch(loginSuccess(userData));
     } catch (err) {
-      console.log(typeof err);
       dispatch(loginFailure(err));
     }
   };

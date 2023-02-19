@@ -92,22 +92,7 @@ const UserInfoPage = (): JSX.Element => {
               ))}
             </UserPostsContainer>
           </UserToShowContainer>
-          <LoggedUserInfoContainer>
-            <UserMainInfo>
-              {typeof loggedUserData.pic === "string" &&
-              loggedUserData.pic !== "" ? (
-                <UserProfileImg
-                  imgId={loggedUserData.pic}
-                  width={80}
-                  height={80}
-                  radius={65}
-                />
-              ) : (
-                <NoImgAvatar />
-              )}
-              <DesktopNav />
-            </UserMainInfo>
-          </LoggedUserInfoContainer>
+          <DesktopNav />
         </>
       )}
     </UserInfoPageContainer>

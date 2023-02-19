@@ -9,7 +9,7 @@ export const BurgerContainer = styled.div`
   left: 20px;
   position: fixed;
   width: 40px;
-  @media (max-width: 899px) {
+  @media (max-width: 1023px) {
     display: flex;
   }
 `;

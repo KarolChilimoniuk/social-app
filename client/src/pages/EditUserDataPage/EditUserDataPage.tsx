@@ -13,6 +13,7 @@ import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import FormFileInput from "../../components/FileInput/FileInput";
 import SubInput from "../../components/SubmitInput/SubmitInput";
 import UploadedUserImg from "../../components/UserProfileImg/UserProfileImg";
+import DesktopNav from "../../components/DesktopNav/DesktopNav";
 import { editData, editUserPic } from "../../services/api/userPanel";
 import {
   ErrorParagraph,
@@ -22,15 +23,12 @@ import {
   FormParagraph,
   UpdateParagraph,
   SectionContainer,
-} from "./UserPanel.style";
+  ImgContainer,
+} from "./EditUserDataPage.style";
 
 const UserPanel = (): JSX.Element => {
-  const userData: IUserDataState = useSelector(
+  const loggedUserData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
-  );
-
-  const error: string = useSelector(
-    (state: IRootState) => state.userData.authError
   );
 
   const dispatch: Dispatch = useDispatch();
@@ -49,7 +47,9 @@ const UserPanel = (): JSX.Element => {
 
   const [imgToPreview, setImagePreview] = useState<ImgToPreview>(null);
 
-  const [uploadedImg, setUploadedImg] = useState<UploadedImg>(userData.pic);
+  const [uploadedImg, setUploadedImg] = useState<UploadedImg>(
+    loggedUserData.pic
+  );
 
   const [updateStatus, setUpdateStatus] = useState<boolean>(false);
 
@@ -75,37 +75,33 @@ const UserPanel = (): JSX.Element => {
 
   const textSubmitHandler = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault();
-    await editData(formData, userData._id, dispatch, setUpdateStatus);
+    await editData(formData, loggedUserData._id, dispatch, setUpdateStatus);
   };
 
   const imgSubmitHandler = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault();
-    try {
-      const uploadedImageData = await editUserPic(
-        imgToPreview,
-        userData._id,
-        dispatch
-      );
-      typeof uploadedImageData === "string" &&
-        uploadedImageData !== "choose an image" &&
-        setUploadedImg(uploadedImageData);
-    } catch (err) {
-      console.log(err);
-    }
+    const uploadedImageData = await editUserPic(
+      imgToPreview,
+      loggedUserData._id,
+      dispatch
+    );
+    typeof uploadedImageData === "string" &&
+      uploadedImageData !== "choose an image" &&
+      setUploadedImg(uploadedImageData);
   };
 
   return (
     <SectionContainer>
       <FormContainer>
         <Form onSubmit={textSubmitHandler}>
-          {error !== "" && updateStatus === false ? (
-            <ErrorParagraph>{error}</ErrorParagraph>
+          {loggedUserData.authError !== "" && updateStatus === false ? (
+            <ErrorParagraph>{loggedUserData.authError}</ErrorParagraph>
           ) : null}
-          {error === "" && updateStatus === true ? (
+          {loggedUserData.authError === "" && updateStatus === true ? (
             <UpdateParagraph>Data updated</UpdateParagraph>
           ) : null}
           <FormHeader>Edit profile</FormHeader>
-          <FormParagraph>{userData.firstName}</FormParagraph>
+          <FormParagraph>{loggedUserData.firstName}</FormParagraph>
           <TextFormInput
             type={"text"}
             placeholder={"New first name"}
@@ -113,7 +109,7 @@ const UserPanel = (): JSX.Element => {
             value={formData.firstName}
             onChangeHandler={onChangeHandler}
           />
-          <FormParagraph>{userData.lastName}</FormParagraph>
+          <FormParagraph>{loggedUserData.lastName}</FormParagraph>
           <TextFormInput
             type={"text"}
             placeholder={"New last name"}
@@ -121,7 +117,7 @@ const UserPanel = (): JSX.Element => {
             value={formData.lastName}
             onChangeHandler={onChangeHandler}
           />
-          <FormParagraph>{userData.userName}</FormParagraph>
+          <FormParagraph>{loggedUserData.userName}</FormParagraph>
           <TextFormInput
             type={"text"}
             placeholder={"New user name"}
@@ -129,7 +125,7 @@ const UserPanel = (): JSX.Element => {
             value={formData.userName}
             onChangeHandler={onChangeHandler}
           />
-          <FormParagraph>{userData.eMail}</FormParagraph>
+          <FormParagraph>{loggedUserData.eMail}</FormParagraph>
           <TextFormInput
             type={"email"}
             placeholder={"New e-mail"}
@@ -161,15 +157,17 @@ const UserPanel = (): JSX.Element => {
           <SubInput value={"Edit profile photo"} />
         </Form>
       </FormContainer>
-
       {typeof uploadedImg === "string" && uploadedImg !== "" && (
-        <UploadedUserImg
-          imgId={uploadedImg}
-          width={280}
-          height={280}
-          radius={160}
-        />
+        <ImgContainer>
+          <UploadedUserImg
+            imgId={uploadedImg}
+            width={200}
+            height={200}
+            radius={160}
+          />
+        </ImgContainer>
       )}
+      <DesktopNav />
     </SectionContainer>
   );
 };

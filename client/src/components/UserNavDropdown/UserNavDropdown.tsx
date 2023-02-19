@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, useNavigate, NavigateFunction } from "react-router-dom";
+import { useNavigate, NavigateFunction } from "react-router-dom";
 import { logoutUser } from "../../services/api/auth";
 import { UserNavDropdownProps } from "../../types/types";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
@@ -11,6 +11,7 @@ import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import { IRootState, IUserDataState } from "../../interfaces/interfaces";
 import DropDownImg from "../../images/dropdown.png";
 import {
+  Link,
   LogoutButton,
   NavDropdownContainer,
   UserNavButton,
@@ -47,9 +48,9 @@ const UserNavDropdown = ({ userName }: UserNavDropdownProps): JSX.Element => {
         <UserNavImg src={DropDownImg}></UserNavImg>
       </UserNavButton>
       <UserNavMenu className={showMenu ? styles.activeUserMenu : undefined}>
-        <NavLink to="/logged/editUser" className={styles.userNavLink}>
+        <Link to="/logged/editUser" className={styles.userNavLink}>
           <OptionImg src={EditImg}></OptionImg>Edit profile
-        </NavLink>
+        </Link>
         <LogoutButton
           onClick={() => {
             logoutUser(dispatch, navigate);

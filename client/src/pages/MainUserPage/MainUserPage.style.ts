@@ -19,13 +19,14 @@ export const MainPageContainer = styled.section`
 
 export const ThoughtsContainer = styled.section`
   align-items: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
   display: flex;
   flex-direction: column;
   width: 90%;
   padding-left: 10px;
   padding-right: 10px;
-  @media (min-width: 900px) {
-    width: 45%;
+  @media (min-width: 1024px) {
+    width: 50%;
   }
 `;
 

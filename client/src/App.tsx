@@ -8,15 +8,15 @@ import { tokenChecking } from "./services/api/auth";
 import UserBar from "./components/UserBar/UserBar";
 import MobileNav from "./components/MobileNav/MobileNav";
 import Home from "./pages/Home/Home";
-import RegistLogin from "./pages/Register/RegistLogin";
+import RegistLogin from "./pages/RegisterLogin/RegistLogin";
 import MainUserPage from "./pages/MainUserPage/MainUserPage";
 import UserInfoPage from "./pages/UserInfoPage/UserInfoPage";
-import UserPanel from "./pages/UserPanel/UserPanel";
+import UserPanel from "./pages/EditUserDataPage/EditUserDataPage";
 import Footer from "./components/Footer/Footer";
 import { AppContainer, MainDiv, MainDiv2 } from "./App.style";
 
 const App = (): JSX.Element => {
-  const [activeNav, setActiveNav] = useState<boolean>(false);
+  const [activeMobileNav, setActiveMobileNav] = useState<boolean>(false);
   const dispatch: Dispatch = useDispatch();
   const loginStatus: boolean = useSelector(
     (state: IRootState) => state.userData.logged
@@ -37,8 +37,8 @@ const App = (): JSX.Element => {
       <AppContainer>
         {loginStatus && (
           <>
-            <UserBar NavHandler={() => setActiveNav(!activeNav)} />
-            <MobileNav active={activeNav} />
+            <UserBar NavHandler={() => setActiveMobileNav(!activeMobileNav)} />
+            <MobileNav active={activeMobileNav} />
           </>
         )}
         <Routes>

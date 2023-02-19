@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
+import { useSelector } from "react-redux";
 import like from "../../images/like.png";
 import notLike from "../../images/notLike.png";
 import { LikesSectionProps } from "../../types/types";
@@ -13,26 +12,23 @@ const LikesSection = ({
   likeStatus,
   postId,
 }: LikesSectionProps): JSX.Element => {
-  const userData = useSelector((state: IRootState) => state.userData);
+  const loggedUserId = useSelector((state: IRootState) => state.userData._id);
 
   const [likeStat, setLikeStatus] = useState<boolean>(likeStatus);
   const [postLikes, setLike] = useState<number>(likes!);
 
-  const dispatch: Dispatch = useDispatch();
-
   const likeHandler = async () => {
     try {
       if (likeStat) {
-        await removeLike(userData._id, postId);
+        await removeLike(loggedUserId, postId);
         setLikeStatus(!likeStat);
         setLike(postLikes! - 1);
       }
       if (!likeStat) {
-        await addLike(userData._id, postId);
+        await addLike(loggedUserId, postId);
         setLikeStatus(!likeStat);
         setLike(postLikes! + 1);
       }
-      console.log(userData.allPostsToShow);
     } catch (err) {
       console.error(err);
     }
