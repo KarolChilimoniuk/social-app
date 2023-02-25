@@ -16,11 +16,11 @@ export const UserInfoPageContainer = styled.section`
 
 export const UserToShowContainer = styled.div`
   align-items: center;
-  border-right: 1px solid rgba(255, 255, 255, 0.7);
   display: flex;
   flex-direction: column;
   width: 100%;
   @media (min-width: 1024px) {
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
     width: 55%;
   }
 `;
@@ -89,17 +89,4 @@ export const UserPostsContainer = styled.div`
   flex-direction: column;
   margin-top: 20px;
   width: 90%;
-`;
-
-export const LoggedUserInfoContainer = styled.section`
-  align-self: flex-start;
-  display: none;
-  @media (min-width: 900px) {
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    height: 300px;
-    min-width: 40%;
-    justify-content: flex-start;
-  }
 `;

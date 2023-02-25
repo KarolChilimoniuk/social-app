@@ -46,9 +46,7 @@ export const register = async (req: Request, res: Response) => {
     }
     const user: IUser = await UserModel.findOne({ eMail: email });
     if (user) {
-      return res
-        .status(409)
-        .send("User using this email exists - choose other email");
+      res.status(409).send("User using this email exists - choose other email");
     }
     const hashedPassword: string = await bcrypt.hash(password, 10);
     await UserModel.create({
@@ -67,42 +65,54 @@ export const register = async (req: Request, res: Response) => {
 
 // Native log in (no Google) controller
 
-export const nativeLogin = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  let listOfFollowed: Array<IUser> = [];
-  let listOfFollowers: Array<IUser> = [];
-  let userPosts: Array<IThoughtInPushMethod> = [];
-  let thoughtsToShow: Array<IThoughtInPushMethod> = [];
+export const nativeLogin = async (req: any, res: Response) => {
   try {
-    const { error } = loginValidation(req.body);
-    if (error) {
-      return res.status(404).send(error.message);
-    }
-    const user: IUser = await UserModel.findOne({ eMail: email });
-    if (!user) {
-      res.status(404).send("User with email is not found");
-    }
-    const validatedPassword: boolean = await bcrypt.compare(
-      password,
-      user.password
-    );
-    if (!validatedPassword) {
-      res.status(401).send("Wrong password");
+    let email: string;
+    let password: string;
+    let user: IUser;
+    if (req.tokenData) {
+      email = req.tokenData.email;
+      password = req.tokenData.password;
+      console.log(req.tokenData, "ok");
+      user = await UserModel.findOne({ eMail: email });
+    } else {
+      email = req.body.email;
+      password = req.body.password;
+      const { error } = loginValidation(req.body);
+      if (error) {
+        return res.status(404).send(error.message);
+      }
+      user = await UserModel.findOne({ eMail: email });
+      if (!user) {
+        return res.status(404).send("User with this email is not found");
+      }
+      if (!req.decodedData) {
+        const validatedPassword: boolean = await bcrypt.compare(
+          password,
+          user.password
+        );
+        if (!validatedPassword) {
+          return res.status(401).send("Wrong password");
+        }
+      }
     }
     const cookieToken: string = await user.genAuthToken(
       user._id,
       user.eMail,
       user.password
     );
-    listOfFollowed = await getUserFollowed(user);
-    listOfFollowers = await getUserFollowers(user);
-    userPosts = await getUserPosts(user);
-    thoughtsToShow = await getPostsToShow(listOfFollowed, user);
+    const listOfFollowed: Array<IUser> = await getUserFollowed(user);
+    const listOfFollowers: Array<IUser> = await getUserFollowers(user);
+    const userPosts: Array<IThoughtInPushMethod> = await getUserPosts(user);
+    const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+      listOfFollowed,
+      user
+    );
     res
       .status(202)
       .cookie("token", cookieToken, {
         httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 3,
+        maxAge: 1000 * 60 * 60 * 4,
         secure: true,
         sameSite: "none",
       })
@@ -134,10 +144,6 @@ export const nativeLogin = async (req: Request, res: Response) => {
 
 export const googleLogin = async (req: Request, res: Response) => {
   const { credential } = req.body;
-  let listOfFollowed: Array<IUser> = [];
-  let listOfFollowers: Array<IUser> = [];
-  let userPosts: Array<IThoughtInPushMethod> = [];
-  let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   if (credential) {
     const googleUserInfo: any = jwt.decode(credential);
     const appUser: IUser = await UserModel.findOne({
@@ -151,15 +157,20 @@ export const googleLogin = async (req: Request, res: Response) => {
         appUser.eMail,
         appUser.password
       );
-      listOfFollowed = await getUserFollowed(appUser);
-      listOfFollowers = await getUserFollowers(appUser);
-      userPosts = await getUserPosts(appUser);
-      thoughtsToShow = await getPostsToShow(listOfFollowed, appUser);
+      const listOfFollowed: Array<IUser> = await getUserFollowed(appUser);
+      const listOfFollowers: Array<IUser> = await getUserFollowers(appUser);
+      const userPosts: Array<IThoughtInPushMethod> = await getUserPosts(
+        appUser
+      );
+      const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+        listOfFollowed,
+        appUser
+      );
       res
         .status(202)
         .cookie("token", cookieToken, {
           httpOnly: true,
-          maxAge: 1000 * 60 * 60 * 24 * 3,
+          maxAge: 1000 * 60 * 60 * 4,
           secure: true,
           sameSite: "none",
         })
@@ -191,43 +202,17 @@ export const googleLogin = async (req: Request, res: Response) => {
 // Token verification
 
 export const tokenChecking = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
   const { token } = req.cookies;
-  let listOfFollowed: Array<IUser> = [];
-  let listOfFollowers: Array<IUser> = [];
-  let userPosts: Array<IThoughtInPushMethod> = [];
-  let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   if (!token) {
     res.status(401).send("token does not exist");
   } else {
     const data: IDecodedUserData = await jwt_decode(token);
-    const user: IUser = await UserModel.findOne({ eMail: data.email });
-    listOfFollowed = await getUserFollowed(user);
-    listOfFollowers = await getUserFollowers(user);
-    userPosts = await getUserPosts(user);
-    thoughtsToShow = await getPostsToShow(listOfFollowed, user);
-    res.status(200).send({
-      message: "Token exists",
-      userData: {
-        _id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        userName: user.userName,
-        eMail: user.eMail,
-        birthDate: user.birthDate,
-        registerDate: user.registerDate,
-        pic: user.pic,
-        chats: user.chats,
-        allPostsToShow: thoughtsToShow,
-        userPosts: userPosts,
-        followed: listOfFollowed,
-        followers: listOfFollowers,
-        groups: user.groups,
-      },
-    });
+    req.tokenData = data;
+    next();
   }
 };
 

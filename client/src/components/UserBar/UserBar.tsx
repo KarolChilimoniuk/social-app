@@ -20,9 +20,7 @@ const UserBar = ({ NavHandler }: UserBarProps): JSX.Element => {
   }, [scroll]);
 
   return (
-    <BarContainer1
-      color={scroll > 3 ? "rgba(180, 180, 180, 1)" : "rgb(43,88,114)"}
-    >
+    <BarContainer1 color={scroll > 3 ? "rgb(85,121,142)" : "rgb(43,88,114)"}>
       <Burger onClickNavHandler={NavHandler} />
       <BarParagraph>Welcome</BarParagraph>
       <UserNavDropdown userName={loggedUserData.firstName} />

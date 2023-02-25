@@ -146,3 +146,14 @@ export type UserHeaderProps = {
   lastName: string;
   userId: string;
 };
+
+export type FollowUnfollowProps = {
+  loggedUserId: string;
+  listOfFollowed: Array<IUserInfo>;
+  userToShowId: string;
+};
+
+export type SearchUserProps = {
+  hide: boolean;
+  hideHandler: Function;
+};

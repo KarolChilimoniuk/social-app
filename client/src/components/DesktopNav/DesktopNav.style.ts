@@ -8,7 +8,9 @@ export const DesktopNavContainer = styled.div`
   align-self: flex-start;
   display: none;
   flex-direction: column;
+  height: 100%;
   margin-left: 20px;
+  position: relative;
   width: 35%;
   @media (min-width: 1024px) {
     display: flex;
@@ -34,6 +36,9 @@ export const NavLi = styled.li`
   :hover {
     background-color: rgba(255, 255, 255, 0.3);
   }
+  :active {
+    font-size: 0.8rem;
+  }
 `;
 
 export const MenuNav = styled.nav`
@@ -43,6 +48,11 @@ export const MenuNav = styled.nav`
 `;
 
 export const Link = styled(NavLink)`
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+`;
+
+export const NoLinkImgContainer = styled.div`
   color: rgb(0, 0, 0);
   text-decoration: none;
 `;

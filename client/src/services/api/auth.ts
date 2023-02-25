@@ -82,10 +82,9 @@ export const tokenChecking = async (dispatch: Dispatch<any>): Promise<void> => {
   await instance
     .get("/auth/tokenChecking")
     .then((res: AxiosResponse) => {
-      console.log(res.data.userData);
       dispatch(userLogin(res.data.userData));
     })
-    .catch((err: AxiosError) => console.error("token is not found"));
+    .catch((err: AxiosError) => console.error(err.response?.data));
 };
 
 export const logoutUser = async (

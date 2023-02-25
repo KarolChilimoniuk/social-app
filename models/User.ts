@@ -1,8 +1,8 @@
 import mongoose, { Schema, model } from "mongoose";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
+import PasswordJoiComplexity from "joi-password-complexity";
 import { IUser } from "../services/interfaces";
-import { ObjectId } from "mongodb";
 
 const UserSchema = new Schema<IUser>({
   firstName: { type: String, required: true },
@@ -48,8 +48,15 @@ export const signUpValidation = (data: any) => {
       .max(30)
       .required()
       .label("User name"),
-    password: Joi.string()
-      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+    password: PasswordJoiComplexity({
+      min: 6,
+      max: 10,
+      lowerCase: 1,
+      upperCase: 1,
+      numeric: 1,
+      symbol: 1,
+      requirementCount: 4,
+    })
       .required()
       .label("Password"),
     email: Joi.string()

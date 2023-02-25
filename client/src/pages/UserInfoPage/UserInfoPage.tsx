@@ -5,6 +5,7 @@ import DesktopNav from "../../components/DesktopNav/DesktopNav";
 import Thought from "../../components/Thought/Thought";
 import UserProfileImg from "../../components/UserProfileImg/UserProfileImg";
 import NoImgAvatar from "../../components/NoImgAvatar/NoImgAvatar";
+import FollowUnfollow from "../../components/FollowUnfollow/FollowUnfollow";
 import { IRootState, IFilteredUser } from "../../interfaces/interfaces";
 import {
   UserInfoPageContainer,
@@ -16,7 +17,6 @@ import {
   UserFollowingDetailsSpan,
   UserPostsContainer,
   UserToShowContainer,
-  LoggedUserInfoContainer,
 } from "./UserInfoPage.style";
 
 const UserInfoPage = (): JSX.Element => {
@@ -39,6 +39,13 @@ const UserInfoPage = (): JSX.Element => {
       {userInfo !== null && (
         <>
           <UserToShowContainer>
+            <button
+              onClick={() => {
+                console.log(loggedUserData.followed);
+              }}
+            >
+              sdsfds
+            </button>
             <UserMainInfo>
               {userInfo.pic ? (
                 <UserProfileImg
@@ -56,6 +63,13 @@ const UserInfoPage = (): JSX.Element => {
                 </UserMainDetailsHeader>
                 <UserMainDetailsParagraph>
                   @{userInfo.userName}
+                  {userInfo._id !== loggedUserData._id && (
+                    <FollowUnfollow
+                      listOfFollowed={userInfo.followed}
+                      loggedUserId={loggedUserData._id}
+                      userToShowId={userInfo._id}
+                    />
+                  )}
                 </UserMainDetailsParagraph>
                 <UserFollowingDetailsParagraph>
                   Followers:{"  "}

@@ -24,7 +24,6 @@ export const HomeHeader = styled.h2`
 export const HomeLink = styled(NavLink)`
   cursor: pointer;
   text-decoration: none;
-
   :hover {
     color: rgb(90, 0, 0);
     text-decoration: underline;

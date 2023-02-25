@@ -9,7 +9,7 @@ import {
   getUserPosts,
   getPostsToShow,
 } from "../services/userMethods";
-import { IUser, IThoughtInPushMethod } from "services/interfaces";
+import { IUser, IThoughtInPushMethod, IThought } from "services/interfaces";
 
 // Edit user data controller
 
@@ -25,10 +25,6 @@ export const editUserData = async (req: Request, res: Response) => {
     email,
   } = req.body;
   try {
-    let listOfFollowed: Array<IUser> = [];
-    let listOfFollowers: Array<IUser> = [];
-    let userPosts: Array<IThoughtInPushMethod> = [];
-    let thoughtsToShow: Array<IThoughtInPushMethod> = [];
     const user = await UserModel.findOne({ _id: userId });
     let hashedPassword: string = "";
     if (password !== "" && password !== repeatedPassword) {
@@ -57,10 +53,15 @@ export const editUserData = async (req: Request, res: Response) => {
       user.eMail = email !== user.eMail && email !== "" ? email : user.eMail;
       await user.save();
       const updatedUser: IUser = await UserModel.findOne({ _id: user._id });
-      listOfFollowed = await getUserFollowed(updatedUser);
-      listOfFollowers = await getUserFollowers(updatedUser);
-      userPosts = await getUserPosts(updatedUser);
-      thoughtsToShow = await getPostsToShow(listOfFollowed, updatedUser);
+      const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
+      const listOfFollowers: Array<IUser> = await getUserFollowers(updatedUser);
+      const userPosts: Array<IThoughtInPushMethod> = await getUserPosts(
+        updatedUser
+      );
+      const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+        listOfFollowed,
+        updatedUser
+      );
       res.status(201).send({
         message: "Data Updated",
         userData: {
@@ -98,10 +99,6 @@ export const editUserPic = async (req: Request, res: Response) => {
   if (userId) {
     try {
       if (userPic) {
-        let listOfFollowed: Array<IUser> = [];
-        let listOfFollowers: Array<IUser> = [];
-        let userPosts: Array<IThoughtInPushMethod> = [];
-        let thoughtsToShow: Array<IThoughtInPushMethod> = [];
         const uploadedImage = await cloud.uploader.upload(
           userPic,
           {
@@ -129,10 +126,15 @@ export const editUserPic = async (req: Request, res: Response) => {
           }
         );
         const updatedUser = await UserModel.findOne({ _id: userId });
-        listOfFollowed = await getUserFollowed(updatedUser);
-        listOfFollowers = await getUserFollowers(updatedUser);
-        userPosts = await getUserPosts(updatedUser);
-        thoughtsToShow = await getPostsToShow(listOfFollowed, updatedUser);
+        const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
+        const listOfFollowers: Array<IUser> = await getUserFollowers(
+          updatedUser
+        );
+        const userPosts: Array<IThoughtInPushMethod> = await getUserPosts(
+          updatedUser
+        );
+        const thoughtsToShow: Array<IThoughtInPushMethod> =
+          await getPostsToShow(listOfFollowed, updatedUser);
         updatedUser &&
           res.status(201).send({
             message: "Data updated",
@@ -165,12 +167,9 @@ export const editUserPic = async (req: Request, res: Response) => {
 
 export const addThought = async (req: Request, res: Response) => {
   const { email, thoughtContent } = req.body;
-  let listOfFollowed: Array<IUser> = [];
-  let userPosts: Array<IThoughtInPushMethod> = [];
-  let thoughtsToShow: Array<IThoughtInPushMethod> = [];
   if (email) {
     try {
-      const user = await UserModel.findOne({ eMail: email });
+      const user: IUser = await UserModel.findOne({ eMail: email });
       const newThought = await ThoughtModel.create({
         textContent: thoughtContent,
         author: {
@@ -181,10 +180,15 @@ export const addThought = async (req: Request, res: Response) => {
         { eMail: email },
         { $push: { posts: newThought._id } }
       );
-      const updatedUser = await UserModel.findOne({ eMail: email });
-      listOfFollowed = await getUserFollowed(updatedUser);
-      userPosts = await getUserPosts(updatedUser);
-      thoughtsToShow = await getPostsToShow(listOfFollowed, updatedUser);
+      const updatedUser: IUser = await UserModel.findOne({ eMail: email });
+      const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
+      const userPosts: Array<IThoughtInPushMethod> = await getUserPosts(
+        updatedUser
+      );
+      const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+        listOfFollowed,
+        updatedUser
+      );
       res.status(201).send({
         message: "Thought added",
         userData: {
@@ -215,7 +219,7 @@ export const addLike = async (req: Request, res: Response) => {
       }
       const updatedThought = await ThoughtModel.findById(thoughtId);
       res.status(200).send({
-        message: "Like removed",
+        message: "Like added",
         thoughtData: updatedThought,
       });
     } catch (err) {
@@ -239,10 +243,82 @@ export const removeLike = async (req: Request, res: Response) => {
           message: "Thought not found :(",
         });
       }
-      const updatedThought = await ThoughtModel.findById(thoughtId);
+      const updatedThought: Array<IThought> = await ThoughtModel.findById(
+        thoughtId
+      );
       res.status(200).send({
         message: "Like removed",
         thoughtData: updatedThought,
+      });
+    } catch (err) {
+      res.json(err.message);
+    }
+  }
+};
+
+// Follow user
+
+export const follow = async (req: Request, res: Response) => {
+  try {
+    const { followerId, followedId } = req.body;
+    if (followerId && followedId) {
+      const follower = await ThoughtModel.findOneAndUpdate(
+        { _id: followerId },
+        { $push: { followed: followedId } }
+      );
+      const followed = await UserModel.findOneAndUpdate(
+        { _id: followedId },
+        { $push: { followers: followerId } }
+      );
+      if (!follower || !followed) {
+        res.status(404).send({
+          message: "User can't be found :(",
+        });
+      }
+      const updatedUser: IUser = await UserModel.findOne({ _id: followerId });
+      const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
+      const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+        listOfFollowed,
+        updatedUser
+      );
+      res.status(200).send({
+        message: "Follow",
+        thoughtsToShow: thoughtsToShow,
+      });
+    }
+  } catch (err) {
+    res.json(err.message);
+  }
+};
+
+// Unfollow user
+
+export const unFollow = async (req: Request, res: Response) => {
+  const { followerId, followedId } = req.body;
+  if (followerId && followedId) {
+    try {
+      const follower = await ThoughtModel.findOneAndUpdate(
+        { _id: followerId },
+        { $pull: { followed: followedId } }
+      );
+      const followed = await UserModel.findOneAndUpdate(
+        { _id: followedId },
+        { $pull: { followers: followerId } }
+      );
+      if (!follower || !followed) {
+        res.status(404).send({
+          message: "User can't be found :(",
+        });
+      }
+      const updatedUser: IUser = await UserModel.findOne({ _id: followerId });
+      const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
+      const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+        listOfFollowed,
+        updatedUser
+      );
+      res.status(200).send({
+        message: "Unfollow",
+        thoughtsToShow: thoughtsToShow,
       });
     } catch (err) {
       res.json(err.message);

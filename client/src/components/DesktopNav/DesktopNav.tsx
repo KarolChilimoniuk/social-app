@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import HomeIcon from "../../images/home.png";
 import NewsIcon from "../../images/news.png";
 import UserHeader from "../UserHeader/UserHeader";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
+import SearchIcon from "../../images/search.png";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
+import SearchUser from "../SearchUser/SearchUser";
 import { IUserDataState, IRootState } from "../../interfaces/interfaces";
 import {
   DesktopNavContainer,
@@ -15,6 +18,7 @@ import {
   MenuList,
   NavLi,
   MenuNav,
+  NoLinkImgContainer,
   Link,
   NavImg,
 } from "./DesktopNav.style";
@@ -24,8 +28,11 @@ const UserDesktopNav = (): JSX.Element => {
     (state: IRootState) => state.userData
   );
 
+  const [searchHide, setSearchHide] = useState<boolean>(true);
+
   return (
     <DesktopNavContainer>
+      <SearchUser hide={searchHide} hideHandler={setSearchHide} />
       <LoggedUserInfo>
         {typeof loggedUserData.pic === "string" && loggedUserData.pic !== "" ? (
           <UserProfileImg
@@ -72,6 +79,12 @@ const UserDesktopNav = (): JSX.Element => {
               <NavImg src={NewsIcon} />
               News
             </Link>
+          </NavLi>
+          <NavLi onClick={() => setSearchHide(false)}>
+            <NoLinkImgContainer>
+              <NavImg src={SearchIcon} />
+              Search user
+            </NoLinkImgContainer>
           </NavLi>
         </MenuList>
       </MenuNav>

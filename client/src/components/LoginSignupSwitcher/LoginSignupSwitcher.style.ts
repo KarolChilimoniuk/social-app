@@ -9,6 +9,7 @@ export const Switcher = styled.button`
   cursor: pointer;
   margin-bottom: 50px;
   margin-top: 30px;
+  transition: background-color 0.3s 0.1s, color 0.3s 0.1s;
 
   :hover {
     background-color: rgb(5, 41, 63);

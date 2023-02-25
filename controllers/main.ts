@@ -5,7 +5,7 @@ import {
   getUserFollowers,
   getUserPosts,
 } from "../services/userMethods";
-import { IUser } from "services/interfaces";
+import { IUser, IThoughtInPushMethod } from "services/interfaces";
 
 export const main = (req: Request, res: Response) => {
   res.send("Server works ;]");
@@ -15,12 +15,11 @@ export const fetchFilteredUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     !id && res.status(400).json("Bad request :(");
-    const user = await UserModel.findById(id);
+    const user: IUser = await UserModel.findById(id);
     !user && res.status(404).json("User not found :(");
-    const listOfFollowed = await getUserFollowed(user);
-    const listOfFollowers = await getUserFollowers(user);
-    const userPosts = await getUserPosts(user);
-    console.log(user);
+    const listOfFollowed: Array<IUser> = await getUserFollowed(user);
+    const listOfFollowers: Array<IUser> = await getUserFollowers(user);
+    const userPosts: Array<IThoughtInPushMethod> = await getUserPosts(user);
     res.status(200).send({
       userData: {
         _id: user._id,

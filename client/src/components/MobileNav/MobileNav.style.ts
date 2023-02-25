@@ -34,9 +34,17 @@ export const NavLi = styled.li`
   :hover {
     background-color: rgba(255, 255, 255, 0.4);
   }
+  :active {
+    font-size: 0.8rem;
+  }
 `;
 
 export const Link = styled(NavLink)`
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+`;
+
+export const NoLinkImgContainer = styled.div`
   color: rgb(0, 0, 0);
   text-decoration: none;
 `;
@@ -78,7 +86,7 @@ export const UserFollowingInfo = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-  @media (min-width: 400px) {
+  @media (min-width: 430px) {
     flex-direction: row;
   }
 `;

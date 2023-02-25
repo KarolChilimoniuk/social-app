@@ -16,8 +16,8 @@ export interface IUserDataState {
   chats: Array<string>;
   allPostsToShow: Array<IThought>;
   userPosts: Array<IThought>;
-  followed: Array<string>;
-  followers: Array<string>;
+  followed: Array<IUserInfo>;
+  followers: Array<IUserInfo>;
   groups: Array<string>;
   pic: string;
 }
