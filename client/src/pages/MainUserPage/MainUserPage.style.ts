@@ -29,21 +29,3 @@ export const ThoughtsContainer = styled.section`
     width: 50%;
   }
 `;
-
-export const UserInfoContainer = styled.section`
-  display: none;
-  @media (min-width: 900px) {
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    height: 300px;
-    min-width: 40%;
-    justify-content: flex-start;
-  }
-`;
-
-export const UserMainInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 20px;
-`;

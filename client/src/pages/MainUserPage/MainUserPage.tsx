@@ -17,6 +17,7 @@ const MainUserPage = (): JSX.Element => {
   useEffect(() => {
     fetchUsers(dispatch);
   }, []);
+
   return (
     <MainPageContainer>
       <ThoughtsContainer>

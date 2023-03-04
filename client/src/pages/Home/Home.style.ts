@@ -12,7 +12,7 @@ export const HomeSection = styled.section`
   }
 `;
 
-export const HomeHeader = styled.h2`
+export const Header = styled.h2`
   font-size: 1.2rem;
   margin: 0;
   margin-bottom: 10px;
@@ -21,7 +21,7 @@ export const HomeHeader = styled.h2`
   }
 `;
 
-export const HomeLink = styled(NavLink)`
+export const Link = styled(NavLink)`
   cursor: pointer;
   text-decoration: none;
   :hover {
@@ -30,7 +30,7 @@ export const HomeLink = styled(NavLink)`
   }
 `;
 
-export const HomeParagraph = styled.p`
+export const Paragraph = styled.p`
   @media (min-width: 700px) {
     font-size: 1.2rem;
   }

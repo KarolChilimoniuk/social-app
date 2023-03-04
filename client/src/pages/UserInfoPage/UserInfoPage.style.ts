@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const UserInfoPageContainer = styled.section`
+export const UserInfoPageContainer = styled.div`
   align-items: flex-start;
   background-color: rgba(43, 88, 114, 0.8);
   display: flex;
@@ -14,7 +14,7 @@ export const UserInfoPageContainer = styled.section`
   }
 `;
 
-export const UserToShowContainer = styled.div`
+export const UserToShowContainer = styled.section`
   align-items: center;
   display: flex;
   flex-direction: column;

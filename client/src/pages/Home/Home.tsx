@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 import MainImg from "../../components/MainImg/MainImg";
-import { HomeSection, HomeHeader, HomeLink, HomeParagraph } from "./Home.style";
+import { HomeSection, Header, Link, Paragraph } from "./Home.style";
 import { hasAccountTrue, hasAccountFalse } from "../../actions/appDataAction";
 import { IRootState } from "../../interfaces/interfaces";
 
@@ -22,18 +22,18 @@ const Home = (): JSX.Element => {
 
   return (
     <HomeSection>
-      <HomeHeader>Welcome to your right place to meet other people!</HomeHeader>
-      <HomeParagraph>
-        <HomeLink
+      <Header>Welcome to your right place to meet other people!</Header>
+      <Paragraph>
+        <Link
           to="/auth"
           onClick={() => {
             dispatch(hasAccountFalse());
           }}
         >
           Join our society
-        </HomeLink>
+        </Link>
         <span> or </span>
-        <HomeLink
+        <Link
           to="/auth"
           onClick={() => {
             dispatch(hasAccountTrue());
@@ -41,8 +41,8 @@ const Home = (): JSX.Element => {
         >
           {" "}
           Log in
-        </HomeLink>
-      </HomeParagraph>
+        </Link>
+      </Paragraph>
       <MainImg />
     </HomeSection>
   );
