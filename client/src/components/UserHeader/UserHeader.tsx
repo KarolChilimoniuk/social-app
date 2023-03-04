@@ -1,8 +1,7 @@
 import { UserHeaderProps } from "../../types/types";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
 import { setIdToFilterUser } from "../../actions/appDataAction";
-import { UserMainInfoHeader } from "./UserHeader.style";
+import { Header, Link } from "./UserHeader.style";
 import styles from "./UserHeader.module.scss";
 
 const UserHeader = ({
@@ -13,15 +12,15 @@ const UserHeader = ({
   const dispatch = useDispatch();
 
   return (
-    <NavLink
+    <Link
       to={`/logged/userInfo`}
       className={styles.UserHeaderLink}
       onClick={() => dispatch(setIdToFilterUser(userId))}
     >
-      <UserMainInfoHeader>
+      <Header>
         {name} {lastName}
-      </UserMainInfoHeader>
-    </NavLink>
+      </Header>
+    </Link>
   );
 };
 

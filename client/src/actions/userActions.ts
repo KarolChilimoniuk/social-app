@@ -23,6 +23,7 @@ import {
   UpdateUserInfoAction,
   UpdateUserPostsAction,
   LogoutAction,
+  FollowUnfollowAction,
 } from "../types/types";
 import { RootState } from "../types/types";
 
@@ -109,19 +110,29 @@ export const updateUserPostsFailure = (
 };
 
 export const followUser = (
-  listOfFollowed: Array<string>
-  // allPostsToShow: Array<IThought>
-) => {
-  // return { type: FOLLOW, payloads: { listOfFollowed, allPostsToShow } };
-  return { type: FOLLOW, payloads: { listOfFollowed } };
+  listOfFollowed: Array<string>,
+  allPostsToShow: Array<IThought>
+): FollowUnfollowAction => {
+  return {
+    type: FOLLOW,
+    payloads: {
+      listOfFollowed: listOfFollowed,
+      allPostsToShow: allPostsToShow,
+    },
+  };
 };
 
 export const unfollowUser = (
-  listOfFollowed: Array<string>
-  // allPostsToShow: Array<IThought>
-) => {
-  // return { type: UNFOLLOW, payloads: { listOfFollowed, allPostsToShow } };
-  return { type: UNFOLLOW, payloads: { listOfFollowed } };
+  listOfFollowed: Array<string>,
+  allPostsToShow: Array<IThought>
+): FollowUnfollowAction => {
+  return {
+    type: UNFOLLOW,
+    payloads: {
+      listOfFollowed: listOfFollowed,
+      allPostsToShow: allPostsToShow,
+    },
+  };
 };
 
 export const logout = (): LogoutAction => {

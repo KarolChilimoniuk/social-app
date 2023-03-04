@@ -14,7 +14,7 @@ export const FooterContainer = styled.section`
   }
 `;
 
-export const FooterHeader = styled.h3`
+export const Header = styled.h3`
   color: rgb(255, 255, 255);
   font-size: 0.8rem;
 `;

@@ -1,6 +1,6 @@
 import React from "react";
 import rootReducer from "../reducers";
-import { IComment, IUserInfo } from "../interfaces/interfaces";
+import { IComment, IThought, IUserInfo } from "../interfaces/interfaces";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -43,7 +43,8 @@ export type UserFormProps = {
 };
 
 export type FollowUnfollowAction = {
-  listOfFollowed: Array<string>;
+  type: string;
+  payloads: { listOfFollowed: Array<string>; allPostsToShow: Array<IThought> };
 };
 
 export type LogoutAction = {
@@ -162,7 +163,8 @@ export type UserHeaderProps = {
 
 export type FollowUnfollowProps = {
   userToShowId: string;
-  userToShowFollowers: Array<string>;
+  userToShowFollowers: Array<string> | null;
+  listOfFollowersHandler: Function;
   followersNumberHandler: Function;
 };
 

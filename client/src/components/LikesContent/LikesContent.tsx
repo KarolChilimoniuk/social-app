@@ -17,7 +17,7 @@ const LikesSection = ({
   const [likeStat, setLikeStatus] = useState<boolean>(likeStatus);
   const [postLikes, setLike] = useState<number>(likes!);
 
-  const likeHandler = async () => {
+  const likeHandler = async (): Promise<void> => {
     try {
       if (likeStat) {
         await removeLike(loggedUserId, postId);

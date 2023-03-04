@@ -14,6 +14,17 @@ export const UserInfoPageContainer = styled.div`
   }
 `;
 
+export const LoadingContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 60px;
+  width: 100%;
+  @media (min-width: 1024px) {
+    width: 60%;
+  }
+`;
+
 export const UserToShowContainer = styled.section`
   align-items: center;
   display: flex;

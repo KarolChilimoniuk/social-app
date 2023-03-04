@@ -6,6 +6,7 @@ import SubInput from "../SubmitInput/SubmitInput";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import { addThought } from "../../services/api/userMainPage";
+import { userThoughts, changeThoughtValue } from "./service";
 import { IUserDataState, IRootState } from "../../interfaces/interfaces";
 import {
   FormContainer,
@@ -24,24 +25,19 @@ const MainUserPageForm = (): JSX.Element => {
 
   const [thoughtContent, newThoughtContent] = useState<string>("");
 
-  const userThoughts = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    if (thoughtContent === "") {
-      alert("Your thought is empty :/ Write something.");
-    }
-    if (thoughtContent !== "") {
-      await addThought(loggedUserData.eMail, thoughtContent, dispatch);
-    }
-  };
-
-  const changeThoughtValue = async (e: React.SyntheticEvent) => {
-    const target = e.currentTarget as HTMLTextAreaElement;
-    newThoughtContent(target.value);
-  };
-
   return (
     <FormContainer>
-      <Form onSubmit={userThoughts}>
+      <Form
+        onSubmit={(e: React.SyntheticEvent) =>
+          userThoughts(
+            e,
+            thoughtContent,
+            addThought,
+            loggedUserData.eMail,
+            dispatch
+          )
+        }
+      >
         <InputContainer>
           {typeof loggedUserData.pic === "string" &&
           loggedUserData.pic !== "" ? (
@@ -61,7 +57,9 @@ const MainUserPageForm = (): JSX.Element => {
             rows={5}
             cols={3}
             value={thoughtContent}
-            onChangeHandler={changeThoughtValue}
+            onChangeHandler={(e: React.SyntheticEvent) =>
+              changeThoughtValue(e, newThoughtContent)
+            }
           />
         </InputContainer>
         <SubmitContainer>

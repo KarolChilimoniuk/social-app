@@ -1,5 +1,5 @@
 import { InputProps } from "../../types/types";
-import { InputContainer, Input } from "./FileInput.style";
+import { FileInputContainer, Input } from "./FileInput.style";
 
 const FormFileInput = ({
   name,
@@ -7,7 +7,7 @@ const FormFileInput = ({
   onChangeHandler,
 }: InputProps): JSX.Element => {
   return (
-    <InputContainer>
+    <FileInputContainer>
       <>
         <Input
           type="file"
@@ -16,7 +16,7 @@ const FormFileInput = ({
           onChange={onChangeHandler}
         />
       </>
-    </InputContainer>
+    </FileInputContainer>
   );
 };
 

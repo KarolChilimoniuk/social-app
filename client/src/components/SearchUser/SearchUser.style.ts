@@ -29,14 +29,14 @@ export const DesktopSearchUserContainer = styled.div`
     padding-top: 30px;
     position: absolute;
     top: 0;
-    transition: right 0.3s 0.2s;
+    transition: right 0.5s 0.2s;
     right: ${(props) => (props.hidden === true ? "-4000px" : "0")};
     width: 100%;
     z-index: 2;
   }
 `;
 
-export const SearchUserForm = styled.form`
+export const Form = styled.form`
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.7);
   display: flex;
@@ -45,23 +45,16 @@ export const SearchUserForm = styled.form`
   width: 90%;
 `;
 
-export const SearchUserImg = styled.img`
+export const Img = styled.img`
   align-self: flex-end;
   cursor: pointer;
   height: 40px;
   margin: 0 20px 15px 0;
   width: 40px;
   transition: transform 0.5s 0.1s;
-
   :hover {
     transform: rotate(180deg);
   }
-`;
-
-export const LoadingImg = styled.img`
-  height: 60px;
-  margin: 0 20px 15px 0;
-  width: 60px;
 `;
 
 export const SearchUserResult = styled.div`

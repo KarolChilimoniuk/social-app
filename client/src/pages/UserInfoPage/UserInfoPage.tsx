@@ -4,10 +4,12 @@ import { fetchFilteredUser } from "../../services/api/userInfoPage";
 import DesktopNav from "../../components/DesktopNav/DesktopNav";
 import Thought from "../../components/Thought/Thought";
 import UserProfileImg from "../../components/UserProfileImg/UserProfileImg";
+import LoadingIcon from "../../components/LoadingIcon/LoadingIcon";
 import NoImgAvatar from "../../components/NoImgAvatar/NoImgAvatar";
 import FollowUnfollow from "../../components/FollowUnfollow/FollowUnfollow";
 import { IRootState, IFilteredUser } from "../../interfaces/interfaces";
 import {
+  LoadingContainer,
   UserAvatarContainer,
   UserInfoPageContainer,
   UserMainInfo,
@@ -28,12 +30,16 @@ const UserInfoPage = (): JSX.Element => {
   const loggedUserData = useSelector((state: IRootState) => state.userData);
 
   const [userInfo, setUserInfo] = useState<IFilteredUser | null>(null);
+  const [listOfFollowers, setListOfFollowers] = useState<Array<string> | null>(
+    null
+  );
   const [follwersAmount, setFollowersAmount] = useState<number | null>(null);
 
   useEffect(() => {
     if (idToFilterUser !== "") {
       fetchFilteredUser(idToFilterUser).then((res) => {
         setUserInfo(res);
+        setListOfFollowers(res.followers);
         setFollowersAmount(res.followers.length);
       });
     }
@@ -41,8 +47,14 @@ const UserInfoPage = (): JSX.Element => {
 
   return (
     <UserInfoPageContainer>
-      {userInfo !== null && (
-        <>
+      <>
+        {userInfo === null && (
+          <LoadingContainer>
+            <LoadingIcon />
+            <p>...Loading</p>
+          </LoadingContainer>
+        )}
+        {userInfo !== null && (
           <UserToShowContainer>
             <UserMainInfo>
               {userInfo.pic ? (
@@ -69,14 +81,15 @@ const UserInfoPage = (): JSX.Element => {
                     <FollowUnfollow
                       followersNumberHandler={setFollowersAmount}
                       userToShowId={userInfo._id}
-                      userToShowFollowers={userInfo.followers}
+                      userToShowFollowers={listOfFollowers}
+                      listOfFollowersHandler={setListOfFollowers}
                     />
                   )}
                 </UserMainDetailsParagraph>
                 <UserFollowingDetailsParagraph>
                   Followers:{"  "}
                   <UserFollowingDetailsSpan>
-                    {follwersAmount || 0}
+                    {follwersAmount}
                   </UserFollowingDetailsSpan>
                   Followed:{"  "}
                   <UserFollowingDetailsSpan>
@@ -108,9 +121,9 @@ const UserInfoPage = (): JSX.Element => {
               ))}
             </UserPostsContainer>
           </UserToShowContainer>
-          <DesktopNav />
-        </>
-      )}
+        )}
+        <DesktopNav />
+      </>
     </UserInfoPageContainer>
   );
 };

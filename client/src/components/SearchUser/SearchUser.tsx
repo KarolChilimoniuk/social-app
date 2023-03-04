@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import loadingImg from "../../images/loading.png";
 import closeImg from "../../images/cross-mark.png";
 import TextFormInput from "../TextFormInput/TextFormInput";
 import SubInput from "../SubmitInput/SubmitInput";
+import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import UserHeader from "../UserHeader/UserHeader";
+import { formSubmitHandler, changeHandler } from "./Service";
 import { SearchUserProps } from "../../types/types";
 import { IRootState, IAppUsers } from "../../interfaces/interfaces";
 import {
   MobileSearchUserContainer,
   DesktopSearchUserContainer,
-  LoadingImg,
-  SearchUserForm,
-  SearchUserImg,
+  Form,
+  Img,
   SearchUserResult,
   FilteredUserContainer,
   UserHeaderContainer,
@@ -27,58 +27,44 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [usersToShow, setUsersToShow] = useState<Array<IAppUsers>>([]);
 
-  const onChangeHandler = (e: React.ChangeEvent): void => {
-    const target = e.target as HTMLInputElement;
-    setFormValue(target.value);
-  };
-
-  const formSubmitHandler = async (e: React.SyntheticEvent): Promise<void> => {
-    e.preventDefault();
-    setLoading(true);
-    if (formValue !== "") {
-      const filteredUsers = appUsers.filter((user: IAppUsers) => {
-        if (
-          user.firstName.toLowerCase().includes(formValue) ||
-          user.lastName.toLowerCase().includes(formValue) ||
-          user.userName.toLowerCase().includes(formValue)
-        ) {
-          return user;
-        }
-      });
-      setUsersToShow(filteredUsers);
-    }
-    if (formValue === "") {
-      setUsersToShow(appUsers);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => setUsersToShow(appUsers), [appUsers]);
 
   return (
     <>
       <MobileSearchUserContainer hidden={hide}>
-        <SearchUserImg
+        <Img
           src={closeImg}
           onClick={() => {
             hideHandler(true);
             console.log(hide);
           }}
         />
-        <SearchUserForm onSubmit={formSubmitHandler}>
+        <Form
+          onSubmit={(e: React.SyntheticEvent) =>
+            formSubmitHandler(
+              e,
+              setLoading,
+              formValue,
+              appUsers,
+              setUsersToShow
+            )
+          }
+        >
           <TextFormInput
             type="text"
             placeholder="Search user"
             name="Search user"
-            onChangeHandler={onChangeHandler}
+            onChangeHandler={(e: React.ChangeEvent) =>
+              changeHandler(e, setFormValue)
+            }
             value={formValue}
             width={"70%"}
             height={"30px"}
           />
           <SubInput value={"Search user"} />
-        </SearchUserForm>
+        </Form>
         <SearchUserResult>
-          {isLoading && <LoadingImg src={loadingImg} />}
+          {(isLoading || appUsers === []) && <LoadingIcon />}
           {!isLoading &&
             appUsers.length > 0 &&
             usersToShow.map((user: IAppUsers) => (
@@ -105,27 +91,39 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
         </SearchUserResult>
       </MobileSearchUserContainer>
       <DesktopSearchUserContainer hidden={hide}>
-        <SearchUserImg
+        <Img
           src={closeImg}
           onClick={() => {
             hideHandler(true);
             console.log(hide);
           }}
         />
-        <SearchUserForm onSubmit={formSubmitHandler}>
+        <Form
+          onSubmit={(e: React.SyntheticEvent) =>
+            formSubmitHandler(
+              e,
+              setLoading,
+              formValue,
+              appUsers,
+              setUsersToShow
+            )
+          }
+        >
           <TextFormInput
             type="text"
             placeholder="Search user"
             name="Search user"
-            onChangeHandler={onChangeHandler}
+            onChangeHandler={(e: React.ChangeEvent) =>
+              changeHandler(e, setFormValue)
+            }
             value={formValue}
             width={"70%"}
             height={"30px"}
           />
           <SubInput value={"Search user"} />
-        </SearchUserForm>
+        </Form>
         <SearchUserResult>
-          {isLoading && <LoadingImg src={loadingImg} />}
+          {(isLoading || appUsers === []) && <LoadingIcon />}
           {!isLoading &&
             appUsers.length > 0 &&
             usersToShow.map((user: IAppUsers) => (

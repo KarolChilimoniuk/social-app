@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const BarContainer1 = styled.div`
+export const BarContainer = styled.div`
   align-items: center;
   background-color: ${(props) => props.color};
   border-bottom: 1px solid rgb(0, 0, 0);
@@ -18,7 +18,7 @@ export const BarContainer1 = styled.div`
   z-index: 3;
 `;
 
-export const BarParagraph = styled.p`
+export const Paragraph = styled.p`
   font-size: 0.9rem;
   margin-right: 10px;
 `;

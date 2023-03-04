@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const FormContainer = styled.div`
   align-items: center;
   background-color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 20px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;

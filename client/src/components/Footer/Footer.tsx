@@ -1,9 +1,9 @@
-import { FooterContainer, FooterHeader } from "./Footer.style";
+import { FooterContainer, Header } from "./Footer.style";
 
 const Footer = (): JSX.Element => {
   return (
     <FooterContainer>
-      <FooterHeader>Karol Chilimoniuk © 2023</FooterHeader>
+      <Header>Karol Chilimoniuk © 2023</Header>
     </FooterContainer>
   );
 };

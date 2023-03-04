@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ImgContainer = styled.div`
+export const MainImgContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;

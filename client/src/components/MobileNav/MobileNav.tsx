@@ -12,9 +12,9 @@ import { NavProps } from "../../types/types";
 import styles from "./MobileNav.module.scss";
 import {
   MobileNavContainer,
-  MenuNav,
-  MenuList,
-  NavLi,
+  Nav,
+  List,
+  Li,
   NavImg,
   NoLinkImgContainer,
   Link,
@@ -22,8 +22,8 @@ import {
   UserAvatarContainer,
   UserMainInfoContainer,
   UserFollowingInfo,
-  UserFollowingParagraph,
-  UserFollowingSpan,
+  Paragraph,
+  Span,
 } from "./MobileNav.style";
 
 const MobileNav = ({ active }: NavProps): JSX.Element => {
@@ -60,44 +60,38 @@ const MobileNav = ({ active }: NavProps): JSX.Element => {
             userId={loggedUserData._id}
           />
           <UserFollowingInfo>
-            <UserFollowingParagraph>
-              Followers:{" "}
-              <UserFollowingSpan>
-                {loggedUserData.followers.length}
-              </UserFollowingSpan>
-            </UserFollowingParagraph>
+            <Paragraph>
+              Followers: <Span>{loggedUserData.followers.length}</Span>
+            </Paragraph>
             {""}
-            <UserFollowingParagraph>
-              Followed:{" "}
-              <UserFollowingSpan>
-                {loggedUserData.followed.length}
-              </UserFollowingSpan>{" "}
-            </UserFollowingParagraph>
+            <Paragraph>
+              Followed: <Span>{loggedUserData.followed.length}</Span>{" "}
+            </Paragraph>
           </UserFollowingInfo>
         </UserMainInfoContainer>
       </LoggedUserInfoContainer>
-      <MenuNav>
-        <MenuList>
-          <NavLi>
+      <Nav>
+        <List>
+          <Li>
             <Link to="/logged">
               <NavImg src={HomeIcon} />
               Home
             </Link>
-          </NavLi>
-          <NavLi>
+          </Li>
+          <Li>
             <Link to="/logged">
               <NavImg src={NewsIcon} />
               News
             </Link>
-          </NavLi>
-          <NavLi onClick={() => setSearchHide(false)}>
+          </Li>
+          <Li onClick={() => setSearchHide(false)}>
             <NoLinkImgContainer>
               <NavImg src={SearchIcon} />
               Search user
             </NoLinkImgContainer>
-          </NavLi>
-        </MenuList>
-      </MenuNav>
+          </Li>
+        </List>
+      </Nav>
     </MobileNavContainer>
   );
 };

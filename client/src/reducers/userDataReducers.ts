@@ -96,13 +96,13 @@ const userReducers = (
       return {
         ...state,
         followed: action.payloads.listOfFollowed,
-        // allPostsToShow: action.payloads.allPostsToShow,
+        allPostsToShow: action.payloads.allPostsToShow,
       };
     case "UNFOLLOW":
       return {
         ...state,
         followed: action.payloads.listOfFollowed,
-        // allPostsToShow: action.payloads.allPostsToShow,
+        allPostsToShow: action.payloads.allPostsToShow,
       };
     case "LOGOUT":
       return {

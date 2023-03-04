@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FollowUnfollowButton = styled.button`
+export const Button = styled.button`
   background-color: rgba(5, 41, 63, 0.6);
   border: 0;
   border-radius: 5px;

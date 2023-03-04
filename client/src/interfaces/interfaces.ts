@@ -110,8 +110,6 @@ export interface IFilteredUser {
   registerDate: string;
   pic: string;
   userPosts: Array<IThought>;
-  // followed: Array<IUserInfo>;
-  // followers: Array<IUserInfo>;
   followed: Array<string>;
   followers: Array<string>;
 }

@@ -2,30 +2,19 @@ import { GoogleLogin } from "@react-oauth/google";
 import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
 import { useNavigate, NavigateFunction } from "react-router-dom";
+import { failureResponseGoogle, successResponseGoogle } from "./service";
 import { loginByGoogle } from "../../services/api/auth";
 
 const GoogleLoginComp = (): JSX.Element => {
   const dispatch: Dispatch = useDispatch();
   const navigate: NavigateFunction = useNavigate();
 
-  const successResponseGoogle = async (response: any): Promise<void> => {
-    try {
-      console.log("Google authentication completed");
-      const googleData = await Object.assign({}, response);
-      googleData && (await loginByGoogle(googleData, dispatch, navigate));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const failureResponseGoogle = (): void => {
-    console.error("Google authentication failed");
-  };
-
   return (
     <>
       <GoogleLogin
-        onSuccess={successResponseGoogle}
+        onSuccess={(res) =>
+          successResponseGoogle(res, loginByGoogle, dispatch, navigate)
+        }
         onError={failureResponseGoogle}
         type="standard"
         auto_select={false}

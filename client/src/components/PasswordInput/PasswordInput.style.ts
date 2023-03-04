@@ -36,6 +36,6 @@ export const FormImageContainer = styled.div`
   justify-content: center;
 `;
 
-export const FormImage = styled.img`
+export const Img = styled.img`
   width: 18px;
 `;

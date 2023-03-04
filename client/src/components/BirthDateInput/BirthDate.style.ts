@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const InputContainer = styled.div`
+export const DateInputContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

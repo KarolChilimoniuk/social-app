@@ -18,7 +18,6 @@ export const fetchUsers = async (dispatch: Dispatch): Promise<any> => {
         };
       });
       dispatch(fetchAppUsers(result));
-      console.log(result);
     })
     .catch((err: AxiosError) => {
       console.error(err.message);

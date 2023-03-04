@@ -1,11 +1,11 @@
 import ConnectionImg from "../../images/networking.png";
-import { ImgContainer, Img } from "./MainImg.style";
+import { MainImgContainer, Img } from "./MainImg.style";
 
 const MainImg = (): JSX.Element => {
   return (
-    <ImgContainer>
+    <MainImgContainer>
       <Img src={ConnectionImg} />
-    </ImgContainer>
+    </MainImgContainer>
   );
 };
 

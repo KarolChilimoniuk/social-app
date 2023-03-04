@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Dispatch } from "redux";
 import { useSelector, useDispatch } from "react-redux";
+import LoadingIcon from "../../components/LoadingIcon/LoadingIcon";
 import MainUserPageForm from "../../components/MainUserPageForm/MainUserPageForm";
 import Thought from "../../components/Thought/Thought";
 import DesktopNav from "../../components/DesktopNav/DesktopNav";
@@ -22,6 +23,7 @@ const MainUserPage = (): JSX.Element => {
     <MainPageContainer>
       <ThoughtsContainer>
         <MainUserPageForm />
+        {loggedUserData.allPostsToShow === [] && <LoadingIcon />}
         {loggedUserData.allPostsToShow.length >= 1 && loggedUserData.logged
           ? loggedUserData.allPostsToShow.map((el) => (
               <Thought

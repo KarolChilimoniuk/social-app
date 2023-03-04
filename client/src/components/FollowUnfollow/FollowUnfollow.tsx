@@ -3,62 +3,58 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { FollowUnfollowProps } from "../../types/types";
 import { follow, unFollow } from "../../services/api/followers";
+import { followHandler, unfollowHandler } from "./Service";
 import { IRootState } from "../../interfaces/interfaces";
-import { FollowUnfollowButton } from "./FollowUnfollow.style";
+import { Button } from "./FollowUnfollow.style";
 
 const FollowUnfollow = ({
   userToShowId,
   userToShowFollowers,
+  listOfFollowersHandler,
   followersNumberHandler,
 }: FollowUnfollowProps): JSX.Element => {
   const dispatch: Dispatch = useDispatch();
 
   const loggedUserData = useSelector((state: IRootState) => state.userData);
 
-  const [followers, setFollowers] = useState<null | Array<string>>(
-    userToShowFollowers
-  );
-
-  const [followStatus, setFollowStatus] = useState<boolean>(false);
-
-  const followHandler = () => {
-    const newFollowersList = [...followers!];
-    newFollowersList.push(loggedUserData._id);
-    setFollowers(newFollowersList);
-    setFollowStatus(true);
-    followersNumberHandler(newFollowersList.length);
-    follow(loggedUserData._id, userToShowId, dispatch);
-  };
-
-  const unfollowHandler = () => {
-    const newFollowersList = followers?.filter(
-      (followerId) => followerId !== loggedUserData._id
-    );
-    setFollowers(newFollowersList!);
-    setFollowStatus(false);
-    followersNumberHandler(newFollowersList!.length);
-    unFollow(loggedUserData._id, userToShowId, dispatch);
-  };
-
-  useEffect(
-    () =>
-      followers?.includes(loggedUserData._id)
-        ? setFollowStatus(true)
-        : setFollowStatus(false),
-    []
-  );
-
   return (
     <>
-      {followStatus ? (
-        <FollowUnfollowButton onClick={unfollowHandler}>
+      {userToShowFollowers?.includes(loggedUserData._id) ? (
+        <Button
+          onClick={() =>
+            unfollowHandler(
+              userToShowFollowers,
+              loggedUserData._id,
+              listOfFollowersHandler,
+              followersNumberHandler,
+              unFollow,
+              userToShowId,
+              dispatch
+            )
+          }
+        >
           Unfollow
-        </FollowUnfollowButton>
+        </Button>
       ) : (
-        <FollowUnfollowButton onClick={followHandler}>
+        <Button
+          onClick={() =>
+            followHandler(
+              userToShowFollowers,
+              loggedUserData._id,
+              listOfFollowersHandler,
+              followersNumberHandler,
+              follow,
+              userToShowId,
+              dispatch
+            )
+          }
+        >
           Follow
-        </FollowUnfollowButton>
+        </Button>
       )}
+      <button onClick={() => console.log(userToShowFollowers)}>
+        fsdfdsfsd
+      </button>
     </>
   );
 };

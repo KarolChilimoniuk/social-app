@@ -91,11 +91,6 @@ export const editUserData = async (req: Request, res: Response) => {
 
 export const editUserPic = async (req: Request, res: Response) => {
   const { userPic, userId } = req.body;
-  console.log(
-    process.env.CLOUDINARY_NAME,
-    process.env.CLOUDINARY_APIKEY,
-    process.env.CLOUDINARY_SECRET
-  );
   if (userId) {
     try {
       if (userPic) {
@@ -276,15 +271,15 @@ export const follow = async (req: Request, res: Response) => {
         });
       }
       const updatedUser: IUser = await UserModel.findOne({ _id: followerId });
-      // const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
-      // const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
-      //   listOfFollowed,
-      //   updatedUser
-      // );
-      // console.log(listOfFollowed);
+      const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
+      const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+        listOfFollowed,
+        updatedUser
+      );
       return res.status(200).send({
         message: "Follow",
         listOfFollowed: updatedUser.followed,
+        thoughtsToShow: thoughtsToShow,
       });
     }
   } catch (err) {
@@ -312,15 +307,15 @@ export const unFollow = async (req: Request, res: Response) => {
         });
       }
       const updatedUser: IUser = await UserModel.findOne({ _id: followerId });
-      // const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
-      // const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
-      //   listOfFollowed,
-      //   updatedUser
-      // );
-      // console.log(listOfFollowed);
+      const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
+      const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+        listOfFollowed,
+        updatedUser
+      );
       res.status(200).send({
         message: "Unfollow",
         listOfFollowed: updatedUser.followed,
+        thoughtsToShow: thoughtsToShow,
       });
     } catch (err) {
       res.json(err.message);

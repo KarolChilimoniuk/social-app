@@ -7,7 +7,6 @@ export const fetchFilteredUser = async (id: string): Promise<any> => {
     .get(`/${id}`)
     .then((res: AxiosResponse) => {
       result = res.data.userData;
-      console.log(res.data);
     })
     .catch((err: AxiosError) => {
       result = err.message;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const InputContainer = styled.div`
+export const FileInputContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;

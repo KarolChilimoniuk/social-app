@@ -11,7 +11,7 @@ export const InputContainer = styled.div`
 `;
 
 export const Input = styled.input`
-  background-color: transparent;
+  background-color: rgb(116, 150, 169);
   border: 0;
   color: rgb(255, 255, 255);
   height: ${(props) => props.height};
@@ -21,11 +21,11 @@ export const Input = styled.input`
   width: 80%;
 
   &:focus {
-    background-color: transparent;
+    background-color: rgb(116, 150, 169);
     outline: none;
   }
   &:autofill {
-    background-color: transparent;
+    background-color: rgb(116, 150, 169);
     border: 0;
     border-radius: 5px;
   }

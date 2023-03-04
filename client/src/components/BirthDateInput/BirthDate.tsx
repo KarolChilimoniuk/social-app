@@ -1,9 +1,9 @@
-import { InputContainer, InputLabel, Input } from "./BirthDate.style";
+import { DateInputContainer, InputLabel, Input } from "./BirthDate.style";
 import { InputProps } from "../../types/types";
 
 const BirthDateInput = ({ onChangeHandler }: InputProps): JSX.Element => {
   return (
-    <InputContainer>
+    <DateInputContainer>
       <InputLabel htmlFor="birthDate">Birth date</InputLabel>
       <Input
         type="date"
@@ -11,7 +11,7 @@ const BirthDateInput = ({ onChangeHandler }: InputProps): JSX.Element => {
         name="birthDate"
         onChange={onChangeHandler}
       />
-    </InputContainer>
+    </DateInputContainer>
   );
 };
 

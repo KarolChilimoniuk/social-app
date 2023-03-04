@@ -12,13 +12,13 @@ import {
   DesktopNavContainer,
   UserAvatarContainer,
   UserFollowingInfo,
-  UserFollowingParagraph,
-  UserFollowingSpan,
+  Paragraph,
+  Span,
   UserInfoDetails,
   LoggedUserInfo,
-  MenuList,
-  NavLi,
-  MenuNav,
+  List,
+  Li,
+  Nav,
   NoLinkImgContainer,
   Link,
   NavImg,
@@ -56,43 +56,37 @@ const UserDesktopNav = (): JSX.Element => {
             userId={loggedUserData._id}
           />
           <UserFollowingInfo>
-            <UserFollowingParagraph>
-              Followers:{" "}
-              <UserFollowingSpan>
-                {loggedUserData.followers.length}
-              </UserFollowingSpan>
-            </UserFollowingParagraph>{" "}
-            <UserFollowingParagraph>
-              Followed:{" "}
-              <UserFollowingSpan>
-                {loggedUserData.followed.length}
-              </UserFollowingSpan>{" "}
-            </UserFollowingParagraph>
+            <Paragraph>
+              Followers: <Span>{loggedUserData.followers.length}</Span>
+            </Paragraph>{" "}
+            <Paragraph>
+              Followed: <Span>{loggedUserData.followed.length}</Span>{" "}
+            </Paragraph>
           </UserFollowingInfo>
         </UserInfoDetails>
       </LoggedUserInfo>
-      <MenuNav>
-        <MenuList>
-          <NavLi>
+      <Nav>
+        <List>
+          <Li>
             <Link to="/logged">
               <NavImg src={HomeIcon} />
               Home
             </Link>
-          </NavLi>
-          <NavLi>
+          </Li>
+          <Li>
             <Link to="/logged">
               <NavImg src={NewsIcon} />
               News
             </Link>
-          </NavLi>
-          <NavLi onClick={() => setSearchHide(false)}>
+          </Li>
+          <Li onClick={() => setSearchHide(false)}>
             <NoLinkImgContainer>
               <NavImg src={SearchIcon} />
               Search user
             </NoLinkImgContainer>
-          </NavLi>
-        </MenuList>
-      </MenuNav>
+          </Li>
+        </List>
+      </Nav>
     </DesktopNavContainer>
   );
 };

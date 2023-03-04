@@ -7,6 +7,12 @@ import { clearAuthError } from "../../actions/userActions";
 import RegisterFormTemplate from "../RegisterFormTemplate/RegisterFormTemplate";
 import LoginFormTemplate from "../LoginFormTemplate/LoginFormTemplate";
 import LoginSignupSwitcher from "../LoginSignupSwitcher/LoginSignupSwitcher";
+import {
+  loginHandler,
+  registerHandler,
+  onChangeHandler,
+  switcherHandler,
+} from "./Service";
 import { signUp, login } from "../../services/api/auth";
 import { IFormData, IRootState } from "../../interfaces/interfaces";
 import { UserFormProps } from "../../types/types";
@@ -18,7 +24,13 @@ const UserForm = ({ loadingHandler }: UserFormProps): JSX.Element => {
   );
   const navigate: NavigateFunction = useNavigate();
 
-  const loggedUserData = useSelector((state: IRootState) => state.userData);
+  const authError = useSelector(
+    (state: IRootState) => state.userData.authError
+  );
+
+  const loggedStatus = useSelector(
+    (state: IRootState) => state.userData.logged
+  );
 
   const dispatch: Dispatch = useDispatch();
 
@@ -32,42 +44,31 @@ const UserForm = ({ loadingHandler }: UserFormProps): JSX.Element => {
     email: "",
   });
 
-  const registerHandler = (e: React.SyntheticEvent): void => {
-    loadingHandler(true);
-    e.preventDefault();
-    signUp(formData, dispatch, navigate, loadingHandler);
-  };
-
-  const loginHandler = (e: React.SyntheticEvent): void => {
-    loadingHandler(true);
-    e.preventDefault();
-    login(formData, dispatch, navigate, loadingHandler);
-  };
-
-  const onChangeHandler = (e: React.SyntheticEvent): void => {
-    const target = e.target as HTMLTextAreaElement;
-    newFormData({ ...formData, [target.name]: target.value });
-  };
-
-  const switcherHandler = (hasAccountHandler: Function) => {
-    dispatch(hasAccountHandler());
-    dispatch(clearAuthError());
-  };
-
   useEffect(() => {
-    loggedUserData.logged && navigate("/logged");
-  }, [loggedUserData.logged]);
+    loggedStatus && navigate("/logged");
+  }, [loggedStatus]);
 
   return (
     <>
-      {loggedUserData.authError !== "" ? (
-        <ErrorParagraph>{loggedUserData.authError}</ErrorParagraph>
-      ) : null}
+      <ErrorParagraph>
+        {typeof authError === "string" && authError}
+      </ErrorParagraph>
       {!hasAccountStatus && (
         <FormsContainer>
           <RegisterFormTemplate
-            registerHandler={registerHandler}
-            onChangeHandler={onChangeHandler}
+            registerHandler={(e: React.SyntheticEvent) =>
+              registerHandler(
+                e,
+                loadingHandler,
+                signUp,
+                formData,
+                dispatch,
+                navigate
+              )
+            }
+            onChangeHandler={(e: React.SyntheticEvent) =>
+              onChangeHandler(e, newFormData, formData)
+            }
             userName={formData.userName}
             firstName={formData.firstName}
             lastName={formData.lastName}
@@ -78,7 +79,7 @@ const UserForm = ({ loadingHandler }: UserFormProps): JSX.Element => {
           />
           <LoginSignupSwitcher
             onClickHandler={() => {
-              switcherHandler(hasAccountTrue);
+              switcherHandler(hasAccountTrue, dispatch, clearAuthError);
             }}
             accountStatus={hasAccountStatus}
           />
@@ -87,14 +88,25 @@ const UserForm = ({ loadingHandler }: UserFormProps): JSX.Element => {
       {hasAccountStatus && (
         <FormsContainer>
           <LoginFormTemplate
-            loginHandler={loginHandler}
-            onChangeHandler={onChangeHandler}
+            loginHandler={(e: React.SyntheticEvent) =>
+              loginHandler(
+                e,
+                loadingHandler,
+                formData,
+                dispatch,
+                navigate,
+                login
+              )
+            }
+            onChangeHandler={(e: React.SyntheticEvent) =>
+              onChangeHandler(e, newFormData, formData)
+            }
             email={formData.email}
             password={formData.password}
           />
           <LoginSignupSwitcher
             onClickHandler={() => {
-              switcherHandler(hasAccountFalse);
+              switcherHandler(hasAccountFalse, dispatch, clearAuthError);
             }}
             accountStatus={hasAccountStatus}
           />

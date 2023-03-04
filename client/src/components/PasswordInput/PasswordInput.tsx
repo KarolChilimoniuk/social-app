@@ -4,7 +4,7 @@ import View from "../../images/view.png";
 import Hide from "../../images/hide.png";
 import {
   FormImageContainer,
-  FormImage,
+  Img,
   InputContainer,
   Input,
 } from "./PasswordInput.style";
@@ -28,7 +28,7 @@ const PasswordInput = ({
           value={value}
         />
         <FormImageContainer>
-          <FormImage
+          <Img
             src={hideStatus ? View : Hide}
             onClick={() => changeHideStatus(!hideStatus)}
             alt="Password visibility switcher"

@@ -1,10 +1,10 @@
 import loadingImg from "../../images/loading.png";
-import { LoadingImg } from "./LoadingIcon.style";
+import { Img } from "./LoadingIcon.style";
 
 const LoadingIcon = (): JSX.Element => {
   return (
     <>
-      <LoadingImg src={loadingImg} />
+      <Img src={loadingImg} />
     </>
   );
 };

@@ -10,7 +10,7 @@ export const UserImgContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-export const UserImg = styled.img`
+export const Img = styled.img`
   width: ${(props) => props.width + "px"};
   min-width: 15px;
 `;

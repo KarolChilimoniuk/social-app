@@ -13,17 +13,17 @@ export const MobileNavContainer = styled.div`
   position: fixed;
   top: 0;
   width: 0;
-  transition: 0.3s ease;
+  transition: left 1s 0.1 ease;
   z-index: 2;
 `;
 
-export const MenuList = styled.ul`
+export const List = styled.ul`
   list-style: none;
   width: 100%;
   padding: 0;
 `;
 
-export const NavLi = styled.li`
+export const Li = styled.li`
   border-radius: 30px;
   cursor: pointer;
   font-weight: 700;
@@ -51,7 +51,7 @@ export const NoLinkImgContainer = styled.div`
   text-decoration: none;
 `;
 
-export const MenuNav = styled.nav`
+export const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -97,12 +97,12 @@ export const UserFollowingInfo = styled.div`
   }
 `;
 
-export const UserFollowingParagraph = styled.p`
+export const Paragraph = styled.p`
   display: flex;
   margin: 0 20px 0 0;
 `;
 
-export const UserFollowingSpan = styled.span`
+export const Span = styled.span`
   color: rgb(255, 255, 255);
   cursor: pointer;
   font-weight: 800;

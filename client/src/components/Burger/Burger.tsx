@@ -1,20 +1,17 @@
 import { useState } from "react";
 import { BurgerBarProps } from "../../types/types";
+import { activeBarHandler } from "./service";
 import { BurgerContainer, Bar1, Bar2, Bar3 } from "./Burger.style";
 import styles from "./Burger.module.scss";
 
 const Burger = ({ onClickNavHandler }: BurgerBarProps): JSX.Element => {
   const [activeStatus, setActiveStatus] = useState<boolean>(false);
 
-  const activeBarHandler = (): void => {
-    setActiveStatus(!activeStatus);
-  };
-
   return (
     <BurgerContainer
       onClick={() => {
         onClickNavHandler();
-        activeBarHandler();
+        activeBarHandler(activeStatus, setActiveStatus);
       }}
     >
       <Bar1 className={activeStatus === true ? styles.activeBar1 : undefined} />

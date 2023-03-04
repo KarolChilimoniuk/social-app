@@ -31,8 +31,6 @@ export const fetchFilteredUser = async (req: Request, res: Response) => {
         registerDate: user.registerDate,
         pic: user.pic,
         userPosts: userPosts,
-        // followed: listOfFollowed,
-        // followers: listOfFollowers,
         followed: user.followed,
         followers: user.followers,
       },

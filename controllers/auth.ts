@@ -69,7 +69,6 @@ export const nativeLogin = async (req: any, res: Response) => {
     if (req.tokenData) {
       email = req.tokenData.email;
       password = req.tokenData.password;
-      console.log(req.tokenData, "ok");
       user = await UserModel.findOne({ eMail: email });
     } else {
       email = req.body.email;

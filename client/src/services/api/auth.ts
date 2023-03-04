@@ -54,12 +54,11 @@ export const login = async (
     })
     .then((res: AxiosResponse) => {
       dispatch(userLogin(res.data.userData));
-      console.log(userData);
       loadingHandler(false);
       navigate("/logged");
     })
     .catch((err: AxiosError) => {
-      console.log(err);
+      console.error(err.message);
       dispatch(loginFailure(err.response?.data));
       loadingHandler(false);
     });
