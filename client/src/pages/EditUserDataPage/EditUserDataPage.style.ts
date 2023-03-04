@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-export const SectionContainer = styled.div`
+export const EditDataSection = styled.section`
   align-items: flex-start;
-
   background-color: rgba(43, 88, 114, 0.8);
   border-radius: 5px;
   display: flex;
@@ -15,6 +14,17 @@ export const SectionContainer = styled.div`
   @media (min-width: 650px) and (orientation: landscape) {
     flex-direction: row;
     justify-content: flex-start;
+  }
+`;
+
+export const UserDataContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 1024px) {
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 60%;
   }
 `;
 
@@ -66,7 +76,6 @@ export const ImgContainer = styled.div`
   margin-right: 30px;
   padding-right: 30px;
   @media (min-width: 1024px) {
-    border-right: 1px solid rgba(255, 255, 255, 0.7);
     min-height: 95vh;
   }
 `;
