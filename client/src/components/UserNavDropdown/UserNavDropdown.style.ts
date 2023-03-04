@@ -24,6 +24,7 @@ export const UserNavButton = styled.button`
   background-color: transparent;
   border: 0;
   display: flex;
+  margin-top: 15px;
   position: relative;
   &:hover {
     cursor: pointer;

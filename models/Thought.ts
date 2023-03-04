@@ -1,7 +1,7 @@
 import { string } from "joi";
 import { ObjectId } from "mongodb";
 import { Schema, model } from "mongoose";
-import { IThought } from "../services/interfaces";
+import { IThought } from "../interfaces";
 
 const ThoughtSchema = new Schema<IThought>({
   likes: { type: [String], default: [] },

@@ -15,7 +15,8 @@ import { IFormData } from "../../interfaces/interfaces";
 export const signUp = async (
   userData: IFormData,
   dispatch: Dispatch,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  loadingHandler: Function
 ): Promise<void> => {
   await instance
     .post(`/auth/signUp`, {
@@ -31,17 +32,20 @@ export const signUp = async (
       dispatch(signupSuccess(""));
       dispatch(clearAuthError());
       alert("User registered");
+      loadingHandler(false);
       navigate("/");
     })
     .catch((err: AxiosError) => {
       dispatch(signupFailure(err.response?.data));
+      loadingHandler(false);
     });
 };
 
 export const login = async (
   userData: IFormData,
   dispatch: Dispatch<any>,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  loadingHandler: Function
 ): Promise<void> => {
   await instance
     .post(`/auth/login`, {
@@ -51,11 +55,13 @@ export const login = async (
     .then((res: AxiosResponse) => {
       dispatch(userLogin(res.data.userData));
       console.log(userData);
+      loadingHandler(false);
       navigate("/logged");
     })
     .catch((err: AxiosError) => {
       console.log(err);
       dispatch(loginFailure(err.response?.data));
+      loadingHandler(false);
     });
 };
 

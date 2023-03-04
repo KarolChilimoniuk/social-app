@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const UserInfoPageContainer = styled.section`
-  align-items: center;
+  align-items: flex-start;
   background-color: rgba(43, 88, 114, 0.8);
   display: flex;
   flex-direction: column;
@@ -34,13 +34,16 @@ export const UserMainInfo = styled.div`
   }
 `;
 
+export const UserAvatarContainer = styled.div`
+  padding-top: 15px;
+`;
+
 export const UserMainDetails = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   @media (min-width: 515px) {
     margin-left: 30px;
-    padding-top: 10px;
   }
 `;
 

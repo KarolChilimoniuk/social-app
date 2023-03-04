@@ -9,9 +9,10 @@ import LoginFormTemplate from "../LoginFormTemplate/LoginFormTemplate";
 import LoginSignupSwitcher from "../LoginSignupSwitcher/LoginSignupSwitcher";
 import { signUp, login } from "../../services/api/auth";
 import { IFormData, IRootState } from "../../interfaces/interfaces";
+import { UserFormProps } from "../../types/types";
 import { FormsContainer, ErrorParagraph } from "./UserForm.style";
 
-const UserForm = (): JSX.Element => {
+const UserForm = ({ loadingHandler }: UserFormProps): JSX.Element => {
   const hasAccountStatus: boolean = useSelector(
     (state: IRootState) => state.appData.hasAccount
   );
@@ -32,20 +33,29 @@ const UserForm = (): JSX.Element => {
   });
 
   const registerHandler = (e: React.SyntheticEvent): void => {
+    loadingHandler(true);
     e.preventDefault();
-    signUp(formData, dispatch, navigate);
+    signUp(formData, dispatch, navigate, loadingHandler);
   };
+
   const loginHandler = (e: React.SyntheticEvent): void => {
+    loadingHandler(true);
     e.preventDefault();
-    login(formData, dispatch, navigate);
+    login(formData, dispatch, navigate, loadingHandler);
   };
+
   const onChangeHandler = (e: React.SyntheticEvent): void => {
     const target = e.target as HTMLTextAreaElement;
     newFormData({ ...formData, [target.name]: target.value });
   };
 
+  const switcherHandler = (hasAccountHandler: Function) => {
+    dispatch(hasAccountHandler());
+    dispatch(clearAuthError());
+  };
+
   useEffect(() => {
-    loggedUserData.logged === true && navigate("/logged");
+    loggedUserData.logged && navigate("/logged");
   }, [loggedUserData.logged]);
 
   return (
@@ -68,8 +78,7 @@ const UserForm = (): JSX.Element => {
           />
           <LoginSignupSwitcher
             onClickHandler={() => {
-              dispatch(hasAccountTrue());
-              dispatch(clearAuthError());
+              switcherHandler(hasAccountTrue);
             }}
             accountStatus={hasAccountStatus}
           />
@@ -85,8 +94,7 @@ const UserForm = (): JSX.Element => {
           />
           <LoginSignupSwitcher
             onClickHandler={() => {
-              dispatch(hasAccountFalse());
-              dispatch(clearAuthError());
+              switcherHandler(hasAccountFalse);
             }}
             accountStatus={hasAccountStatus}
           />

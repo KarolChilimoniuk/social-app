@@ -52,7 +52,7 @@ const MainUserPageForm = (): JSX.Element => {
               radius={30}
             />
           ) : (
-            <NoImgAvatar />
+            <NoImgAvatar height={40} width={40} />
           )}
           <TextArea
             placeholder="What's in your head..."

@@ -38,6 +38,14 @@ export type UpdateUserPostsAction = {
   payloads: IUserInfo | string | unknown;
 };
 
+export type UserFormProps = {
+  loadingHandler: Function;
+};
+
+export type FollowUnfollowAction = {
+  listOfFollowed: Array<string>;
+};
+
 export type LogoutAction = {
   type: string;
 };
@@ -141,6 +149,11 @@ export type ImgToPreview = string | ArrayBuffer | null;
 
 export type UploadedImg = string;
 
+export type NoImgAvatarProps = {
+  height: number;
+  width: number;
+};
+
 export type UserHeaderProps = {
   name: string;
   lastName: string;
@@ -148,9 +161,9 @@ export type UserHeaderProps = {
 };
 
 export type FollowUnfollowProps = {
-  loggedUserId: string;
-  listOfFollowed: Array<IUserInfo>;
   userToShowId: string;
+  userToShowFollowers: Array<string>;
+  followersNumberHandler: Function;
 };
 
 export type SearchUserProps = {

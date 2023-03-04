@@ -12,13 +12,13 @@ export const ThoughtContainer = styled.div`
 export const ImgNameDateContainer = styled.div`
   display: flex;
   flex-direction: row;
+  padding-top: 10px;
 `;
 
 export const NameDateContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-  padding-top: 20px;
 `;
 
 export const ThoughtDate = styled.span`

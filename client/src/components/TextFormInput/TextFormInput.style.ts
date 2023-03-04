@@ -18,6 +18,7 @@ export const Input = styled.input`
   padding: 10px;
   padding-bottom: 5px;
   padding-top: 5px;
+  width: 80%;
 
   &:focus {
     background-color: transparent;

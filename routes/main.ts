@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { main, fetchFilteredUser } from "../controllers/main";
+import { main, fetchFilteredUser, fetchUsers } from "../controllers/main";
 
 const mainRouter = Router();
-mainRouter.get("/", main);
 mainRouter.get("/:id", fetchFilteredUser);
+mainRouter.get("/", fetchUsers);
 
 export default mainRouter;

@@ -10,7 +10,6 @@ import { Router } from "express";
 
 const authRouter = Router();
 
-authRouter.get("/", getUsers);
 authRouter.get("/tokenChecking", tokenChecking, nativeLogin);
 authRouter.get("/logout", logout);
 authRouter.post("/signUp", register);

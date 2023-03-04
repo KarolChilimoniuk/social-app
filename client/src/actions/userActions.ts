@@ -11,6 +11,8 @@ import {
   UPDATE_USER_INFO_SUCCESS,
   UPDATE_USER_POSTS_FAILURE,
   UPDATE_USER_POSTS_SUCCESS,
+  FOLLOW,
+  UNFOLLOW,
   LOGOUT,
 } from "./actionTypes";
 import { IThought, IUserInfo } from "../interfaces/interfaces";
@@ -104,6 +106,22 @@ export const updateUserPostsFailure = (
     type: UPDATE_USER_POSTS_FAILURE,
     payloads: error,
   };
+};
+
+export const followUser = (
+  listOfFollowed: Array<string>
+  // allPostsToShow: Array<IThought>
+) => {
+  // return { type: FOLLOW, payloads: { listOfFollowed, allPostsToShow } };
+  return { type: FOLLOW, payloads: { listOfFollowed } };
+};
+
+export const unfollowUser = (
+  listOfFollowed: Array<string>
+  // allPostsToShow: Array<IThought>
+) => {
+  // return { type: UNFOLLOW, payloads: { listOfFollowed, allPostsToShow } };
+  return { type: UNFOLLOW, payloads: { listOfFollowed } };
 };
 
 export const logout = (): LogoutAction => {

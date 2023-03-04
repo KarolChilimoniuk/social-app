@@ -49,7 +49,9 @@ export const MenuNav = styled.nav`
 
 export const Link = styled(NavLink)`
   color: rgb(0, 0, 0);
+  display: inline-block;
   text-decoration: none;
+  width: 100%;
 `;
 
 export const NoLinkImgContainer = styled.div`
@@ -74,6 +76,10 @@ export const UserInfoDetails = styled.div`
   justify-content: center;
   margin-left: 20px;
   padding-top: 20px;
+`;
+
+export const UserAvatarContainer = styled.div`
+  padding-top: 30px;
 `;
 
 export const UserFollowingInfo = styled.div`

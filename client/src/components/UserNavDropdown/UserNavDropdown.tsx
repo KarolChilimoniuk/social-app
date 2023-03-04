@@ -43,7 +43,7 @@ const UserNavDropdown = ({ userName }: UserNavDropdownProps): JSX.Element => {
             radius={30}
           />
         ) : (
-          <NoImgAvatar />
+          <NoImgAvatar height={40} width={40} />
         )}
         <UserNavImg src={DropDownImg}></UserNavImg>
       </UserNavButton>

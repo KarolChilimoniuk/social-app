@@ -8,12 +8,8 @@ import {
   getUserFollowers,
   getUserPosts,
   getPostsToShow,
-} from "../services/userMethods";
-import {
-  IUser,
-  IDecodedUserData,
-  IThoughtInPushMethod,
-} from "../services/interfaces";
+} from "../userMethods";
+import { IUser, IDecodedUserData, IThoughtInPushMethod } from "../interfaces";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {

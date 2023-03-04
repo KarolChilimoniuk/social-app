@@ -41,7 +41,9 @@ export const NavLi = styled.li`
 
 export const Link = styled(NavLink)`
   color: rgb(0, 0, 0);
+  display: inline-block;
   text-decoration: none;
+  width: 100%;
 `;
 
 export const NoLinkImgContainer = styled.div`
@@ -65,6 +67,10 @@ export const LoggedUserInfoContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 80%;
+`;
+
+export const UserAvatarContainer = styled.div`
+  padding-top: 30px;
 `;
 
 export const UserMainInfoContainer = styled.div`

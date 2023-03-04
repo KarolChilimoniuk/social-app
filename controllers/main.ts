@@ -4,8 +4,8 @@ import {
   getUserFollowed,
   getUserFollowers,
   getUserPosts,
-} from "../services/userMethods";
-import { IUser, IThoughtInPushMethod } from "services/interfaces";
+} from "../userMethods";
+import { IUser, IThoughtInPushMethod } from "interfaces";
 
 export const main = (req: Request, res: Response) => {
   res.send("Server works ;]");
@@ -31,10 +31,21 @@ export const fetchFilteredUser = async (req: Request, res: Response) => {
         registerDate: user.registerDate,
         pic: user.pic,
         userPosts: userPosts,
-        followed: listOfFollowed,
-        followers: listOfFollowers,
+        // followed: listOfFollowed,
+        // followers: listOfFollowers,
+        followed: user.followed,
+        followers: user.followers,
       },
     });
+  } catch (err) {
+    res.json(err.message);
+  }
+};
+
+export const fetchUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await UserModel.find();
+    res.status(200).send({ users: users });
   } catch (err) {
     res.json(err.message);
   }

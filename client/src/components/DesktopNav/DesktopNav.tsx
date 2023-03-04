@@ -10,6 +10,7 @@ import SearchUser from "../SearchUser/SearchUser";
 import { IUserDataState, IRootState } from "../../interfaces/interfaces";
 import {
   DesktopNavContainer,
+  UserAvatarContainer,
   UserFollowingInfo,
   UserFollowingParagraph,
   UserFollowingSpan,
@@ -35,14 +36,18 @@ const UserDesktopNav = (): JSX.Element => {
       <SearchUser hide={searchHide} hideHandler={setSearchHide} />
       <LoggedUserInfo>
         {typeof loggedUserData.pic === "string" && loggedUserData.pic !== "" ? (
-          <UserProfileImg
-            imgId={loggedUserData.pic}
-            width={80}
-            height={80}
-            radius={65}
-          />
+          <UserAvatarContainer>
+            <UserProfileImg
+              imgId={loggedUserData.pic}
+              width={80}
+              height={80}
+              radius={65}
+            />
+          </UserAvatarContainer>
         ) : (
-          <NoImgAvatar />
+          <UserAvatarContainer>
+            <NoImgAvatar height={80} width={80} />
+          </UserAvatarContainer>
         )}
         <UserInfoDetails>
           <UserHeader

@@ -14,7 +14,7 @@ import FormFileInput from "../../components/FileInput/FileInput";
 import SubInput from "../../components/SubmitInput/SubmitInput";
 import UploadedUserImg from "../../components/UserProfileImg/UserProfileImg";
 import DesktopNav from "../../components/DesktopNav/DesktopNav";
-import { editData, editUserPic } from "../../services/api/userPanel";
+import { editData, editUserPic } from "../../services/api/editUserData";
 import {
   ErrorParagraph,
   FormContainer,

@@ -34,7 +34,7 @@ const Thought = ({
             radius={30}
           ></UserProfileImg>
         ) : (
-          <NoImgAvatar />
+          <NoImgAvatar height={40} width={40} />
         )}
         <NameDateContainer>
           <UserHeader

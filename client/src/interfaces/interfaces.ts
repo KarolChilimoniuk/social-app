@@ -16,8 +16,8 @@ export interface IUserDataState {
   chats: Array<string>;
   allPostsToShow: Array<IThought>;
   userPosts: Array<IThought>;
-  followed: Array<IUserInfo>;
-  followers: Array<IUserInfo>;
+  followed: Array<string>;
+  followers: Array<string>;
   groups: Array<string>;
   pic: string;
 }
@@ -39,9 +39,18 @@ export interface IUserInfo {
   groups: Array<string>;
 }
 
+export interface IAppUsers {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  pic: string;
+}
+
 export interface IAppMainDataState {
   hasAccount: boolean;
   idToFilterUser: string;
+  appUsers: Array<IAppUsers>;
 }
 
 export interface IFormData {
@@ -101,6 +110,8 @@ export interface IFilteredUser {
   registerDate: string;
   pic: string;
   userPosts: Array<IThought>;
-  followed: Array<IUserInfo>;
-  followers: Array<IUserInfo>;
+  // followed: Array<IUserInfo>;
+  // followers: Array<IUserInfo>;
+  followed: Array<string>;
+  followers: Array<string>;
 }

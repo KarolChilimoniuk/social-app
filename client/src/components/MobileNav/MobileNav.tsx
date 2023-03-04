@@ -19,6 +19,7 @@ import {
   NoLinkImgContainer,
   Link,
   LoggedUserInfoContainer,
+  UserAvatarContainer,
   UserMainInfoContainer,
   UserFollowingInfo,
   UserFollowingParagraph,
@@ -39,14 +40,18 @@ const MobileNav = ({ active }: NavProps): JSX.Element => {
       <SearchUser hide={searchHide} hideHandler={setSearchHide} />
       <LoggedUserInfoContainer>
         {typeof loggedUserData.pic === "string" && loggedUserData.pic !== "" ? (
-          <UserProfileImg
-            imgId={loggedUserData.pic}
-            width={80}
-            height={80}
-            radius={65}
-          />
+          <UserAvatarContainer>
+            <UserProfileImg
+              imgId={loggedUserData.pic}
+              width={80}
+              height={80}
+              radius={65}
+            />
+          </UserAvatarContainer>
         ) : (
-          <NoImgAvatar />
+          <UserAvatarContainer>
+            <NoImgAvatar height={80} width={80} />
+          </UserAvatarContainer>
         )}
         <UserMainInfoContainer>
           <UserHeader

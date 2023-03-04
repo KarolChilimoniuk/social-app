@@ -1,6 +1,6 @@
 import { IThoughtInPushMethod, IUser } from "./interfaces";
-import { UserModel } from "../models/User";
-import { ThoughtModel } from "../models/Thought";
+import { UserModel } from "./models/User";
+import { ThoughtModel } from "./models/Thought";
 
 // Sorting method for posts dates
 
@@ -13,7 +13,7 @@ const sortMethod = (
 
 // Fetch user list of followed
 
-export const getUserFollowed = async (user: IUser): Promise<Array<IUser>> => {
+export const getUserFollowed = async (user: IUser): Promise<Array<any>> => {
   let result: Array<IUser> = [];
   if (user.followed.length > 0) {
     result = await Promise.all(

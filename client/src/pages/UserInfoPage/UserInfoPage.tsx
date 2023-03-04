@@ -8,6 +8,7 @@ import NoImgAvatar from "../../components/NoImgAvatar/NoImgAvatar";
 import FollowUnfollow from "../../components/FollowUnfollow/FollowUnfollow";
 import { IRootState, IFilteredUser } from "../../interfaces/interfaces";
 import {
+  UserAvatarContainer,
   UserInfoPageContainer,
   UserMainInfo,
   UserMainDetails,
@@ -27,10 +28,14 @@ const UserInfoPage = (): JSX.Element => {
   const loggedUserData = useSelector((state: IRootState) => state.userData);
 
   const [userInfo, setUserInfo] = useState<IFilteredUser | null>(null);
+  const [follwersAmount, setFollowersAmount] = useState<number | null>(null);
 
   useEffect(() => {
     if (idToFilterUser !== "") {
-      fetchFilteredUser(idToFilterUser).then((res) => setUserInfo(res));
+      fetchFilteredUser(idToFilterUser).then((res) => {
+        setUserInfo(res);
+        setFollowersAmount(res.followers.length);
+      });
     }
   }, [idToFilterUser]);
 
@@ -39,23 +44,20 @@ const UserInfoPage = (): JSX.Element => {
       {userInfo !== null && (
         <>
           <UserToShowContainer>
-            <button
-              onClick={() => {
-                console.log(loggedUserData.followed);
-              }}
-            >
-              sdsfds
-            </button>
             <UserMainInfo>
               {userInfo.pic ? (
-                <UserProfileImg
-                  imgId={userInfo.pic}
-                  width={90}
-                  height={90}
-                  radius={50}
-                ></UserProfileImg>
+                <UserAvatarContainer>
+                  <UserProfileImg
+                    imgId={userInfo.pic}
+                    width={90}
+                    height={90}
+                    radius={50}
+                  ></UserProfileImg>
+                </UserAvatarContainer>
               ) : (
-                <NoImgAvatar />
+                <UserAvatarContainer>
+                  <NoImgAvatar height={90} width={90} />
+                </UserAvatarContainer>
               )}
               <UserMainDetails>
                 <UserMainDetailsHeader>
@@ -65,16 +67,16 @@ const UserInfoPage = (): JSX.Element => {
                   @{userInfo.userName}
                   {userInfo._id !== loggedUserData._id && (
                     <FollowUnfollow
-                      listOfFollowed={userInfo.followed}
-                      loggedUserId={loggedUserData._id}
+                      followersNumberHandler={setFollowersAmount}
                       userToShowId={userInfo._id}
+                      userToShowFollowers={userInfo.followers}
                     />
                   )}
                 </UserMainDetailsParagraph>
                 <UserFollowingDetailsParagraph>
                   Followers:{"  "}
                   <UserFollowingDetailsSpan>
-                    {userInfo.followers.length}
+                    {follwersAmount || 0}
                   </UserFollowingDetailsSpan>
                   Followed:{"  "}
                   <UserFollowingDetailsSpan>

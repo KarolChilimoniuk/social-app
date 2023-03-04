@@ -8,8 +8,8 @@ import {
   getUserFollowers,
   getUserPosts,
   getPostsToShow,
-} from "../services/userMethods";
-import { IUser, IThoughtInPushMethod, IThought } from "services/interfaces";
+} from "../userMethods";
+import { IUser, IThoughtInPushMethod, IThought } from "interfaces";
 
 // Edit user data controller
 
@@ -262,7 +262,7 @@ export const follow = async (req: Request, res: Response) => {
   try {
     const { followerId, followedId } = req.body;
     if (followerId && followedId) {
-      const follower = await ThoughtModel.findOneAndUpdate(
+      const follower = await UserModel.findOneAndUpdate(
         { _id: followerId },
         { $push: { followed: followedId } }
       );
@@ -271,19 +271,20 @@ export const follow = async (req: Request, res: Response) => {
         { $push: { followers: followerId } }
       );
       if (!follower || !followed) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "User can't be found :(",
         });
       }
       const updatedUser: IUser = await UserModel.findOne({ _id: followerId });
-      const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
-      const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
-        listOfFollowed,
-        updatedUser
-      );
-      res.status(200).send({
+      // const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
+      // const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+      //   listOfFollowed,
+      //   updatedUser
+      // );
+      // console.log(listOfFollowed);
+      return res.status(200).send({
         message: "Follow",
-        thoughtsToShow: thoughtsToShow,
+        listOfFollowed: updatedUser.followed,
       });
     }
   } catch (err) {
@@ -297,7 +298,7 @@ export const unFollow = async (req: Request, res: Response) => {
   const { followerId, followedId } = req.body;
   if (followerId && followedId) {
     try {
-      const follower = await ThoughtModel.findOneAndUpdate(
+      const follower = await UserModel.findOneAndUpdate(
         { _id: followerId },
         { $pull: { followed: followedId } }
       );
@@ -311,14 +312,15 @@ export const unFollow = async (req: Request, res: Response) => {
         });
       }
       const updatedUser: IUser = await UserModel.findOne({ _id: followerId });
-      const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
-      const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
-        listOfFollowed,
-        updatedUser
-      );
+      // const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
+      // const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
+      //   listOfFollowed,
+      //   updatedUser
+      // );
+      // console.log(listOfFollowed);
       res.status(200).send({
         message: "Unfollow",
-        thoughtsToShow: thoughtsToShow,
+        listOfFollowed: updatedUser.followed,
       });
     } catch (err) {
       res.json(err.message);

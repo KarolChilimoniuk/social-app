@@ -62,8 +62,11 @@ export const FormParagraph = styled.p`
 `;
 
 export const ImgContainer = styled.div`
-  border-right: 1px solid rgba(255, 255, 255, 0.7);
-  min-height: 95vh;
+  margin-bottom: 20px;
   margin-right: 30px;
   padding-right: 30px;
+  @media (min-width: 1024px) {
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+    min-height: 95vh;
+  }
 `;

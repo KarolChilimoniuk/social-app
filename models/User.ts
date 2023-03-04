@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
 import PasswordJoiComplexity from "joi-password-complexity";
-import { IUser } from "../services/interfaces";
+import { IUser } from "../interfaces";
 
 const UserSchema = new Schema<IUser>({
   firstName: { type: String, required: true },
@@ -76,10 +76,7 @@ export const signUpValidation = (data: any) => {
 
 export const loginValidation = (data: any) => {
   const JoiSchema = Joi.object({
-    password: Joi.string()
-      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-      .required()
-      .label("Password"),
+    password: Joi.string().required().label("Password"),
     email: Joi.string()
       .email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "pl"] } })
       .required()
