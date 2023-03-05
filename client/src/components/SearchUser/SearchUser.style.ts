@@ -30,7 +30,7 @@ export const DesktopSearchUserContainer = styled.div`
     position: absolute;
     top: 0;
     transition: right 0.5s 0.2s;
-    right: ${(props) => (props.hidden === true ? "-4000px" : "0")};
+    right: ${(props) => (props.hidden === true ? "-8000px" : "0")};
     width: 100%;
     z-index: 2;
   }

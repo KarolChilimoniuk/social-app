@@ -1,14 +1,20 @@
 import styled from "styled-components";
 
+export const UserInfoBackground = styled.div`
+  display: flex;
+  background-color: rgba(43, 88, 114, 0.8);
+  justify-content: center;
+  width: 100%;
+`;
+
 export const UserInfoPageContainer = styled.div`
   align-items: flex-start;
-  background-color: rgba(43, 88, 114, 0.8);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   padding-bottom: 20px;
-  padding-top: 90px;
-  width: 100vw;
+  padding-top: 80px;
+  max-width: 2100px;
   @media (min-width: 930px) {
     flex-direction: row;
   }
@@ -29,6 +35,7 @@ export const UserToShowContainer = styled.section`
   align-items: center;
   display: flex;
   flex-direction: column;
+  padding-right: 20px;
   width: 100%;
   @media (min-width: 1024px) {
     border-right: 1px solid rgba(255, 255, 255, 0.7);

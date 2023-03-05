@@ -11,6 +11,7 @@ import { IRootState, IFilteredUser } from "../../interfaces/interfaces";
 import {
   LoadingContainer,
   UserAvatarContainer,
+  UserInfoBackground,
   UserInfoPageContainer,
   UserMainInfo,
   UserMainDetails,
@@ -46,85 +47,87 @@ const UserInfoPage = (): JSX.Element => {
   }, [idToFilterUser]);
 
   return (
-    <UserInfoPageContainer>
-      <>
-        {userInfo === null && (
-          <LoadingContainer>
-            <LoadingIcon />
-            <p>...Loading</p>
-          </LoadingContainer>
-        )}
-        {userInfo !== null && (
-          <UserToShowContainer>
-            <UserMainInfo>
-              {userInfo.pic ? (
-                <UserAvatarContainer>
-                  <UserProfileImg
-                    imgId={userInfo.pic}
-                    width={90}
-                    height={90}
-                    radius={50}
-                  ></UserProfileImg>
-                </UserAvatarContainer>
-              ) : (
-                <UserAvatarContainer>
-                  <NoImgAvatar height={90} width={90} />
-                </UserAvatarContainer>
-              )}
-              <UserMainDetails>
-                <UserMainDetailsHeader>
-                  {userInfo.firstName} {userInfo.lastName}
-                </UserMainDetailsHeader>
-                <UserMainDetailsParagraph>
-                  @{userInfo.userName}
-                  {userInfo._id !== loggedUserData._id && (
-                    <FollowUnfollow
-                      followersNumberHandler={setFollowersAmount}
-                      userToShowId={userInfo._id}
-                      userToShowFollowers={listOfFollowers}
-                      listOfFollowersHandler={setListOfFollowers}
-                    />
-                  )}
-                </UserMainDetailsParagraph>
-                <UserFollowingDetailsParagraph>
-                  Followers:{"  "}
-                  <UserFollowingDetailsSpan>
-                    {follwersAmount}
-                  </UserFollowingDetailsSpan>
-                  Followed:{"  "}
-                  <UserFollowingDetailsSpan>
-                    {userInfo.followed.length}
-                  </UserFollowingDetailsSpan>
-                  Thoughts:{"  "}
-                  <UserFollowingDetailsSpan>
-                    {userInfo.userPosts.length}
-                  </UserFollowingDetailsSpan>
-                </UserFollowingDetailsParagraph>
-              </UserMainDetails>
-            </UserMainInfo>
-            <UserPostsContainer>
-              {userInfo.userPosts.map((thought: any) => (
-                <Thought
-                  key={thought._id}
-                  authorFirstName={thought.author.firstName}
-                  authorLastName={thought.author.lastName}
-                  authorPic={thought.author.pic}
-                  date={new Date(thought.created).toDateString()}
-                  content={thought.textContent}
-                  likes={thought.likes.length}
-                  likeStatus={
-                    thought.likes.includes(loggedUserData._id) ? true : false
-                  }
-                  authorId={thought.author._id}
-                  postId={thought._id}
-                />
-              ))}
-            </UserPostsContainer>
-          </UserToShowContainer>
-        )}
-        <DesktopNav />
-      </>
-    </UserInfoPageContainer>
+    <UserInfoBackground>
+      <UserInfoPageContainer>
+        <>
+          {userInfo === null && (
+            <LoadingContainer>
+              <LoadingIcon />
+              <p>...Loading</p>
+            </LoadingContainer>
+          )}
+          {userInfo !== null && (
+            <UserToShowContainer>
+              <UserMainInfo>
+                {userInfo.pic ? (
+                  <UserAvatarContainer>
+                    <UserProfileImg
+                      imgId={userInfo.pic}
+                      width={90}
+                      height={90}
+                      radius={50}
+                    ></UserProfileImg>
+                  </UserAvatarContainer>
+                ) : (
+                  <UserAvatarContainer>
+                    <NoImgAvatar height={90} width={90} />
+                  </UserAvatarContainer>
+                )}
+                <UserMainDetails>
+                  <UserMainDetailsHeader>
+                    {userInfo.firstName} {userInfo.lastName}
+                  </UserMainDetailsHeader>
+                  <UserMainDetailsParagraph>
+                    @{userInfo.userName}
+                    {userInfo._id !== loggedUserData._id && (
+                      <FollowUnfollow
+                        followersNumberHandler={setFollowersAmount}
+                        userToShowId={userInfo._id}
+                        userToShowFollowers={listOfFollowers}
+                        listOfFollowersHandler={setListOfFollowers}
+                      />
+                    )}
+                  </UserMainDetailsParagraph>
+                  <UserFollowingDetailsParagraph>
+                    Followers:{"  "}
+                    <UserFollowingDetailsSpan>
+                      {follwersAmount}
+                    </UserFollowingDetailsSpan>
+                    Followed:{"  "}
+                    <UserFollowingDetailsSpan>
+                      {userInfo.followed.length}
+                    </UserFollowingDetailsSpan>
+                    Thoughts:{"  "}
+                    <UserFollowingDetailsSpan>
+                      {userInfo.userPosts.length}
+                    </UserFollowingDetailsSpan>
+                  </UserFollowingDetailsParagraph>
+                </UserMainDetails>
+              </UserMainInfo>
+              <UserPostsContainer>
+                {userInfo.userPosts.map((thought: any) => (
+                  <Thought
+                    key={thought._id}
+                    authorFirstName={thought.author.firstName}
+                    authorLastName={thought.author.lastName}
+                    authorPic={thought.author.pic}
+                    date={new Date(thought.created).toDateString()}
+                    content={thought.textContent}
+                    likes={thought.likes.length}
+                    likeStatus={
+                      thought.likes.includes(loggedUserData._id) ? true : false
+                    }
+                    authorId={thought.author._id}
+                    postId={thought._id}
+                  />
+                ))}
+              </UserPostsContainer>
+            </UserToShowContainer>
+          )}
+          <DesktopNav />
+        </>
+      </UserInfoPageContainer>
+    </UserInfoBackground>
   );
 };
 

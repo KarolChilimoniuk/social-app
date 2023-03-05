@@ -1,16 +1,24 @@
 import styled from "styled-components";
 
+export const EditDataBackground = styled.div`
+  display: flex;
+  background-color: rgba(43, 88, 114, 0.8);
+  width: 100%;
+  @media (min-width: 1024px) {
+    justify-content: center;
+  }
+`;
+
 export const EditDataSection = styled.section`
   align-items: flex-start;
-  background-color: rgba(43, 88, 114, 0.8);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   justify-content: center;
-  padding-left: 50px;
+  padding-left: 20px;
   padding-top: 80px;
-  width: 100vw;
+  max-width: 2100px;
   @media (min-width: 650px) and (orientation: landscape) {
     flex-direction: row;
     justify-content: flex-start;

@@ -22,6 +22,7 @@ import {
 } from "./service";
 import { editData, editUserPic } from "../../services/api/editUserData";
 import {
+  EditDataBackground,
   ErrorParagraph,
   FormContainer,
   Form,
@@ -63,126 +64,128 @@ const UserPanel = (): JSX.Element => {
   }, [loggedUserData.pic]);
 
   return (
-    <EditDataSection>
-      <UserDataContainer>
-        <FormContainer>
-          <Form
-            onSubmit={(e: React.SyntheticEvent) =>
-              textSubmitHandler(
-                e,
-                editData,
-                formData,
-                loggedUserData._id,
-                dispatch,
-                setUpdateStatus
-              )
-            }
-          >
-            {loggedUserData.authError !== "" && updateStatus === false ? (
-              <ErrorParagraph>{loggedUserData.authError}</ErrorParagraph>
-            ) : null}
-            {loggedUserData.authError === "" && updateStatus === true ? (
-              <UpdateParagraph>Data updated</UpdateParagraph>
-            ) : null}
-            <FormHeader>Edit profile</FormHeader>
-            <FormParagraph>{loggedUserData.firstName}</FormParagraph>
-            <TextFormInput
-              type={"text"}
-              placeholder={"New first name"}
-              name={"firstName"}
-              value={formData.firstName}
-              onChangeHandler={(e: React.ChangeEvent) =>
-                onChangeTextHandler(e, formData, newFormData)
+    <EditDataBackground>
+      <EditDataSection>
+        <UserDataContainer>
+          <FormContainer>
+            <Form
+              onSubmit={(e: React.SyntheticEvent) =>
+                textSubmitHandler(
+                  e,
+                  editData,
+                  formData,
+                  loggedUserData._id,
+                  dispatch,
+                  setUpdateStatus
+                )
               }
-            />
-            <FormParagraph>{loggedUserData.lastName}</FormParagraph>
-            <TextFormInput
-              type={"text"}
-              placeholder={"New last name"}
-              name={"lastName"}
-              value={formData.lastName}
-              onChangeHandler={(e: React.ChangeEvent) =>
-                onChangeTextHandler(e, formData, newFormData)
+            >
+              {loggedUserData.authError !== "" && updateStatus === false ? (
+                <ErrorParagraph>{loggedUserData.authError}</ErrorParagraph>
+              ) : null}
+              {loggedUserData.authError === "" && updateStatus === true ? (
+                <UpdateParagraph>Data updated</UpdateParagraph>
+              ) : null}
+              <FormHeader>Edit profile</FormHeader>
+              <FormParagraph>{loggedUserData.firstName}</FormParagraph>
+              <TextFormInput
+                type={"text"}
+                placeholder={"New first name"}
+                name={"firstName"}
+                value={formData.firstName}
+                onChangeHandler={(e: React.ChangeEvent) =>
+                  onChangeTextHandler(e, formData, newFormData)
+                }
+              />
+              <FormParagraph>{loggedUserData.lastName}</FormParagraph>
+              <TextFormInput
+                type={"text"}
+                placeholder={"New last name"}
+                name={"lastName"}
+                value={formData.lastName}
+                onChangeHandler={(e: React.ChangeEvent) =>
+                  onChangeTextHandler(e, formData, newFormData)
+                }
+              />
+              <FormParagraph>{loggedUserData.userName}</FormParagraph>
+              <TextFormInput
+                type={"text"}
+                placeholder={"New user name"}
+                name={"userName"}
+                value={formData.userName}
+                onChangeHandler={(e: React.ChangeEvent) =>
+                  onChangeTextHandler(e, formData, newFormData)
+                }
+              />
+              <FormParagraph>{loggedUserData.eMail}</FormParagraph>
+              <TextFormInput
+                type={"email"}
+                placeholder={"New e-mail"}
+                name={"email"}
+                value={formData.email}
+                onChangeHandler={(e: React.ChangeEvent) =>
+                  onChangeTextHandler(e, formData, newFormData)
+                }
+              />
+              <PasswordInput
+                placeholder={"New password"}
+                name={"password"}
+                value={formData.password}
+                onChangeHandler={(e: React.ChangeEvent) =>
+                  onChangeTextHandler(e, formData, newFormData)
+                }
+              />
+              <PasswordInput
+                placeholder={"Repeat new password"}
+                name={"repeatedPassword"}
+                value={formData.repeatedPassword}
+                onChangeHandler={(e: React.ChangeEvent) =>
+                  onChangeTextHandler(e, formData, newFormData)
+                }
+              />
+              <BirthDateInput
+                onChangeHandler={(e: React.ChangeEvent) =>
+                  onChangeTextHandler(e, formData, newFormData)
+                }
+              />
+              <SubInput value={"Edit user data"} />
+            </Form>
+            <Form
+              onSubmit={(e: React.SyntheticEvent) =>
+                imgSubmitHandler(
+                  e,
+                  editUserPic,
+                  imgToPreview,
+                  loggedUserData._id,
+                  dispatch,
+                  setUploadedImg
+                )
               }
-            />
-            <FormParagraph>{loggedUserData.userName}</FormParagraph>
-            <TextFormInput
-              type={"text"}
-              placeholder={"New user name"}
-              name={"userName"}
-              value={formData.userName}
-              onChangeHandler={(e: React.ChangeEvent) =>
-                onChangeTextHandler(e, formData, newFormData)
-              }
-            />
-            <FormParagraph>{loggedUserData.eMail}</FormParagraph>
-            <TextFormInput
-              type={"email"}
-              placeholder={"New e-mail"}
-              name={"email"}
-              value={formData.email}
-              onChangeHandler={(e: React.ChangeEvent) =>
-                onChangeTextHandler(e, formData, newFormData)
-              }
-            />
-            <PasswordInput
-              placeholder={"New password"}
-              name={"password"}
-              value={formData.password}
-              onChangeHandler={(e: React.ChangeEvent) =>
-                onChangeTextHandler(e, formData, newFormData)
-              }
-            />
-            <PasswordInput
-              placeholder={"Repeat new password"}
-              name={"repeatedPassword"}
-              value={formData.repeatedPassword}
-              onChangeHandler={(e: React.ChangeEvent) =>
-                onChangeTextHandler(e, formData, newFormData)
-              }
-            />
-            <BirthDateInput
-              onChangeHandler={(e: React.ChangeEvent) =>
-                onChangeTextHandler(e, formData, newFormData)
-              }
-            />
-            <SubInput value={"Edit user data"} />
-          </Form>
-          <Form
-            onSubmit={(e: React.SyntheticEvent) =>
-              imgSubmitHandler(
-                e,
-                editUserPic,
-                imgToPreview,
-                loggedUserData._id,
-                dispatch,
-                setUploadedImg
-              )
-            }
-          >
-            <FormFileInput
-              name={"userPic"}
-              accept={"image/*"}
-              onChangeHandler={(e: React.ChangeEvent) =>
-                onChangePic(e, setImagePreview)
-              }
-            />
-            <SubInput value={"Edit profile photo"} />
-          </Form>
-        </FormContainer>
-        {typeof uploadedImg === "string" && uploadedImg !== "" && (
-          <ImgContainer>
-            <UploadedUserImg
-              imgId={uploadedImg}
-              width={200}
-              height={200}
-              radius={160}
-            />
-          </ImgContainer>
-        )}
-      </UserDataContainer>
-      <DesktopNav />
-    </EditDataSection>
+            >
+              <FormFileInput
+                name={"userPic"}
+                accept={"image/*"}
+                onChangeHandler={(e: React.ChangeEvent) =>
+                  onChangePic(e, setImagePreview)
+                }
+              />
+              <SubInput value={"Edit profile photo"} />
+            </Form>
+          </FormContainer>
+          {typeof uploadedImg === "string" && uploadedImg !== "" && (
+            <ImgContainer>
+              <UploadedUserImg
+                imgId={uploadedImg}
+                width={200}
+                height={200}
+                radius={160}
+              />
+            </ImgContainer>
+          )}
+        </UserDataContainer>
+        <DesktopNav />
+      </EditDataSection>
+    </EditDataBackground>
   );
 };
 

@@ -1,12 +1,20 @@
 import styled from "styled-components";
 
+export const MainPageBackground = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: rgba(43, 88, 114, 0.8);
+  width: 100%;
+`;
+
 export const MainPageContainer = styled.section`
   align-items: center;
-  background-color: rgba(43, 88, 114, 0.8);
+  // background-color: rgba(43, 88, 114, 0.8);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100vw;
+  max-width: 2100px;
   padding-bottom: 20px;
   padding-top: 100px;
   @media (min-width: 900px) {
