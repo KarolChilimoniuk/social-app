@@ -5,6 +5,7 @@ import TextFormInput from "../TextFormInput/TextFormInput";
 import SubInput from "../SubmitInput/SubmitInput";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
+import Pagination from "../Pagination/Pagination";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import UserHeader from "../UserHeader/UserHeader";
 import { formSubmitHandler, changeHandler } from "./Service";
@@ -26,6 +27,15 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
   const [formValue, setFormValue] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
   const [usersToShow, setUsersToShow] = useState<Array<IAppUsers>>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [usersPerPage] = useState<number>(20);
+
+  const indexOfLastPost: number = currentPage * usersPerPage;
+  const indexOfFirstPost: number = indexOfLastPost - usersPerPage;
+  const currentPosts: Array<IAppUsers> = appUsers.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
 
   useEffect(() => setUsersToShow(appUsers), [appUsers]);
 
@@ -36,7 +46,6 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
           src={closeImg}
           onClick={() => {
             hideHandler(true);
-            console.log(hide);
           }}
         />
         <Form
@@ -67,27 +76,34 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
           {(isLoading || appUsers === []) && <LoadingIcon />}
           {!isLoading &&
             appUsers.length > 0 &&
-            usersToShow.map((user: IAppUsers) => (
-              <FilteredUserContainer key={user._id}>
-                {user.pic !== "" ? (
-                  <UserProfileImg
-                    imgId={user.pic}
-                    width={80}
-                    height={80}
-                    radius={50}
-                  />
-                ) : (
-                  <NoImgAvatar height={80} width={80} />
-                )}
-                <UserHeaderContainer>
-                  <UserHeader
-                    userId={user._id}
-                    name={user.firstName}
-                    lastName={user.lastName}
-                  />
-                </UserHeaderContainer>
-              </FilteredUserContainer>
-            ))}
+            usersToShow
+              .filter((el, i) => i <= indexOfLastPost && i >= indexOfFirstPost)
+              .map((user: IAppUsers) => (
+                <FilteredUserContainer key={user._id}>
+                  {user.pic !== "" ? (
+                    <UserProfileImg
+                      imgId={user.pic}
+                      width={80}
+                      height={80}
+                      radius={50}
+                    />
+                  ) : (
+                    <NoImgAvatar height={80} width={80} />
+                  )}
+                  <UserHeaderContainer>
+                    <UserHeader
+                      userId={user._id}
+                      name={user.firstName}
+                      lastName={user.lastName}
+                    />
+                  </UserHeaderContainer>
+                </FilteredUserContainer>
+              ))}
+          <Pagination
+            itemsPerPage={2}
+            totalItems={appUsers.length}
+            currentPage={currentPage}
+          />
         </SearchUserResult>
       </MobileSearchUserContainer>
       <DesktopSearchUserContainer hidden={hide}>
@@ -95,7 +111,6 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
           src={closeImg}
           onClick={() => {
             hideHandler(true);
-            console.log(hide);
           }}
         />
         <Form
@@ -126,27 +141,35 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
           {(isLoading || appUsers === []) && <LoadingIcon />}
           {!isLoading &&
             appUsers.length > 0 &&
-            usersToShow.map((user: IAppUsers) => (
-              <FilteredUserContainer key={user._id}>
-                {user.pic !== "" ? (
-                  <UserProfileImg
-                    imgId={user.pic}
-                    width={80}
-                    height={80}
-                    radius={50}
-                  />
-                ) : (
-                  <NoImgAvatar height={80} width={80} />
-                )}
-                <UserHeaderContainer>
-                  <UserHeader
-                    userId={user._id}
-                    name={user.firstName}
-                    lastName={user.lastName}
-                  />
-                </UserHeaderContainer>
-              </FilteredUserContainer>
-            ))}
+            usersToShow
+              .filter((el, i) => i <= indexOfLastPost && i >= indexOfFirstPost)
+              .map((user: IAppUsers) => (
+                <FilteredUserContainer key={user._id}>
+                  {user.pic !== "" ? (
+                    <UserProfileImg
+                      imgId={user.pic}
+                      width={80}
+                      height={80}
+                      radius={50}
+                    />
+                  ) : (
+                    <NoImgAvatar height={80} width={80} />
+                  )}
+                  <UserHeaderContainer>
+                    <UserHeader
+                      userId={user._id}
+                      name={user.firstName}
+                      lastName={user.lastName}
+                    />
+                  </UserHeaderContainer>
+                </FilteredUserContainer>
+              ))}
+          <Pagination
+            itemsPerPage={usersPerPage}
+            totalItems={appUsers.length}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </SearchUserResult>
       </DesktopSearchUserContainer>
     </>

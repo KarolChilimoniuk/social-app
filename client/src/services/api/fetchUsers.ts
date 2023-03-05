@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { fetchAppUsers } from "../../actions/appDataAction";
 import { IUserInfo } from "../../interfaces/interfaces";
 
-export const fetchUsers = async (dispatch: Dispatch): Promise<any> => {
+export const fetchUsers = async (dispatch: Dispatch): Promise<void> => {
   await instance
     .get(`/`)
     .then((res: AxiosResponse) => {

@@ -24,7 +24,7 @@ export const unFollow = async (
   await instance
     .patch("/logged/unfollow", { followerId, followedId })
     .then((res: AxiosResponse) => {
-      dispatch(followUser(res.data.listOfFollowed, res.data.thoughtsToShow));
+      dispatch(unfollowUser(res.data.listOfFollowed, res.data.thoughtsToShow));
     })
     .catch((err: AxiosError) => console.error(err.message));
 };
