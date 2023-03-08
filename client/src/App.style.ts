@@ -4,7 +4,9 @@ export const AppContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 100%;
   min-height: 100vh;
+  position: relative;
   width: 100%;
   overflow: hidden;
 `;

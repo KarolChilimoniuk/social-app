@@ -14,6 +14,7 @@ export const UserInfoPageContainer = styled.div`
   min-height: 100vh;
   padding-bottom: 20px;
   padding-top: 80px;
+  width: 90%;
   max-width: 2100px;
   @media (min-width: 930px) {
     flex-direction: row;
@@ -46,7 +47,7 @@ export const UserToShowContainer = styled.section`
 export const UserMainInfo = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   @media (min-width: 515px) {
     flex-direction: row;
   }
@@ -109,5 +110,5 @@ export const UserPostsContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  width: 90%;
+  width: 100%;
 `;

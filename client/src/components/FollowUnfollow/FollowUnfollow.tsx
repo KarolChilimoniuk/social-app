@@ -52,9 +52,6 @@ const FollowUnfollow = ({
           Follow
         </Button>
       )}
-      <button onClick={() => console.log(userToShowFollowers)}>
-        fsdfdsfsd
-      </button>
     </>
   );
 };

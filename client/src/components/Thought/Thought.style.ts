@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ThoughtContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
+  border-radius: 10px;
   min-height: 100px;
   margin-top: 30px;
   padding: 10px 10px 20px 20px;

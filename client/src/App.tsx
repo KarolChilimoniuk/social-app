@@ -12,19 +12,19 @@ import RegistLogin from "./pages/RegisterLogin/RegistLogin";
 import MainUserPage from "./pages/MainUserPage/MainUserPage";
 import UserInfoPage from "./pages/UserInfoPage/UserInfoPage";
 import UserPanel from "./pages/EditUserDataPage/EditUserDataPage";
+import Modal from "./components/Modal/Modal";
 import Footer from "./components/Footer/Footer";
 import { AppContainer, MainDiv, MainDiv2 } from "./App.style";
 
 const App = (): JSX.Element => {
-  const [activeMobileNav, setActiveMobileNav] = useState<boolean>(false);
   const dispatch: Dispatch = useDispatch();
   const loginStatus: boolean = useSelector(
     (state: IRootState) => state.userData.logged
   );
-  const idToFilterUser: string = useSelector(
-    (state: IRootState) => state.appData.idToFilterUser
-  );
+
   const navigate: NavigateFunction = useNavigate();
+
+  const [activeMobileNav, setActiveMobileNav] = useState<boolean>(false);
 
   useEffect(() => {
     tokenChecking(dispatch);
@@ -54,6 +54,7 @@ const App = (): JSX.Element => {
             path="/logged/editUser"
             element={
               <MainDiv2>
+                <Modal />
                 <UserPanel />
               </MainDiv2>
             }
@@ -62,6 +63,7 @@ const App = (): JSX.Element => {
             path={`/logged/userInfo`}
             element={
               <MainDiv2>
+                <Modal />
                 <UserInfoPage />
               </MainDiv2>
             }
@@ -70,6 +72,7 @@ const App = (): JSX.Element => {
             path="/logged"
             element={
               <MainDiv2>
+                <Modal />
                 <MainUserPage />
               </MainDiv2>
             }

@@ -82,10 +82,11 @@ export const UserFollowingInfo = styled.div`
 `;
 
 export const Paragraph = styled.p`
+  display: flex;
   margin: 0 20px 0 0;
 `;
 
-export const Span = styled.span`
+export const Span = styled.a`
   color: rgb(255, 255, 255);
   cursor: pointer;
   font-weight: 800;

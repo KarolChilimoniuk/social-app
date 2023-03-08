@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { Dispatch } from "redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  hideModalHandler,
+  modalLoadingStatus,
+} from "../../actions/appDataAction";
 import { fetchFilteredUser } from "../../services/api/userInfoPage";
 import DesktopNav from "../../components/DesktopNav/DesktopNav";
 import Pagination from "../../components/Pagination/Pagination";
@@ -8,11 +13,8 @@ import UserProfileImg from "../../components/UserProfileImg/UserProfileImg";
 import LoadingIcon from "../../components/LoadingIcon/LoadingIcon";
 import NoImgAvatar from "../../components/NoImgAvatar/NoImgAvatar";
 import FollowUnfollow from "../../components/FollowUnfollow/FollowUnfollow";
-import {
-  IRootState,
-  IFilteredUser,
-  IThought,
-} from "../../interfaces/interfaces";
+import { fetchFollowed, fetchFollowers } from "../../services/api/followers";
+import { IRootState, IFilteredUser } from "../../interfaces/interfaces";
 import {
   LoadingContainer,
   UserAvatarContainer,
@@ -27,7 +29,6 @@ import {
   UserPostsContainer,
   UserToShowContainer,
 } from "./UserInfoPage.style";
-import { lastIndexOf } from "lodash";
 
 const UserInfoPage = (): JSX.Element => {
   const idToFilterUser: string = useSelector(
@@ -35,6 +36,8 @@ const UserInfoPage = (): JSX.Element => {
   );
 
   const loggedUserData = useSelector((state: IRootState) => state.userData);
+
+  const dispatch: Dispatch = useDispatch();
 
   const [userInfo, setUserInfo] = useState<IFilteredUser | null>(null);
   const [listOfFollowers, setListOfFollowers] = useState<Array<string> | null>(
@@ -46,10 +49,6 @@ const UserInfoPage = (): JSX.Element => {
 
   const indexOfLastPost: number = currentPage * postsPerPage;
   const indexOfFirstPost: number = indexOfLastPost - postsPerPage;
-  const currentPosts: Array<IThought> | undefined = userInfo?.userPosts.slice(
-    indexOfFirstPost,
-    indexOfLastPost
-  );
 
   useEffect(() => {
     if (idToFilterUser !== "") {
@@ -64,95 +63,108 @@ const UserInfoPage = (): JSX.Element => {
   return (
     <UserInfoBackground>
       <UserInfoPageContainer>
-        <>
-          {userInfo === null && (
-            <LoadingContainer>
-              <LoadingIcon />
-              <p>...Loading</p>
-            </LoadingContainer>
-          )}
-          {userInfo !== null && (
-            <UserToShowContainer>
-              <UserMainInfo>
-                {userInfo.pic ? (
-                  <UserAvatarContainer>
-                    <UserProfileImg
-                      imgId={userInfo.pic}
-                      width={90}
-                      height={90}
-                      radius={50}
-                    ></UserProfileImg>
-                  </UserAvatarContainer>
-                ) : (
-                  <UserAvatarContainer>
-                    <NoImgAvatar height={90} width={90} />
-                  </UserAvatarContainer>
-                )}
-                <UserMainDetails>
-                  <UserMainDetailsHeader>
-                    {userInfo.firstName} {userInfo.lastName}
-                  </UserMainDetailsHeader>
-                  <UserMainDetailsParagraph>
-                    @{userInfo.userName}
-                    {userInfo._id !== loggedUserData._id && (
-                      <FollowUnfollow
-                        followersNumberHandler={setFollowersAmount}
-                        userToShowId={userInfo._id}
-                        userToShowFollowers={listOfFollowers}
-                        listOfFollowersHandler={setListOfFollowers}
-                      />
-                    )}
-                  </UserMainDetailsParagraph>
-                  <UserFollowingDetailsParagraph>
-                    Followers:{"  "}
-                    <UserFollowingDetailsSpan>
-                      {follwersAmount}
-                    </UserFollowingDetailsSpan>
-                    Followed:{"  "}
-                    <UserFollowingDetailsSpan>
-                      {userInfo.followed.length}
-                    </UserFollowingDetailsSpan>
-                    Thoughts:{"  "}
-                    <UserFollowingDetailsSpan>
-                      {userInfo.userPosts.length}
-                    </UserFollowingDetailsSpan>
-                  </UserFollowingDetailsParagraph>
-                </UserMainDetails>
-              </UserMainInfo>
-              <UserPostsContainer>
-                {userInfo.userPosts
-                  .filter(
-                    (el, i) => i <= indexOfLastPost && i >= indexOfFirstPost
-                  )
-                  .map((thought: any, i) => (
-                    <Thought
-                      key={thought._id}
-                      authorFirstName={thought.author.firstName}
-                      authorLastName={thought.author.lastName}
-                      authorPic={thought.author.pic}
-                      date={new Date(thought.created).toDateString()}
-                      content={thought.textContent}
-                      likes={thought.likes.length}
-                      likeStatus={
-                        thought.likes.includes(loggedUserData._id)
-                          ? true
-                          : false
-                      }
-                      authorId={thought.author._id}
-                      postId={thought._id}
+        {userInfo === null && (
+          <LoadingContainer>
+            <LoadingIcon />
+            <p>...Loading</p>
+          </LoadingContainer>
+        )}
+        {userInfo !== null && (
+          <UserToShowContainer>
+            <UserMainInfo>
+              {userInfo.pic ? (
+                <UserAvatarContainer>
+                  <UserProfileImg
+                    imgId={userInfo.pic}
+                    width={90}
+                    height={90}
+                    radius={50}
+                  ></UserProfileImg>
+                </UserAvatarContainer>
+              ) : (
+                <UserAvatarContainer>
+                  <NoImgAvatar height={90} width={90} />
+                </UserAvatarContainer>
+              )}
+              <UserMainDetails>
+                <UserMainDetailsHeader>
+                  {userInfo.firstName} {userInfo.lastName}
+                </UserMainDetailsHeader>
+                <UserMainDetailsParagraph>
+                  @{userInfo.userName}
+                  {userInfo._id !== loggedUserData._id && (
+                    <FollowUnfollow
+                      followersNumberHandler={setFollowersAmount}
+                      userToShowId={userInfo._id}
+                      userToShowFollowers={listOfFollowers}
+                      listOfFollowersHandler={setListOfFollowers}
                     />
-                  ))}
+                  )}
+                </UserMainDetailsParagraph>
+                <UserFollowingDetailsParagraph>
+                  Followers:{"  "}
+                  <UserFollowingDetailsSpan
+                    onClick={() => {
+                      dispatch(modalLoadingStatus(true));
+                      dispatch(hideModalHandler(false));
+                      fetchFollowers(userInfo._id, dispatch);
+                    }}
+                  >
+                    {follwersAmount}
+                  </UserFollowingDetailsSpan>
+                  Followed:{"  "}
+                  <UserFollowingDetailsSpan
+                    onClick={() => {
+                      dispatch(modalLoadingStatus(true));
+                      dispatch(hideModalHandler(false));
+                      fetchFollowed(userInfo._id, dispatch);
+                    }}
+                  >
+                    {userInfo.followed.length}
+                  </UserFollowingDetailsSpan>
+                  Thoughts:{"  "}
+                  <UserFollowingDetailsSpan>
+                    {userInfo.userPosts.length}
+                  </UserFollowingDetailsSpan>
+                </UserFollowingDetailsParagraph>
+              </UserMainDetails>
+            </UserMainInfo>
+            <UserPostsContainer>
+              {userInfo?.userPosts.length === 0 && (
+                <p>Thoughts list is empty</p>
+              )}
+              {userInfo.userPosts
+                .filter(
+                  (el, i) => i <= indexOfLastPost && i >= indexOfFirstPost
+                )
+                .map((thought: any, i) => (
+                  <Thought
+                    key={thought._id}
+                    authorFirstName={thought.author.firstName}
+                    authorLastName={thought.author.lastName}
+                    authorPic={thought.author.pic}
+                    date={new Date(thought.created).toDateString()}
+                    content={thought.textContent}
+                    likes={thought.likes.length}
+                    likeStatus={
+                      thought.likes.includes(loggedUserData._id) ? true : false
+                    }
+                    authorId={thought.author._id}
+                    postId={thought._id}
+                  />
+                ))}
+              {userInfo.userPosts.length !== 0 && (
                 <Pagination
                   itemsPerPage={postsPerPage}
                   totalItems={userInfo.userPosts.length}
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
                 />
-              </UserPostsContainer>
-            </UserToShowContainer>
-          )}
-          <DesktopNav />
-        </>
+              )}
+            </UserPostsContainer>
+          </UserToShowContainer>
+        )}
+        <DesktopNav />
       </UserInfoPageContainer>
     </UserInfoBackground>
   );

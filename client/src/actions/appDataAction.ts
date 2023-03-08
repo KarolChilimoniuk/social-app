@@ -3,8 +3,16 @@ import {
   HAS_ACCOUNT_STATUS_TRUE,
   SET_ID_TO_FILTER_USER,
   FETCH_APP_USERS,
+  HIDE_MODAL_HANDLER,
+  FETCH_MODAL_CONTENT,
+  MODAL_LOADIG_STATUS,
 } from "./actionTypes";
-import { HasAccountAction, SetIdToFilterUserAction } from "../types/types";
+import {
+  FetchAppUsersAction,
+  HasAccountAction,
+  ModalAction,
+  SetIdToFilterUserAction,
+} from "../types/types";
 import { IAppUsers } from "../interfaces/interfaces";
 
 export const hasAccountTrue = (): HasAccountAction => {
@@ -28,9 +36,30 @@ export const setIdToFilterUser = (id: string): SetIdToFilterUserAction => {
   };
 };
 
-export const fetchAppUsers = (users: Array<IAppUsers>) => {
+export const fetchAppUsers = (users: Array<IAppUsers>): FetchAppUsersAction => {
   return {
     type: FETCH_APP_USERS,
     payloads: users,
+  };
+};
+
+export const hideModalHandler = (status: boolean): ModalAction => {
+  return {
+    type: HIDE_MODAL_HANDLER,
+    payloads: status,
+  };
+};
+
+export const modalLoadingStatus = (status: boolean): ModalAction => {
+  return {
+    type: MODAL_LOADIG_STATUS,
+    payloads: status,
+  };
+};
+
+export const fetchModalContent = (content: Array<IAppUsers>): ModalAction => {
+  return {
+    type: FETCH_MODAL_CONTENT,
+    payloads: content,
   };
 };

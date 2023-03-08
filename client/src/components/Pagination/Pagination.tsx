@@ -1,4 +1,5 @@
 import { nextPage, previousPage, paginate } from "./Service";
+import { PaginationProps } from "../../types/types";
 import { PaginationContainer, List, Item } from "./Pagination.style";
 
 const Pagination = ({
@@ -6,7 +7,7 @@ const Pagination = ({
   totalItems,
   currentPage,
   setCurrentPage,
-}: any): JSX.Element => {
+}: PaginationProps): JSX.Element => {
   const pageNumbers: Array<number> = [];
 
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {

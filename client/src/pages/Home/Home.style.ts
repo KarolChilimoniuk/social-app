@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export const HomeSection = styled.section`
   margin: 0;
+  max-width: 1700px;
   padding-top: 30%;
   position: relative;
   z-index: 5;

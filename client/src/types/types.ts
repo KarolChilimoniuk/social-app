@@ -1,6 +1,11 @@
 import React from "react";
 import rootReducer from "../reducers";
-import { IComment, IThought, IUserInfo } from "../interfaces/interfaces";
+import {
+  IAppUsers,
+  IComment,
+  IThought,
+  IUserInfo,
+} from "../interfaces/interfaces";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -36,6 +41,16 @@ export type UpdateUserInfoAction = {
 export type UpdateUserPostsAction = {
   type: string;
   payloads: IUserInfo | string | unknown;
+};
+
+export type FetchAppUsersAction = {
+  type: string;
+  payloads: Array<IAppUsers>;
+};
+
+export type ModalAction = {
+  type: string;
+  payloads: boolean | Array<IAppUsers>;
 };
 
 export type UserFormProps = {
@@ -171,4 +186,11 @@ export type FollowUnfollowProps = {
 export type SearchUserProps = {
   hide: boolean;
   hideHandler: Function;
+};
+
+export type PaginationProps = {
+  itemsPerPage: number;
+  totalItems: number;
+  currentPage: number;
+  setCurrentPage: Function;
 };

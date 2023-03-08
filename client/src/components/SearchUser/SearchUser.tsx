@@ -73,7 +73,7 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
           <SubInput value={"Search user"} />
         </Form>
         <SearchUserResult>
-          {(isLoading || appUsers === []) && <LoadingIcon />}
+          {isLoading && <LoadingIcon />}
           {!isLoading &&
             appUsers.length > 0 &&
             usersToShow
@@ -103,6 +103,7 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
             itemsPerPage={2}
             totalItems={appUsers.length}
             currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
           />
         </SearchUserResult>
       </MobileSearchUserContainer>

@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { Dispatch } from "redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  hideModalHandler,
+  modalLoadingStatus,
+} from "../../actions/appDataAction";
 import HomeIcon from "../../images/home.png";
 import NewsIcon from "../../images/news.png";
 import UserHeader from "../UserHeader/UserHeader";
@@ -8,6 +13,7 @@ import SearchIcon from "../../images/search.png";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import SearchUser from "../SearchUser/SearchUser";
 import { IUserDataState, IRootState } from "../../interfaces/interfaces";
+import { fetchFollowed, fetchFollowers } from "../../services/api/followers";
 import {
   DesktopNavContainer,
   UserAvatarContainer,
@@ -28,6 +34,8 @@ const UserDesktopNav = (): JSX.Element => {
   const loggedUserData: IUserDataState = useSelector(
     (state: IRootState) => state.userData
   );
+
+  const dispatch: Dispatch = useDispatch();
 
   const [searchHide, setSearchHide] = useState<boolean>(true);
 
@@ -57,10 +65,28 @@ const UserDesktopNav = (): JSX.Element => {
           />
           <UserFollowingInfo>
             <Paragraph>
-              Followers: <Span>{loggedUserData.followers.length}</Span>
+              Followers:{" "}
+              <Span
+                onClick={() => {
+                  dispatch(modalLoadingStatus(true));
+                  dispatch(hideModalHandler(false));
+                  fetchFollowers(loggedUserData._id, dispatch);
+                }}
+              >
+                {loggedUserData.followers.length}
+              </Span>
             </Paragraph>{" "}
             <Paragraph>
-              Followed: <Span>{loggedUserData.followed.length}</Span>{" "}
+              Followed:{" "}
+              <Span
+                onClick={() => {
+                  dispatch(modalLoadingStatus(true));
+                  dispatch(hideModalHandler(false));
+                  fetchFollowed(loggedUserData._id, dispatch);
+                }}
+              >
+                {loggedUserData.followed.length}
+              </Span>{" "}
             </Paragraph>
           </UserFollowingInfo>
         </UserInfoDetails>

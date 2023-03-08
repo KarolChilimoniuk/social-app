@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react";
 import { Dispatch } from "redux";
 import { useSelector, useDispatch } from "react-redux";
-import LoadingIcon from "../../components/LoadingIcon/LoadingIcon";
 import Pagination from "../../components/Pagination/Pagination";
 import MainUserPageForm from "../../components/MainUserPageForm/MainUserPageForm";
 import Thought from "../../components/Thought/Thought";
 import DesktopNav from "../../components/DesktopNav/DesktopNav";
 import { fetchUsers } from "../../services/api/fetchUsers";
-import {
-  IRootState,
-  IUserDataState,
-  IThought,
-} from "../../interfaces/interfaces";
+import { IRootState, IUserDataState } from "../../interfaces/interfaces";
 import {
   MainPageBackground,
   MainPageContainer,
@@ -29,8 +24,6 @@ const MainUserPage = (): JSX.Element => {
 
   const indexOfLastPost: number = currentPage * postsPerPage;
   const indexOfFirstPost: number = indexOfLastPost - postsPerPage;
-  const currentPosts: Array<IThought> | undefined =
-    loggedUserData.allPostsToShow.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
     fetchUsers(dispatch);
@@ -41,7 +34,9 @@ const MainUserPage = (): JSX.Element => {
       <MainPageContainer>
         <ThoughtsContainer>
           <MainUserPageForm />
-          {loggedUserData.allPostsToShow === [] && <LoadingIcon />}
+          {loggedUserData.allPostsToShow.length === 0 && (
+            <p>You have not thoughts to show. Publish your first thought!</p>
+          )}
           {loggedUserData.allPostsToShow.length >= 1 && loggedUserData.logged
             ? loggedUserData.allPostsToShow
                 .filter(
@@ -64,12 +59,14 @@ const MainUserPage = (): JSX.Element => {
                   />
                 ))
             : null}
-          <Pagination
-            itemsPerPage={postsPerPage}
-            totalItems={loggedUserData.allPostsToShow.length}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          {loggedUserData.allPostsToShow.length !== 0 && (
+            <Pagination
+              itemsPerPage={postsPerPage}
+              totalItems={loggedUserData.allPostsToShow.length}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
         </ThoughtsContainer>
         <DesktopNav />
       </MainPageContainer>

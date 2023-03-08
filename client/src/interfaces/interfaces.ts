@@ -51,6 +51,9 @@ export interface IAppMainDataState {
   hasAccount: boolean;
   idToFilterUser: string;
   appUsers: Array<IAppUsers>;
+  modalHideStatus: boolean;
+  modalLoadingStatus: boolean;
+  modalContent: Array<IAppUsers>;
 }
 
 export interface IFormData {

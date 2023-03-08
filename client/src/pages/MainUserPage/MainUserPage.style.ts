@@ -34,6 +34,6 @@ export const ThoughtsContainer = styled.section`
   padding-right: 10px;
   @media (min-width: 1024px) {
     border-right: 1px solid rgba(255, 255, 255, 0.7);
-    width: 50%;
+    width: 55%;
   }
 `;

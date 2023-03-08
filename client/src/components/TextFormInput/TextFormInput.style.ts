@@ -12,6 +12,7 @@ export const InputContainer = styled.div`
 
 export const Input = styled.input`
   background-color: rgb(116, 150, 169);
+  border-radius: 5px;
   border: 0;
   color: rgb(255, 255, 255);
   height: ${(props) => props.height};
