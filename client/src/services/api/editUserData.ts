@@ -23,6 +23,7 @@ export const editData = async (
       password: newUserData.password,
       repeatedPassword: newUserData.repeatedPassword,
       birthDate: newUserData.birthDate,
+      description: newUserData.description,
       email: newUserData.email,
     })
     .then((res: AxiosResponse) => {

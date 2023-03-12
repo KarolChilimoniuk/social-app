@@ -79,6 +79,11 @@ export const FormParagraph = styled.p`
   font-weight: 600;
 `;
 
+export const FormSecondParagraph = styled.p`
+  font-weight: 400;
+  margin-top: 0;
+`;
+
 export const ImgContainer = styled.div`
   margin-bottom: 20px;
   margin-right: 30px;

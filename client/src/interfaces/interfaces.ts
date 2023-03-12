@@ -11,6 +11,7 @@ export interface IUserDataState {
   lastName: string;
   userName: string;
   eMail: string;
+  description: string;
   birthDate: Date;
   registerDate: Date;
   chats: Array<string>;
@@ -61,6 +62,7 @@ export interface IFormData {
   firstName: string;
   lastName: string;
   password: string;
+  description?: string;
   repeatedPassword: string;
   birthDate: string;
   email: string;
@@ -112,6 +114,7 @@ export interface IFilteredUser {
   birthDate: string;
   registerDate: string;
   pic: string;
+  description: string;
   userPosts: Array<IThought>;
   followed: Array<string>;
   followers: Array<string>;

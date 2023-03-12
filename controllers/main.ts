@@ -30,6 +30,7 @@ export const fetchFilteredUser = async (req: Request, res: Response) => {
         birthDate: user.birthDate,
         registerDate: user.registerDate,
         pic: user.pic,
+        description: user.description,
         userPosts: userPosts,
         followed: user.followed,
         followers: user.followers,
@@ -44,6 +45,36 @@ export const fetchUsers = async (req: Request, res: Response) => {
   try {
     const users = await UserModel.find();
     res.status(200).send({ users: users });
+  } catch (err) {
+    res.json(err.message);
+  }
+};
+
+export const fetchFollowed = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    !id && res.status(400).json("Bad request :(");
+    const user: IUser = await UserModel.findById(id);
+    !user && res.status(404).json("User not found :(");
+    const listOfFollowed: Array<IUser> = await getUserFollowed(user);
+    res.status(200).send({
+      listOfFollowed: listOfFollowed,
+    });
+  } catch (err) {
+    res.json(err.message);
+  }
+};
+
+export const fetchFollowers = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    !id && res.status(400).json("Bad request :(");
+    const user: IUser = await UserModel.findById(id);
+    !user && res.status(404).json("User not found :(");
+    const listOfFollowers: Array<IUser> = await getUserFollowers(user);
+    res.status(200).send({
+      listOfFollowers: listOfFollowers,
+    });
   } catch (err) {
     res.json(err.message);
   }

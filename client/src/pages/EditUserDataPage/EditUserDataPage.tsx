@@ -8,6 +8,7 @@ import {
 } from "../../interfaces/interfaces";
 import { ImgToPreview, UploadedImg } from "../../types/types";
 import TextFormInput from "../../components/TextFormInput/TextFormInput";
+import TextArea from "../../components/TextArea/TextArea";
 import BirthDateInput from "../../components/BirthDateInput/BirthDate";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import FormFileInput from "../../components/FileInput/FileInput";
@@ -24,6 +25,7 @@ import { editData, editUserPic } from "../../services/api/editUserData";
 import {
   EditDataBackground,
   ErrorParagraph,
+  FormSecondParagraph,
   FormContainer,
   Form,
   FormHeader,
@@ -47,6 +49,7 @@ const UserPanel = (): JSX.Element => {
     lastName: "",
     password: "",
     repeatedPassword: "",
+    description: "",
     birthDate: "",
     email: "",
   });
@@ -76,7 +79,8 @@ const UserPanel = (): JSX.Element => {
                   formData,
                   loggedUserData._id,
                   dispatch,
-                  setUpdateStatus
+                  setUpdateStatus,
+                  newFormData
                 )
               }
             >
@@ -127,6 +131,21 @@ const UserPanel = (): JSX.Element => {
                   onChangeTextHandler(e, formData, newFormData)
                 }
               />
+              <FormParagraph>Something about you:</FormParagraph>
+              {loggedUserData.description! !== "" ? (
+                <FormSecondParagraph>
+                  {loggedUserData.description}
+                </FormSecondParagraph>
+              ) : null}
+              <TextArea
+                onChangeHandler={(e: React.ChangeEvent) =>
+                  onChangeTextHandler(e, formData, newFormData)
+                }
+                value={formData.description}
+                name={"description"}
+                placeholder={"Write something about you"}
+              />
+              <FormParagraph>Password:</FormParagraph>
               <PasswordInput
                 placeholder={"New password"}
                 name={"password"}
@@ -143,6 +162,7 @@ const UserPanel = (): JSX.Element => {
                   onChangeTextHandler(e, formData, newFormData)
                 }
               />
+              <FormParagraph>Birth date:</FormParagraph>
               <BirthDateInput
                 onChangeHandler={(e: React.ChangeEvent) =>
                   onChangeTextHandler(e, formData, newFormData)
@@ -162,6 +182,7 @@ const UserPanel = (): JSX.Element => {
                 )
               }
             >
+              <FormParagraph>User Avatar:</FormParagraph>
               <FormFileInput
                 name={"userPic"}
                 accept={"image/*"}

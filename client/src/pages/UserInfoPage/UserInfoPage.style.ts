@@ -61,6 +61,10 @@ export const UserMainDetails = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 350px;
+  @media (max-width: 370px) {
+    overflow: auto;
+  }
   @media (min-width: 515px) {
     margin-left: 30px;
   }
@@ -77,17 +81,25 @@ export const UserMainDetailsHeader = styled.h2`
 export const UserMainDetailsParagraph = styled.p`
   color: rgb(255, 255, 255);
   display: flex;
-  justify-content: slace-between;
+  justify-content: space-between;
   margin-top: 15px;
   width: 100%;
   margin-bottom: 0;
   margin-top: 10px;
 `;
 
+export const UserDescriptionParagraph = styled.p`
+  color: rgb(0, 0, 0);
+  margin: 0;
+  width: 100%;
+  min-width: 260px;
+`;
+
 export const UserFollowingDetailsParagraph = styled.p`
   color: rgb(0, 0, 0);
   display: flex;
   flex-direction: row;
+  font-weight: 600;
   justify-content: flex-start;
   margin-top: 15px;
   width: 100%;
@@ -111,4 +123,14 @@ export const UserPostsContainer = styled.div`
   flex-direction: column;
   margin-top: 20px;
   width: 100%;
+`;
+
+export const NoThoughtsParagraph = styled.p`
+  color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  width: 100%;
+  margin-bottom: 0;
+  margin-top: 10px;
 `;

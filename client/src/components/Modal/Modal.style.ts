@@ -71,3 +71,13 @@ export const UserContainer = styled.div`
 export const UserHeaderContainer = styled.div`
   padding-left: 20px;
 `;
+
+export const NoContentParagraph = styled.p`
+  color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  width: 100%;
+  margin-bottom: 0;
+  margin-top: 10px;
+`;

@@ -17,10 +17,21 @@ export const textSubmitHandler = async (
   formData: IFormData,
   loggedUserId: string,
   dispatch: Dispatch,
-  setUpdateStatus: Function
+  setUpdateStatus: Function,
+  newFormData: Function
 ): Promise<void> => {
   e.preventDefault();
   await editData(formData, loggedUserId, dispatch, setUpdateStatus);
+  newFormData({
+    userName: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    repeatedPassword: "",
+    description: "",
+    birthDate: "",
+    email: "",
+  });
 };
 
 export const setPreviewFromFileInput = (

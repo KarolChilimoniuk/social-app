@@ -13,6 +13,7 @@ import {
   ImgContainer,
   Img,
   Content,
+  NoContentParagraph,
   Paragraph,
   UserContainer,
   UserHeaderContainer,
@@ -44,7 +45,7 @@ const Modal = (): JSX.Element => {
         </ImgContainer>
         {modalLoadingStatus && <LoadingIcon />}
         {!modalLoadingStatus && modalContent.length === 0 ? (
-          <Paragraph>None :/</Paragraph>
+          <NoContentParagraph>List if empty</NoContentParagraph>
         ) : (
           <Content>
             {modalContent!.map((user: IAppUsers) => (

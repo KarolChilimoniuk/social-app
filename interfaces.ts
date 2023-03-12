@@ -10,6 +10,7 @@ export interface IUser {
   birthDate: Date;
   registerDate: Date;
   pic: string;
+  description: string;
   chats: Array<string>;
   posts: Array<string>;
   followed: Array<string>;

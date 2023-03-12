@@ -16,6 +16,7 @@ import FollowUnfollow from "../../components/FollowUnfollow/FollowUnfollow";
 import { fetchFollowed, fetchFollowers } from "../../services/api/followers";
 import { IRootState, IFilteredUser } from "../../interfaces/interfaces";
 import {
+  NoThoughtsParagraph,
   LoadingContainer,
   UserAvatarContainer,
   UserInfoBackground,
@@ -23,6 +24,7 @@ import {
   UserMainInfo,
   UserMainDetails,
   UserMainDetailsHeader,
+  UserDescriptionParagraph,
   UserMainDetailsParagraph,
   UserFollowingDetailsParagraph,
   UserFollowingDetailsSpan,
@@ -127,11 +129,16 @@ const UserInfoPage = (): JSX.Element => {
                     {userInfo.userPosts.length}
                   </UserFollowingDetailsSpan>
                 </UserFollowingDetailsParagraph>
+                <UserDescriptionParagraph>
+                  {userInfo.description}
+                </UserDescriptionParagraph>
               </UserMainDetails>
             </UserMainInfo>
             <UserPostsContainer>
               {userInfo?.userPosts.length === 0 && (
-                <p>Thoughts list is empty</p>
+                <NoThoughtsParagraph>
+                  Thoughts wall is empty
+                </NoThoughtsParagraph>
               )}
               {userInfo.userPosts
                 .filter(

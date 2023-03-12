@@ -22,6 +22,7 @@ export const editUserData = async (req: Request, res: Response) => {
     password,
     repeatedPassword,
     birthDate,
+    description,
     email,
   } = req.body;
   try {
@@ -51,6 +52,10 @@ export const editUserData = async (req: Request, res: Response) => {
           ? birthDate
           : user.birthDate;
       user.eMail = email !== user.eMail && email !== "" ? email : user.eMail;
+      user.description =
+        description !== user.description && description !== ""
+          ? description
+          : user.description;
       await user.save();
       const updatedUser: IUser = await UserModel.findOne({ _id: user._id });
       const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
@@ -73,6 +78,7 @@ export const editUserData = async (req: Request, res: Response) => {
           birthDate: updatedUser.birthDate,
           registerDate: updatedUser.registerDate,
           pic: updatedUser.pic,
+          description: updatedUser.description,
           chats: updatedUser.chats,
           allPostsToShow: thoughtsToShow,
           userPosts: userPosts,
