@@ -81,7 +81,7 @@ export const UserMainDetailsHeader = styled.h2`
 export const UserMainDetailsParagraph = styled.p`
   color: rgb(255, 255, 255);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-top: 15px;
   width: 100%;
   margin-bottom: 0;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const ThoughtContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.3);
@@ -36,4 +37,16 @@ export const ThoughtContent = styled.p`
 
 export const LikesContent = styled.div`
   display: flex;
+`;
+
+export const Link = styled(NavLink)`
+  color: rgb(0, 0, 0);
+  display: inline-block;
+  font-weight: 500;
+  margin-top: 10px;
+  text-decoration: none;
+  transition: all 0.2s 0.1s;
+  :hover {
+    color: rgb(255, 255, 255);
+  }
 `;

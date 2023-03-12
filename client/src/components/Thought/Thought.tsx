@@ -6,6 +6,7 @@ import { ThoughtProps } from "../../types/types";
 import {
   ThoughtContainer,
   ImgNameDateContainer,
+  Link,
   NameDateContainer,
   ThoughtContent,
   ThoughtDate,
@@ -47,6 +48,7 @@ const Thought = ({
       </ImgNameDateContainer>
       <ThoughtContent>{content}</ThoughtContent>
       <LikesSection likeStatus={likeStatus} likes={likes} postId={postId} />
+      <Link to={"/"}>See comments</Link>
     </ThoughtContainer>
   );
 };
