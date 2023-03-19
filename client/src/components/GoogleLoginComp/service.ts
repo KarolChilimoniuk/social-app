@@ -5,17 +5,20 @@ export const successResponseGoogle = async (
   response: any,
   loginByGoogle: Function,
   dispatch: Dispatch,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  loadingHandler: Function
 ): Promise<void> => {
   try {
-    console.log("Google authentication completed");
     const googleData = await Object.assign({}, response);
     googleData && (await loginByGoogle(googleData, dispatch, navigate));
+    loadingHandler(false);
   } catch (error) {
     console.error(error);
+    loadingHandler(false);
   }
 };
 
-export const failureResponseGoogle = (): void => {
+export const failureResponseGoogle = (loadingHandler: Function): void => {
   console.error("Google authentication failed");
+  loadingHandler(false);
 };

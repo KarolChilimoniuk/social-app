@@ -37,3 +37,8 @@ export const ThoughtsContainer = styled.section`
     width: 55%;
   }
 `;
+
+export const Paragraph = styled.p`
+  color: rgb(255, 255, 255);
+  font-size: 1.2rem;
+`;

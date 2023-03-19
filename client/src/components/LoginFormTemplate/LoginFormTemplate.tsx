@@ -11,6 +11,7 @@ import {
 } from "./LoginFormTemplate.style";
 
 const LoginFormTemplate = ({
+  loadingHandler,
   loginHandler,
   onChangeHandler,
   email,
@@ -37,7 +38,7 @@ const LoginFormTemplate = ({
             <SubInput value={"Log in"} />
           </SubmitContainer>
         </Form>
-        <GoogleLoginComp />
+        <GoogleLoginComp loadingHandler={loadingHandler} />
       </FormContainer>
     </FormBackground>
   );

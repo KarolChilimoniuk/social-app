@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import closeImg from "../../images/cross-mark.png";
-import { hideModalHandler } from "../../actions/appDataAction";
+import { hideStatsModalHandler } from "../../actions/appDataAction";
 import UserHeader from "../UserHeader/UserHeader";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
@@ -14,22 +14,21 @@ import {
   Img,
   Content,
   NoContentParagraph,
-  Paragraph,
   UserContainer,
   UserHeaderContainer,
-} from "./Modal.style";
+} from "./StatsModal.style";
 
-const Modal = (): JSX.Element => {
+const StatsModal = (): JSX.Element => {
   const dispatch: Dispatch = useDispatch();
 
   const modalHideStatus: boolean = useSelector(
-    (state: IRootState) => state.appData.modalHideStatus
+    (state: IRootState) => state.appData.statsModalHideStatus
   );
   const modalContent: Array<IAppUsers> = useSelector(
-    (state: IRootState) => state.appData.modalContent
+    (state: IRootState) => state.appData.statsModalContent
   );
   const modalLoadingStatus: boolean = useSelector(
-    (state: IRootState) => state.appData.modalLoadingStatus
+    (state: IRootState) => state.appData.statsModalLoadingStatus
   );
 
   return (
@@ -39,7 +38,7 @@ const Modal = (): JSX.Element => {
           <Img
             src={closeImg}
             onClick={() => {
-              dispatch(hideModalHandler(true));
+              dispatch(hideStatsModalHandler(true));
             }}
           />
         </ImgContainer>
@@ -76,4 +75,4 @@ const Modal = (): JSX.Element => {
   );
 };
 
-export default Modal;
+export default StatsModal;

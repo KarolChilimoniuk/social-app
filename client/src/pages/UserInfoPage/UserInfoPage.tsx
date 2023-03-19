@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  hideModalHandler,
-  modalLoadingStatus,
+  hideStatsModalHandler,
+  statsModalLoadingStatus,
 } from "../../actions/appDataAction";
 import { fetchFilteredUser } from "../../services/api/userInfoPage";
 import DesktopNav from "../../components/DesktopNav/DesktopNav";
@@ -107,8 +107,8 @@ const UserInfoPage = (): JSX.Element => {
                   Followers:{"  "}
                   <UserFollowingDetailsSpan
                     onClick={() => {
-                      dispatch(modalLoadingStatus(true));
-                      dispatch(hideModalHandler(false));
+                      dispatch(statsModalLoadingStatus(true));
+                      dispatch(hideStatsModalHandler(false));
                       fetchFollowers(userInfo._id, dispatch);
                     }}
                   >
@@ -117,8 +117,8 @@ const UserInfoPage = (): JSX.Element => {
                   Followed:{"  "}
                   <UserFollowingDetailsSpan
                     onClick={() => {
-                      dispatch(modalLoadingStatus(true));
-                      dispatch(hideModalHandler(false));
+                      dispatch(statsModalLoadingStatus(true));
+                      dispatch(hideStatsModalHandler(false));
                       fetchFollowed(userInfo._id, dispatch);
                     }}
                   >

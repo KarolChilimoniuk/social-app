@@ -12,7 +12,8 @@ import RegistLogin from "./pages/RegisterLogin/RegistLogin";
 import MainUserPage from "./pages/MainUserPage/MainUserPage";
 import UserInfoPage from "./pages/UserInfoPage/UserInfoPage";
 import UserPanel from "./pages/EditUserDataPage/EditUserDataPage";
-import Modal from "./components/Modal/Modal";
+import CommentsModal from "./components/CommentsModal/CommentsModal";
+import StatsModal from "./components/StatsModal/StatsModal";
 import Footer from "./components/Footer/Footer";
 import { AppContainer, MainDiv, MainDiv2 } from "./App.style";
 
@@ -54,7 +55,7 @@ const App = (): JSX.Element => {
             path="/logged/editUser"
             element={
               <MainDiv2>
-                <Modal />
+                <StatsModal />
                 <UserPanel />
               </MainDiv2>
             }
@@ -63,7 +64,8 @@ const App = (): JSX.Element => {
             path={`/logged/userInfo`}
             element={
               <MainDiv2>
-                <Modal />
+                <CommentsModal />
+                <StatsModal />
                 <UserInfoPage />
               </MainDiv2>
             }
@@ -72,7 +74,8 @@ const App = (): JSX.Element => {
             path="/logged"
             element={
               <MainDiv2>
-                <Modal />
+                <CommentsModal />
+                <StatsModal />
                 <MainUserPage />
               </MainDiv2>
             }

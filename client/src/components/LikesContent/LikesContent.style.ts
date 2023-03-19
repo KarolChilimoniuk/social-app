@@ -6,11 +6,11 @@ export const LikesContent = styled.div`
   padding-bottom: 10px;
 `;
 
-export const LikeImg = styled.img`
+export const Img = styled.img`
   cursor: pointer;
   width: 20px;
 `;
 
-export const LikesSpan = styled.span`
+export const Span = styled.span`
   margin-left: 5px;
 `;

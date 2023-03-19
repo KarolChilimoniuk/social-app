@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import * as path from "path";
 import mainRouter from "./routes/main";
 import authRouter from "./routes/auth";
 import userActivitiesRouter from "./routes/userActivities";
@@ -44,6 +45,14 @@ app.use(cookieParser());
 app.use("/", mainRouter);
 app.use("/auth", authRouter);
 app.use("/logged", userActivitiesRouter);
+
+// ----- static folder for "production" -----
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+}
 
 main()
   .then(() => {

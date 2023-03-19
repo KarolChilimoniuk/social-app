@@ -9,7 +9,7 @@ const ThoughtSchema = new Schema<IThought>({
   comments: { type: [String], default: [] },
   shares: { type: Number, default: 0 },
   created: { type: Date, default: new Date() },
-  author: Object,
+  author: { type: Object, required: true },
 });
 
 export const ThoughtModel = model<IThought>("Thoughts", ThoughtSchema);

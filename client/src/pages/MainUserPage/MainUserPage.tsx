@@ -11,6 +11,7 @@ import {
   MainPageBackground,
   MainPageContainer,
   ThoughtsContainer,
+  Paragraph,
 } from "./MainUserPage.style";
 
 const MainUserPage = (): JSX.Element => {
@@ -35,7 +36,9 @@ const MainUserPage = (): JSX.Element => {
         <ThoughtsContainer>
           <MainUserPageForm />
           {loggedUserData.allPostsToShow.length === 0 && (
-            <p>You have not thoughts to show. Publish your first thought!</p>
+            <Paragraph>
+              Your wall is still empty. Publish your first thought!
+            </Paragraph>
           )}
           {loggedUserData.allPostsToShow.length >= 1 && loggedUserData.logged
             ? loggedUserData.allPostsToShow

@@ -1,16 +1,20 @@
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "redux";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import LikesSection from "../LikesContent/LikesContent";
 import UserHeader from "../UserHeader/UserHeader";
+import { commentsHandler } from "./Service";
 import { ThoughtProps } from "../../types/types";
 import {
   ThoughtContainer,
   ImgNameDateContainer,
-  Link,
+  Paragraph,
   NameDateContainer,
   ThoughtContent,
   ThoughtDate,
 } from "./Thought.style";
+import { IRootState } from "../../interfaces/interfaces";
 
 const Thought = ({
   authorFirstName,
@@ -24,6 +28,11 @@ const Thought = ({
   authorId,
   postId,
 }: ThoughtProps): JSX.Element => {
+  const dispatch: Dispatch = useDispatch();
+  const commentsModalHideStatus = useSelector(
+    (state: IRootState) => state.appData.commentsModalHideStatus
+  );
+
   return (
     <ThoughtContainer>
       <ImgNameDateContainer>
@@ -47,8 +56,18 @@ const Thought = ({
         </NameDateContainer>
       </ImgNameDateContainer>
       <ThoughtContent>{content}</ThoughtContent>
-      <LikesSection likeStatus={likeStatus} likes={likes} postId={postId} />
-      <Link to={"/"}>See comments</Link>
+      {commentsModalHideStatus ? (
+        <>
+          <LikesSection likeStatus={likeStatus} likes={likes} postId={postId} />
+          <Paragraph
+            onClick={() => {
+              commentsHandler(dispatch, postId);
+            }}
+          >
+            See comments
+          </Paragraph>
+        </>
+      ) : null}
     </ThoughtContainer>
   );
 };

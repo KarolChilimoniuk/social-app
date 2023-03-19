@@ -4,8 +4,10 @@ import {
   getUserFollowed,
   getUserFollowers,
   getUserPosts,
+  getComments,
 } from "../userMethods";
-import { IUser, IThoughtInPushMethod } from "interfaces";
+import { IUser, IThought, IThoughtInPushMethod } from "interfaces";
+import { ThoughtModel } from "../models/Thought";
 
 export const main = (req: Request, res: Response) => {
   res.send("Server works ;]");
@@ -74,6 +76,34 @@ export const fetchFollowers = async (req: Request, res: Response) => {
     const listOfFollowers: Array<IUser> = await getUserFollowers(user);
     res.status(200).send({
       listOfFollowers: listOfFollowers,
+    });
+  } catch (err) {
+    res.json(err.message);
+  }
+};
+
+export const fetchComments = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    !id && res.status(400).json("Bad request :(");
+    const thought: IThought = await ThoughtModel.findById(id);
+    !thought && res.status(404).json("Thought not found :(");
+    const thoughtAuthor = await UserModel.findById(thought.author._id);
+    const commentsData = await getComments(thought.comments);
+    console.log(commentsData);
+    res.status(200).send({
+      _id: thought._id,
+      author: {
+        _id: thoughtAuthor._id,
+        firstName: thoughtAuthor.firstName,
+        lastName: thoughtAuthor.lastName,
+        pic: thoughtAuthor.pic,
+      },
+      created: thought.created,
+      textContent: thought.textContent,
+      shares: thought.shares,
+      likes: thought.likes,
+      comments: commentsData,
     });
   } catch (err) {
     res.json(err.message);

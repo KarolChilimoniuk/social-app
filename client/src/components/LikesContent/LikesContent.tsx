@@ -5,7 +5,7 @@ import notLike from "../../images/notLike.png";
 import { LikesSectionProps } from "../../types/types";
 import { IRootState } from "../../interfaces/interfaces";
 import { addLike, removeLike } from "../../services/api/likesContent";
-import { LikesContent, LikeImg, LikesSpan } from "./LikesContent.style";
+import { LikesContent, Img, Span } from "./LikesContent.style";
 
 const LikesSection = ({
   likes,
@@ -37,11 +37,11 @@ const LikesSection = ({
   return (
     <LikesContent>
       {likeStat ? (
-        <LikeImg src={like} onClick={likeHandler} />
+        <Img src={like} onClick={likeHandler} />
       ) : (
-        <LikeImg src={notLike} onClick={likeHandler} />
+        <Img src={notLike} onClick={likeHandler} />
       )}
-      <LikesSpan>{postLikes}</LikesSpan>
+      <Span>{postLikes}</Span>
     </LikesContent>
   );
 };

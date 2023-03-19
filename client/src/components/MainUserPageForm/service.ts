@@ -6,7 +6,7 @@ export const userThoughts = async (
   addThought: Function,
   eMail: string,
   dispatch: Dispatch
-) => {
+): Promise<void> => {
   e.preventDefault();
   if (thoughtContent === "") {
     alert("Your thought is empty :/ Write something.");
@@ -16,10 +16,10 @@ export const userThoughts = async (
   }
 };
 
-export const changeThoughtValue = async (
+export const changeThoughtValue = (
   e: React.SyntheticEvent,
   newThoughtContent: Function
-) => {
+): void => {
   const target = e.currentTarget as HTMLTextAreaElement;
   newThoughtContent(target.value);
 };

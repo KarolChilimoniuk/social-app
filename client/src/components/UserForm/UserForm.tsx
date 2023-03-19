@@ -88,6 +88,7 @@ const UserForm = ({ loadingHandler }: UserFormProps): JSX.Element => {
       {hasAccountStatus && (
         <FormsContainer>
           <LoginFormTemplate
+            loadingHandler={loadingHandler}
             loginHandler={(e: React.SyntheticEvent) =>
               loginHandler(
                 e,

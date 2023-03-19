@@ -52,9 +52,37 @@ export interface IAppMainDataState {
   hasAccount: boolean;
   idToFilterUser: string;
   appUsers: Array<IAppUsers>;
-  modalHideStatus: boolean;
-  modalLoadingStatus: boolean;
-  modalContent: Array<IAppUsers>;
+  statsModalHideStatus: boolean;
+  statsModalLoadingStatus: boolean;
+  statsModalContent: Array<IAppUsers>;
+  commentsModalHideStatus: boolean;
+  commentsModalLoadingStatus: boolean;
+  commentsModalContent: IPostWithCommentsContent | null;
+}
+
+export interface IAuthor {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  pic: string;
+}
+
+export interface IComment {
+  _id: string;
+  author: IAuthor;
+  content: string;
+  created: string;
+  likes: string;
+}
+
+export interface IPostWithCommentsContent {
+  _id: string;
+  author: IAuthor;
+  created: string;
+  textContent: string;
+  shares: number;
+  likes: Array<string>;
+  comments: Array<IComment>;
 }
 
 export interface IFormData {
@@ -79,30 +107,7 @@ export interface IThought {
   comments: Array<IComment>;
   shares: number;
   created: Date;
-  author: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    pic: string;
-  };
-}
-
-export interface IThoughtAuthor {
-  author: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    userPic: string;
-  };
-}
-
-export interface IComment {
-  _id: string;
-  author: {
-    _id: string;
-  };
-  content: string;
-  date: Date;
+  author: IAuthor;
 }
 
 export interface IFilteredUser {

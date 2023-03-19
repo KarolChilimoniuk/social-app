@@ -11,6 +11,7 @@ describe("Login form template tests", () => {
         <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_ID}`}>
           <Router>
             <LoginFormTemplate
+              loadingHandler={() => console.log("login handler")}
               loginHandler={(e) => {
                 e.preventDefault();
               }}
@@ -40,6 +41,7 @@ describe("Login form template tests", () => {
         <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_ID}`}>
           <Router>
             <LoginFormTemplate
+              loadingHandler={() => console.log("login handler")}
               loginHandler={(e) => {
                 e.preventDefault();
               }}

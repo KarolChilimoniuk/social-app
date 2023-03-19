@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 
 export const ThoughtContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   min-height: 100px;
   margin-top: 30px;
-  padding: 10px 10px 20px 20px;
+  padding: 10px 20px 20px 20px;
   width: 90%;
 `;
 
@@ -39,10 +38,12 @@ export const LikesContent = styled.div`
   display: flex;
 `;
 
-export const Link = styled(NavLink)`
+export const Paragraph = styled.p`
   color: rgb(0, 0, 0);
+  cursor: pointer;
   display: inline-block;
   font-weight: 500;
+  margin-bottom: 0;
   margin-top: 10px;
   text-decoration: none;
   transition: all 0.2s 0.1s;

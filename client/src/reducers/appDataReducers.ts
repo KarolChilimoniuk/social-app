@@ -4,8 +4,11 @@ import {
   HAS_ACCOUNT_STATUS_FALSE,
   SET_ID_TO_FILTER_USER,
   FETCH_APP_USERS,
-  HIDE_MODAL_HANDLER,
-  FETCH_MODAL_CONTENT,
+  HIDE_STATS_MODAL_HANDLER,
+  FETCH_STATS_MODAL_CONTENT,
+  HIDE_COMMENTS_MODAL_HANDLER,
+  FETCH_COMMENTS_MODAL_CONTENT,
+  COMMENTS_MODAL_LOADIG_STATUS,
 } from "../actions/actionTypes";
 import { IAppMainDataState } from "../interfaces/interfaces";
 
@@ -13,9 +16,12 @@ const initialState: IAppMainDataState = {
   hasAccount: false,
   idToFilterUser: "",
   appUsers: [],
-  modalHideStatus: true,
-  modalLoadingStatus: false,
-  modalContent: [],
+  statsModalHideStatus: true,
+  statsModalLoadingStatus: false,
+  statsModalContent: [],
+  commentsModalHideStatus: true,
+  commentsModalLoadingStatus: false,
+  commentsModalContent: null,
 };
 
 const appReducers = (state = initialState, action: AnyAction) => {
@@ -31,13 +37,27 @@ const appReducers = (state = initialState, action: AnyAction) => {
         ...state,
         appUsers: action.payloads,
       };
-    case HIDE_MODAL_HANDLER:
+    case HIDE_STATS_MODAL_HANDLER:
       return {
         ...state,
-        modalHideStatus: action.payloads,
+        statsModalHideStatus: action.payloads,
       };
-    case FETCH_MODAL_CONTENT: {
-      return { ...state, modalContent: action.payloads };
+    case FETCH_STATS_MODAL_CONTENT: {
+      return { ...state, statsModalContent: action.payloads };
+    }
+    case HIDE_COMMENTS_MODAL_HANDLER:
+      return {
+        ...state,
+        commentsModalHideStatus: action.payloads,
+      };
+    case FETCH_COMMENTS_MODAL_CONTENT: {
+      return { ...state, commentsModalContent: action.payloads };
+    }
+    case COMMENTS_MODAL_LOADIG_STATUS: {
+      return {
+        ...state,
+        commentsModalLoadingStatus: action.payloads,
+      };
     }
     default:
       return { ...state };

@@ -5,6 +5,7 @@ import {
   IComment,
   IThought,
   IUserInfo,
+  IPostWithCommentsContent,
 } from "../interfaces/interfaces";
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -48,9 +49,14 @@ export type FetchAppUsersAction = {
   payloads: Array<IAppUsers>;
 };
 
-export type ModalAction = {
+export type StatsModalAction = {
   type: string;
   payloads: boolean | Array<IAppUsers>;
+};
+
+export type CommentsModalAction = {
+  type: string;
+  payloads: boolean | IPostWithCommentsContent | null;
 };
 
 export type UserFormProps = {
@@ -67,10 +73,15 @@ export type LogoutAction = {
 };
 
 export type LoginFormTemplateProps = {
+  loadingHandler: Function;
   loginHandler(e: React.SyntheticEvent): void;
   onChangeHandler(e: React.SyntheticEvent): void;
   email: string;
   password: string;
+};
+
+export type GoogleLoginProps = {
+  loadingHandler: Function;
 };
 
 export type RegisterFormTemplProps = {

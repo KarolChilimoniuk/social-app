@@ -2,8 +2,8 @@ import { instance } from ".";
 import { Dispatch } from "redux";
 import { followUser, unfollowUser } from "../../actions/userActions";
 import {
-  fetchModalContent,
-  modalLoadingStatus,
+  fetchStatsModalContent,
+  statsModalLoadingStatus,
 } from "../../actions/appDataAction";
 import { AxiosError, AxiosResponse } from "axios";
 
@@ -40,8 +40,8 @@ export const fetchFollowed = async (
   await instance
     .get(`/${userId}/followed`)
     .then((res: AxiosResponse) => {
-      dispatch(modalLoadingStatus(false));
-      dispatch(fetchModalContent(res.data.listOfFollowed));
+      dispatch(statsModalLoadingStatus(false));
+      dispatch(fetchStatsModalContent(res.data.listOfFollowed));
     })
     .catch((err: AxiosError) => {
       console.error(err.message);
@@ -55,8 +55,8 @@ export const fetchFollowers = async (
   await instance
     .get(`/${userId}/followers`)
     .then((res: AxiosResponse) => {
-      dispatch(modalLoadingStatus(false));
-      dispatch(fetchModalContent(res.data.listOfFollowers));
+      dispatch(statsModalLoadingStatus(false));
+      dispatch(fetchStatsModalContent(res.data.listOfFollowers));
     })
     .catch((err: AxiosError) => {
       console.error(err.message);

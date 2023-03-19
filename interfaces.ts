@@ -35,7 +35,7 @@ export interface IThought {
   _id: ObjectId;
   textContent: string;
   likes: Array<string>;
-  comments: Array<IComment> | Array<string>;
+  comments: Array<string>;
   shares: number;
   created: Date;
   author: {
@@ -58,10 +58,19 @@ export interface IThoughtInPushMethod {
   };
 }
 export interface IComment {
-  _id: string;
+  _id: ObjectId;
+  responses: Array<string>;
   author: {
     _id: ObjectId;
   };
   content: string;
-  date: Date;
+  created: Date;
+  likes: Array<string>;
+}
+
+export interface IThoughtCommentData {
+  author: { _id: string; firstName: string; lastName: string; pic: string };
+  content: string;
+  created: Date;
+  likes: Array<string>;
 }

@@ -24,7 +24,7 @@ export const ModalContainer = styled.div`
   overflow: auto;
   width: 300px;
   height: 400px;
-  padding: 20px 20px 0 0;
+  padding: 20px 20px 0 20px;
   position: relative;
 `;
 
@@ -50,16 +50,12 @@ export const Img = styled.img`
 `;
 
 export const Content = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   margin-top: 20px;
   padding-top: 20px;
   width: 100%;
-`;
-
-export const Paragraph = styled.p`
-  font-weight: 600;
 `;
 
 export const UserContainer = styled.div`

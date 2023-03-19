@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  hideModalHandler,
-  modalLoadingStatus,
+  hideStatsModalHandler,
+  statsModalLoadingStatus,
 } from "../../actions/appDataAction";
 import HomeIcon from "../../images/home.png";
 import NewsIcon from "../../images/news.png";
@@ -68,8 +68,8 @@ const UserDesktopNav = (): JSX.Element => {
               Followers:{" "}
               <Span
                 onClick={() => {
-                  dispatch(modalLoadingStatus(true));
-                  dispatch(hideModalHandler(false));
+                  dispatch(statsModalLoadingStatus(true));
+                  dispatch(hideStatsModalHandler(false));
                   fetchFollowers(loggedUserData._id, dispatch);
                 }}
               >
@@ -80,8 +80,8 @@ const UserDesktopNav = (): JSX.Element => {
               Followed:{" "}
               <Span
                 onClick={() => {
-                  dispatch(modalLoadingStatus(true));
-                  dispatch(hideModalHandler(false));
+                  dispatch(statsModalLoadingStatus(true));
+                  dispatch(hideStatsModalHandler(false));
                   fetchFollowed(loggedUserData._id, dispatch);
                 }}
               >

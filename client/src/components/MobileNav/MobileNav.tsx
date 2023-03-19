@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  hideModalHandler,
-  modalLoadingStatus,
+  hideStatsModalHandler,
+  statsModalLoadingStatus,
 } from "../../actions/appDataAction";
 import UserHeader from "../UserHeader/UserHeader";
 import SearchUser from "../SearchUser/SearchUser";
@@ -72,8 +72,8 @@ const MobileNav = ({ active }: NavProps): JSX.Element => {
               Followers:{" "}
               <Span
                 onClick={() => {
-                  dispatch(modalLoadingStatus(true));
-                  dispatch(hideModalHandler(false));
+                  dispatch(statsModalLoadingStatus(true));
+                  dispatch(hideStatsModalHandler(false));
                   fetchFollowers(loggedUserData._id, dispatch);
                 }}
               >
@@ -85,8 +85,8 @@ const MobileNav = ({ active }: NavProps): JSX.Element => {
               Followed:{" "}
               <Span
                 onClick={() => {
-                  dispatch(modalLoadingStatus(true));
-                  dispatch(hideModalHandler(false));
+                  dispatch(statsModalLoadingStatus(true));
+                  dispatch(hideStatsModalHandler(false));
                   fetchFollowed(loggedUserData._id, dispatch);
                 }}
               >

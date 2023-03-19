@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import cloud from "../services/cloudinary";
 import { UserModel } from "../models/User";
 import { ThoughtModel } from "../models/Thought";
+import { CommentModel } from "../models/Comment";
 import {
   getUserFollowed,
   getUserFollowers,
@@ -326,5 +327,31 @@ export const unFollow = async (req: Request, res: Response) => {
     } catch (err) {
       res.json(err.message);
     }
+  }
+};
+
+// addComment
+
+export const addComment = async (req: Request, res: Response) => {
+  const { userId, commentContent, thoughtId } = req.body;
+  try {
+    !userId && res.status(400).json("Bad request :(");
+    const user: IUser = await UserModel.findById(userId);
+    !user && res.status(404).json("User not found :(");
+    const thought: IThought = await ThoughtModel.findById(thoughtId);
+    !thought && res.status(404).json("Thought not found :(");
+    const newComment = await CommentModel.create({
+      content: commentContent,
+      author: {
+        _id: user._id,
+      },
+    });
+    await ThoughtModel.updateOne(
+      { _id: thoughtId },
+      { $push: { comments: newComment._id } }
+    );
+    res.status(201).json("Comment added");
+  } catch (err) {
+    res.json(err.message);
   }
 };

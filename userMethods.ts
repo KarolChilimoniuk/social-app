@@ -1,14 +1,27 @@
-import { IThoughtInPushMethod, IUser } from "./interfaces";
+import {
+  IComment,
+  IThoughtInPushMethod,
+  IUser,
+  IThoughtCommentData,
+} from "./interfaces";
 import { UserModel } from "./models/User";
+import { CommentModel } from "./models/Comment";
 import { ThoughtModel } from "./models/Thought";
 
 // Sorting method for posts dates
 
-const sortMethod = (
-  dateA: IThoughtInPushMethod,
-  dateB: IThoughtInPushMethod
+const sortMethodFromLast = (
+  elA: IThoughtInPushMethod | IThoughtCommentData,
+  elB: IThoughtInPushMethod | IThoughtCommentData
 ) => {
-  return dateB.created.getTime() - dateA.created.getTime();
+  return elB.created.getTime() - elA.created.getTime();
+};
+
+const sortMethodFromFirst = (
+  elA: IThoughtInPushMethod | IThoughtCommentData,
+  elB: IThoughtInPushMethod | IThoughtCommentData
+) => {
+  return elA.created.getTime() - elB.created.getTime();
 };
 
 // Fetch user list of followed
@@ -81,7 +94,7 @@ export const getUserPosts = async (
       })
     );
   }
-  return result.sort(sortMethod);
+  return result.sort(sortMethodFromLast);
 };
 
 // Fetch user friends posts
@@ -137,6 +150,44 @@ export const getPostsToShow = async (
   let userPosts: Array<IThoughtInPushMethod> = await getUserPosts(user);
   let result: Array<IThoughtInPushMethod> = userPosts
     .concat(postsOfFollowed)
-    .sort(sortMethod);
+    .sort(sortMethodFromLast);
   return result;
+};
+
+// Get Comments
+
+// export ons getResponses = async(responsesIds: Array<string): Promise<any> => {
+
+// }
+export const getComments = async (
+  commentsIds: Array<string>
+): Promise<Array<IThoughtCommentData>> => {
+  let result: Array<IThoughtCommentData> = [];
+  if (commentsIds.length > 0) {
+    result = await Promise.all(
+      commentsIds.map(async (id) => {
+        try {
+          const commentData: IComment = await CommentModel.findById(id).exec();
+          const commentAuthor: IUser = await UserModel.findById(
+            commentData.author._id
+          ).exec();
+          return {
+            _id: commentData._id,
+            author: {
+              _id: `${commentAuthor._id}`,
+              firstName: commentAuthor.firstName,
+              lastName: commentAuthor.lastName,
+              pic: commentAuthor.pic,
+            },
+            content: commentData.content,
+            created: commentData.created,
+            likes: commentData.likes,
+          };
+        } catch (err) {
+          console.error(err.message);
+        }
+      })
+    );
+  }
+  return result.sort(sortMethodFromFirst);
 };
