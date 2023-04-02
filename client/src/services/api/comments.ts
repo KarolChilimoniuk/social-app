@@ -12,12 +12,10 @@ export const fetchComments = async (id: string, dispatch: Dispatch) => {
     .then((res: AxiosResponse) => {
       dispatch(commentsModalLoadingStatus(false));
       dispatch(fetchCommentsModalContent(res.data));
-      console.log(res.data);
     })
     .catch((err: AxiosError) => {
       dispatch(commentsModalLoadingStatus(false));
       dispatch(fetchCommentsModalContent(null));
-      console.log(err.message);
       alert(err.message);
     });
 };
@@ -26,7 +24,6 @@ export const addComment = async (
   userId: string,
   commentContent: string,
   thoughtId: string
-  // dispatch: Dispatch
 ): Promise<void> => {
   instance
     .post("/logged/newComment", {
@@ -38,7 +35,45 @@ export const addComment = async (
       alert(res.data);
     })
     .catch((err: AxiosError) => {
-      console.error("Nie działa :(");
+      console.error(`${err.response!.data}`);
+      alert(`${err.response!.data}`);
+    });
+};
+
+export const fetchCommentResponses = async (
+  thoughtId: string,
+  commentId: string,
+  setNewResponses: Function,
+  setLoading: Function
+) => {
+  await instance
+    .get(`/${thoughtId}/comments/${commentId}/responses`)
+    .then((res: AxiosResponse) => {
+      console.log(res);
+      setNewResponses(res.data.responses);
+      setLoading(false);
+    })
+    .catch((err: AxiosError) => {
+      alert(err.message);
+      setLoading(false);
+    });
+};
+
+export const addCommentResponse = async (
+  userId: string,
+  responseContent: string,
+  commentId: string
+): Promise<void> => {
+  instance
+    .post("/logged/newCommentResponse", {
+      userId: userId,
+      responseContent: responseContent,
+      commentId: commentId,
+    })
+    .then((res: AxiosResponse) => {
+      console.log(res.data);
+    })
+    .catch((err: AxiosError) => {
       alert(`${err.response!.data}`);
     });
 };

@@ -62,7 +62,7 @@ export const statsModalLoadingStatus = (status: boolean): StatsModalAction => {
 };
 
 export const fetchStatsModalContent = (
-  content: Array<IAppUsers>
+  content: Array<IAppUsers> | null
 ): StatsModalAction => {
   return {
     type: FETCH_STATS_MODAL_CONTENT,

@@ -18,7 +18,7 @@ export const FormContainer = styled.div`
 `;
 
 export const Form = styled.form`
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;

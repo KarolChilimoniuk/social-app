@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import closeImg from "../../images/cross-mark.png";
-import UserProfileImg from "../UserProfileImg/UserProfileImg";
-import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
+import Comment from "../Comment/Comment";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import TextArea from "../TextArea/TextArea";
 import Thought from "../Thought/Thought";
 import SubInput from "../SubmitInput/SubmitInput";
-import LikesSection from "../LikesContent/LikesContent";
 import Pagination from "../Pagination/Pagination";
-import { hideCommentsModalHandler } from "../../actions/appDataAction";
-import { IRootState } from "../../interfaces/interfaces";
+import {
+  fetchCommentsModalContent,
+  hideCommentsModalHandler,
+} from "../../actions/appDataAction";
+import {
+  IComment,
+  IPostWithCommentsContent,
+  IRootState,
+} from "../../interfaces/interfaces";
 import { changeCommentValue, publishComment } from "./Service";
 import {
   Img,
@@ -19,30 +24,30 @@ import {
   ImgContainer2,
   ModalBackground,
   ModalContainer,
-  Comment,
   Content,
   Paragraph,
   Form,
   InputContainer,
   SubmitContainer,
-  UserContainer,
-  HeaderDateContainer,
-  DateParagraph,
-  CommentContentParagraph,
 } from "./CommentsModal.style";
-import UserHeader from "../UserHeader/UserHeader";
 
 const CommentsModal = (): JSX.Element => {
   const dispatch: Dispatch = useDispatch();
   const appData = useSelector((state: IRootState) => state.appData);
-  const loggedUserId = useSelector((state: IRootState) => state.userData._id);
+  const loggedUserData = useSelector((state: IRootState) => state.userData);
 
+  const [modalContent, setModalContent] =
+    useState<IPostWithCommentsContent | null>(null);
   const [commentContent, newCommentContent] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [commentsPerPage] = useState<number>(10);
 
   const indexOfLastPost: number = currentPage * commentsPerPage;
   const indexOfFirstPost: number = indexOfLastPost - commentsPerPage;
+
+  useEffect(() => {
+    setModalContent(appData.commentsModalContent);
+  }, [appData.commentsModalContent]);
 
   return (
     <ModalBackground hidden={appData.commentsModalHideStatus}>
@@ -52,6 +57,7 @@ const CommentsModal = (): JSX.Element => {
             src={closeImg}
             onClick={() => {
               dispatch(hideCommentsModalHandler(true));
+              dispatch(fetchCommentsModalContent(null));
               newCommentContent("");
             }}
           />
@@ -61,33 +67,31 @@ const CommentsModal = (): JSX.Element => {
             <LoadingIcon />
           </ImgContainer2>
         )}
-        {appData.commentsModalContent !== null &&
+        {modalContent !== null &&
           appData.commentsModalLoadingStatus === false && (
             <Content>
               <Thought
-                authorFirstName={appData.commentsModalContent.author.firstName}
-                authorLastName={appData.commentsModalContent.author.lastName}
-                authorPic={appData.commentsModalContent.author.pic}
-                date={new Date(
-                  appData.commentsModalContent.created
-                ).toDateString()}
-                content={appData.commentsModalContent.textContent}
-                likes={appData.commentsModalContent.likes.length}
+                authorFirstName={modalContent.author.firstName}
+                authorLastName={modalContent.author.lastName}
+                authorPic={modalContent.author.pic}
+                date={new Date(modalContent.created).toDateString()}
+                content={modalContent.textContent}
+                likes={modalContent.likes.length}
                 likeStatus={
-                  appData.commentsModalContent.likes.includes(loggedUserId)
-                    ? true
-                    : false
+                  modalContent.likes.includes(loggedUserData._id) ? true : false
                 }
-                authorId={appData.commentsModalContent.author._id}
-                postId={appData.commentsModalContent._id}
+                authorId={modalContent.author._id}
+                postId={modalContent._id}
               />
               <Form
                 onSubmit={(e: React.SyntheticEvent) => {
                   publishComment(
                     e,
                     commentContent,
-                    appData.commentsModalContent!.author._id,
-                    appData.commentsModalContent!._id
+                    loggedUserData,
+                    modalContent!._id,
+                    setModalContent,
+                    modalContent
                   );
                   newCommentContent("");
                 }}
@@ -110,61 +114,24 @@ const CommentsModal = (): JSX.Element => {
                   <SubInput value={`Publish comment`} />
                 </SubmitContainer>
               </Form>
-              {appData.commentsModalContent.comments.length !== 0 ? (
-                appData.commentsModalContent.comments
-                  .filter(
+              {modalContent.comments!.length !== 0 ? (
+                modalContent
+                  .comments!.filter(
                     (el, i) => i < indexOfLastPost && i >= indexOfFirstPost
                   )
                   .map((comment) => (
-                    <Comment key={comment._id}>
-                      <UserContainer>
-                        {appData.commentsModalContent?.author.pic !== "" ? (
-                          <UserProfileImg
-                            imgId={appData.commentsModalContent?.author.pic}
-                            width={30}
-                            height={30}
-                            radius={30}
-                          ></UserProfileImg>
-                        ) : (
-                          <NoImgAvatar height={30} width={30} />
-                        )}
-                        <HeaderDateContainer>
-                          <UserHeader
-                            name={comment.author.firstName!}
-                            lastName={comment.author.lastName!}
-                            userId={comment.author._id!}
-                          />
-                          <DateParagraph>
-                            <span>
-                              {new Date(comment.created).toDateString()}{" "}
-                            </span>
-                            <span>{new Date(comment.created).getHours()}:</span>
-                            <span>
-                              {new Date(comment.created).getMinutes() < 10
-                                ? `0${new Date(comment.created).getMinutes()}`
-                                : new Date(comment.created).getMinutes()}
-                            </span>
-                          </DateParagraph>
-                        </HeaderDateContainer>
-                      </UserContainer>
-                      <CommentContentParagraph>
-                        {comment.content}
-                      </CommentContentParagraph>
-                      <LikesSection
-                        likeStatus={
-                          comment.likes.includes(loggedUserId) ? true : false
-                        }
-                        likes={comment.likes.length}
-                        postId={comment._id}
-                      />
-                    </Comment>
+                    <Comment
+                      comment={comment}
+                      thoughtId={modalContent._id}
+                      key={comment._id}
+                    />
                   ))
               ) : (
                 <Paragraph>No comments</Paragraph>
               )}
               <Pagination
                 itemsPerPage={commentsPerPage}
-                totalItems={appData.commentsModalContent!.comments!.length}
+                totalItems={modalContent!.comments!.length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
               />

@@ -40,8 +40,8 @@ export const fetchFollowed = async (
   await instance
     .get(`/${userId}/followed`)
     .then((res: AxiosResponse) => {
-      dispatch(statsModalLoadingStatus(false));
       dispatch(fetchStatsModalContent(res.data.listOfFollowed));
+      dispatch(statsModalLoadingStatus(false));
     })
     .catch((err: AxiosError) => {
       console.error(err.message);
@@ -55,8 +55,8 @@ export const fetchFollowers = async (
   await instance
     .get(`/${userId}/followers`)
     .then((res: AxiosResponse) => {
-      dispatch(statsModalLoadingStatus(false));
       dispatch(fetchStatsModalContent(res.data.listOfFollowers));
+      dispatch(statsModalLoadingStatus(false));
     })
     .catch((err: AxiosError) => {
       console.error(err.message);

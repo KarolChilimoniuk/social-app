@@ -5,7 +5,7 @@ export const Switcher = styled.button`
   border: 0;
   border-radius: 5px;
   color: rgb(0, 0, 0);
-  font-weight: 600;
+  font-weight: 700;
   padding: 10px;
   cursor: pointer;
   margin-bottom: 50px;

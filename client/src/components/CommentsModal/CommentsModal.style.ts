@@ -143,3 +143,17 @@ export const DateParagraph = styled.p`
 export const CommentContentParagraph = styled.p`
   margin-top: 5px;
 `;
+
+export const ResponsesTitle = styled.p`
+  color: rgb(50, 50, 50);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s 0.1s;
+  :hover {
+    color: rgb(255, 255, 255);
+  }
+`;
+
+export const ResponsesContainer = styled.div`
+  background-color: rgb(85, 121, 142);
+`;

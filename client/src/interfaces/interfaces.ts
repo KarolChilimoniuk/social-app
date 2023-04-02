@@ -54,7 +54,7 @@ export interface IAppMainDataState {
   appUsers: Array<IAppUsers>;
   statsModalHideStatus: boolean;
   statsModalLoadingStatus: boolean;
-  statsModalContent: Array<IAppUsers>;
+  statsModalContent: Array<IAppUsers> | null;
   commentsModalHideStatus: boolean;
   commentsModalLoadingStatus: boolean;
   commentsModalContent: IPostWithCommentsContent | null;
@@ -72,7 +72,16 @@ export interface IComment {
   author: IAuthor;
   content: string;
   created: string;
-  likes: string;
+  responses: Array<string>;
+  likes: Array<string>;
+}
+
+export interface ICommentResponse {
+  _id: string;
+  author: IAuthor;
+  content: string;
+  created: string;
+  likes: Array<string>;
 }
 
 export interface IPostWithCommentsContent {

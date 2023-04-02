@@ -1,7 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import closeImg from "../../images/cross-mark.png";
-import { hideStatsModalHandler } from "../../actions/appDataAction";
+import {
+  fetchStatsModalContent,
+  hideStatsModalHandler,
+} from "../../actions/appDataAction";
 import UserHeader from "../UserHeader/UserHeader";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
@@ -24,7 +27,7 @@ const StatsModal = (): JSX.Element => {
   const modalHideStatus: boolean = useSelector(
     (state: IRootState) => state.appData.statsModalHideStatus
   );
-  const modalContent: Array<IAppUsers> = useSelector(
+  const modalContent: Array<IAppUsers> | null = useSelector(
     (state: IRootState) => state.appData.statsModalContent
   );
   const modalLoadingStatus: boolean = useSelector(
@@ -39,37 +42,43 @@ const StatsModal = (): JSX.Element => {
             src={closeImg}
             onClick={() => {
               dispatch(hideStatsModalHandler(true));
+              dispatch(fetchStatsModalContent(null));
             }}
           />
         </ImgContainer>
         {modalLoadingStatus && <LoadingIcon />}
-        {!modalLoadingStatus && modalContent.length === 0 ? (
-          <NoContentParagraph>List if empty</NoContentParagraph>
-        ) : (
-          <Content>
-            {modalContent!.map((user: IAppUsers) => (
-              <UserContainer key={user._id}>
-                {user.pic !== "" ? (
-                  <UserProfileImg
-                    imgId={user.pic}
-                    width={80}
-                    height={80}
-                    radius={50}
-                  />
-                ) : (
-                  <NoImgAvatar height={80} width={80} />
-                )}
-                <UserHeaderContainer>
-                  <UserHeader
-                    userId={user._id}
-                    name={user.firstName}
-                    lastName={user.lastName}
-                  />
-                </UserHeaderContainer>
-              </UserContainer>
-            ))}
-          </Content>
-        )}
+        {!modalLoadingStatus &&
+          modalContent !== null &&
+          modalContent.length === 0 && (
+            <NoContentParagraph>List if empty</NoContentParagraph>
+          )}
+        {!modalLoadingStatus &&
+          modalContent !== null &&
+          modalContent.length > 0 && (
+            <Content>
+              {modalContent!.map((user: IAppUsers) => (
+                <UserContainer key={user._id}>
+                  {user.pic !== "" ? (
+                    <UserProfileImg
+                      imgId={user.pic}
+                      width={80}
+                      height={80}
+                      radius={50}
+                    />
+                  ) : (
+                    <NoImgAvatar height={80} width={80} />
+                  )}
+                  <UserHeaderContainer>
+                    <UserHeader
+                      userId={user._id}
+                      name={user.firstName}
+                      lastName={user.lastName}
+                    />
+                  </UserHeaderContainer>
+                </UserContainer>
+              ))}
+            </Content>
+          )}
       </ModalContainer>
     </ModalBackground>
   );

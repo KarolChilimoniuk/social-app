@@ -6,6 +6,7 @@ import {
   IThought,
   IUserInfo,
   IPostWithCommentsContent,
+  ICommentResponse,
 } from "../interfaces/interfaces";
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -51,12 +52,17 @@ export type FetchAppUsersAction = {
 
 export type StatsModalAction = {
   type: string;
-  payloads: boolean | Array<IAppUsers>;
+  payloads: boolean | Array<IAppUsers> | null;
 };
 
 export type CommentsModalAction = {
   type: string;
   payloads: boolean | IPostWithCommentsContent | null;
+};
+
+export type CommentProps = {
+  comment: IComment;
+  thoughtId: string;
 };
 
 export type UserFormProps = {
@@ -166,6 +172,7 @@ export type LikesSectionProps = {
   likes: number | undefined;
   likeStatus: boolean;
   postId: string;
+  type?: string;
 };
 
 export type UserPic = File | null;
@@ -204,4 +211,8 @@ export type PaginationProps = {
   totalItems: number;
   currentPage: number;
   setCurrentPage: Function;
+};
+
+export type ResponseProps = {
+  response: ICommentResponse;
 };

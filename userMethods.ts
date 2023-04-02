@@ -1,25 +1,28 @@
 import {
   IComment,
+  ICommentResponse,
   IThoughtInPushMethod,
   IUser,
   IThoughtCommentData,
+  ICommentResponseData,
 } from "./interfaces";
 import { UserModel } from "./models/User";
 import { CommentModel } from "./models/Comment";
 import { ThoughtModel } from "./models/Thought";
+import { CommentResponseModel } from "./models/CommentResponse";
 
 // Sorting method for posts dates
 
 const sortMethodFromLast = (
-  elA: IThoughtInPushMethod | IThoughtCommentData,
-  elB: IThoughtInPushMethod | IThoughtCommentData
+  elA: IThoughtInPushMethod | IThoughtCommentData | ICommentResponseData,
+  elB: IThoughtInPushMethod | IThoughtCommentData | ICommentResponseData
 ) => {
   return elB.created.getTime() - elA.created.getTime();
 };
 
 const sortMethodFromFirst = (
-  elA: IThoughtInPushMethod | IThoughtCommentData,
-  elB: IThoughtInPushMethod | IThoughtCommentData
+  elA: IThoughtInPushMethod | IThoughtCommentData | ICommentResponseData,
+  elB: IThoughtInPushMethod | IThoughtCommentData | ICommentResponseData
 ) => {
   return elA.created.getTime() - elB.created.getTime();
 };
@@ -156,9 +159,6 @@ export const getPostsToShow = async (
 
 // Get Comments
 
-// export ons getResponses = async(responsesIds: Array<string): Promise<any> => {
-
-// }
 export const getComments = async (
   commentsIds: Array<string>
 ): Promise<Array<IThoughtCommentData>> => {
@@ -181,7 +181,44 @@ export const getComments = async (
             },
             content: commentData.content,
             created: commentData.created,
+            responses: commentData.responses,
             likes: commentData.likes,
+          };
+        } catch (err) {
+          console.error(err.message);
+        }
+      })
+    );
+  }
+  return result.sort(sortMethodFromFirst);
+};
+
+// Get comment responses
+
+export const getCommentResponses = async (
+  responsesIds: Array<string>
+): Promise<Array<ICommentResponseData>> => {
+  let result: Array<ICommentResponseData> = [];
+  if (responsesIds.length > 0) {
+    result = await Promise.all(
+      responsesIds.map(async (id) => {
+        try {
+          const responseData: ICommentResponse =
+            await CommentResponseModel.findById(id).exec();
+          const responseAuthor: IUser = await UserModel.findById(
+            responseData.author._id
+          ).exec();
+          return {
+            _id: responseData._id,
+            author: {
+              _id: `${responseAuthor._id}`,
+              firstName: responseAuthor.firstName,
+              lastName: responseAuthor.lastName,
+              pic: responseAuthor.pic,
+            },
+            content: responseData.content,
+            created: responseData.created,
+            likes: responseData.likes,
           };
         } catch (err) {
           console.error(err.message);

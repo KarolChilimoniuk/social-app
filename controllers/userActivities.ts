@@ -4,13 +4,20 @@ import cloud from "../services/cloudinary";
 import { UserModel } from "../models/User";
 import { ThoughtModel } from "../models/Thought";
 import { CommentModel } from "../models/Comment";
+import { CommentResponseModel } from "../models/CommentResponse";
 import {
   getUserFollowed,
   getUserFollowers,
   getUserPosts,
   getPostsToShow,
 } from "../userMethods";
-import { IUser, IThoughtInPushMethod, IThought } from "interfaces";
+import {
+  IUser,
+  IThoughtInPushMethod,
+  IThought,
+  IComment,
+  ICommentResponse,
+} from "interfaces";
 
 // Edit user data controller
 
@@ -204,9 +211,9 @@ export const addThought = async (req: Request, res: Response) => {
   }
 };
 
-// Add like to the post
+// Add like to the thought
 
-export const addLike = async (req: Request, res: Response) => {
+export const likeThought = async (req: Request, res: Response) => {
   const { thoughtId, userId } = req.body;
   if (thoughtId) {
     try {
@@ -230,9 +237,9 @@ export const addLike = async (req: Request, res: Response) => {
   }
 };
 
-// Remove like from the post
+// Remove like from thought
 
-export const removeLike = async (req: Request, res: Response) => {
+export const unlikeThought = async (req: Request, res: Response) => {
   const { thoughtId, userId } = req.body;
   if (thoughtId) {
     try {
@@ -251,6 +258,54 @@ export const removeLike = async (req: Request, res: Response) => {
       res.status(200).send({
         message: "Like removed",
         thoughtData: updatedThought,
+      });
+    } catch (err) {
+      res.json(err.message);
+    }
+  }
+};
+
+// Add like to the comment
+
+export const likeComment = async (req: Request, res: Response) => {
+  const { commentId, userId } = req.body;
+  if (commentId) {
+    try {
+      const comment = await CommentModel.findOneAndUpdate(
+        { _id: commentId },
+        { $push: { likes: userId } }
+      );
+      if (!comment) {
+        res.status(404).send({
+          message: "Thought not found :(",
+        });
+      }
+      res.status(200).send({
+        message: "Like added",
+      });
+    } catch (err) {
+      res.json(err.message);
+    }
+  }
+};
+
+// Remove like from comment
+
+export const unlikeComment = async (req: Request, res: Response) => {
+  const { commentId, userId } = req.body;
+  if (commentId) {
+    try {
+      const comment = await CommentModel.findOneAndUpdate(
+        { _id: commentId },
+        { $pull: { likes: userId } }
+      );
+      if (!comment) {
+        res.status(404).send({
+          message: "Thought not found :(",
+        });
+      }
+      res.status(200).send({
+        message: "Like removed",
       });
     } catch (err) {
       res.json(err.message);
@@ -351,6 +406,32 @@ export const addComment = async (req: Request, res: Response) => {
       { $push: { comments: newComment._id } }
     );
     res.status(201).json("Comment added");
+  } catch (err) {
+    res.json(err.message);
+  }
+};
+
+// addCommentResponse
+
+export const addCommentResponse = async (req: Request, res: Response) => {
+  const { userId, responseContent, commentId } = req.body;
+  try {
+    !userId && res.status(400).json("Bad request :(");
+    const user: IUser = await UserModel.findById(userId);
+    !user && res.status(404).json("User not found :(");
+    const comment: IComment = await CommentModel.findById(commentId);
+    !comment && res.status(404).json("Comment not found :(");
+    const newResponse: ICommentResponse = await CommentResponseModel.create({
+      content: responseContent,
+      author: {
+        _id: user._id,
+      },
+    });
+    await CommentModel.updateOne(
+      { _id: commentId },
+      { $push: { responses: newResponse._id } }
+    );
+    res.status(201).json("Response to the comment added");
   } catch (err) {
     res.json(err.message);
   }

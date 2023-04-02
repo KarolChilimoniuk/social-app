@@ -18,7 +18,7 @@ const initialState: IAppMainDataState = {
   appUsers: [],
   statsModalHideStatus: true,
   statsModalLoadingStatus: false,
-  statsModalContent: [],
+  statsModalContent: null,
   commentsModalHideStatus: true,
   commentsModalLoadingStatus: false,
   commentsModalContent: null,

@@ -1,5 +1,3 @@
-import { string } from "joi";
-import { ObjectId } from "mongodb";
 import { Schema, model } from "mongoose";
 import { IThought } from "../interfaces";
 

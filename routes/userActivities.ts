@@ -2,11 +2,14 @@ import {
   editUserData,
   editUserPic,
   addThought,
-  addLike,
-  removeLike,
+  likeThought,
+  unlikeThought,
+  likeComment,
+  unlikeComment,
   follow,
   unFollow,
   addComment,
+  addCommentResponse,
 } from "../controllers/userActivities";
 import { Router } from "express";
 
@@ -16,8 +19,11 @@ userActivitiesRouter.post("/editProfile", editUserData);
 userActivitiesRouter.post("/editUserPic", editUserPic);
 userActivitiesRouter.post("/newThought", addThought);
 userActivitiesRouter.post("/newComment", addComment);
-userActivitiesRouter.patch("/addLike", addLike);
-userActivitiesRouter.patch("/removeLike", removeLike);
+userActivitiesRouter.post("/newCommentResponse", addCommentResponse);
+userActivitiesRouter.patch("/likeThought", likeThought);
+userActivitiesRouter.patch("/unlikeThought", unlikeThought);
+userActivitiesRouter.patch("/likeComment", likeComment);
+userActivitiesRouter.patch("/unlikeComment", unlikeComment);
 userActivitiesRouter.patch("/follow", follow);
 userActivitiesRouter.patch("/unfollow", unFollow);
 

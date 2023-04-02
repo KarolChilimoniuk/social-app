@@ -4,13 +4,19 @@ import like from "../../images/like.png";
 import notLike from "../../images/notLike.png";
 import { LikesSectionProps } from "../../types/types";
 import { IRootState } from "../../interfaces/interfaces";
-import { addLike, removeLike } from "../../services/api/likesContent";
+import {
+  likeComment,
+  unlikeComment,
+  likeThought,
+  unlikeThought,
+} from "../../services/api/likes";
 import { LikesContent, Img, Span } from "./LikesContent.style";
 
 const LikesSection = ({
   likes,
   likeStatus,
   postId,
+  type,
 }: LikesSectionProps): JSX.Element => {
   const loggedUserId = useSelector((state: IRootState) => state.userData._id);
 
@@ -20,12 +26,22 @@ const LikesSection = ({
   const likeHandler = async (): Promise<void> => {
     try {
       if (likeStat) {
-        await removeLike(loggedUserId, postId);
+        if (type === "comments") {
+          await unlikeComment(loggedUserId, postId);
+        }
+        if (type !== "comments") {
+          await unlikeThought(loggedUserId, postId);
+        }
         setLikeStatus(!likeStat);
         setLike(postLikes! - 1);
       }
       if (!likeStat) {
-        await addLike(loggedUserId, postId);
+        if (type === "comments") {
+          await likeComment(loggedUserId, postId);
+        }
+        if (type !== "comments") {
+          await likeThought(loggedUserId, postId);
+        }
         setLikeStatus(!likeStat);
         setLike(postLikes! + 1);
       }

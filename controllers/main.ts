@@ -5,9 +5,11 @@ import {
   getUserFollowers,
   getUserPosts,
   getComments,
+  getCommentResponses,
 } from "../userMethods";
-import { IUser, IThought, IThoughtInPushMethod } from "interfaces";
+import { IUser, IThought, IThoughtInPushMethod, IComment } from "interfaces";
 import { ThoughtModel } from "../models/Thought";
+import { CommentModel } from "../models/Comment";
 
 export const main = (req: Request, res: Response) => {
   res.send("Server works ;]");
@@ -104,6 +106,22 @@ export const fetchComments = async (req: Request, res: Response) => {
       shares: thought.shares,
       likes: thought.likes,
       comments: commentsData,
+    });
+  } catch (err) {
+    res.json(err.message);
+  }
+};
+
+export const fetchCommentResponses = async (req: Request, res: Response) => {
+  const { thoughtId, commentId } = req.params;
+  try {
+    !thoughtId && res.status(400).json("Bad request :(");
+    const comment: IComment = await CommentModel.findById(commentId);
+    !comment && res.status(404).json("Comment not found :(");
+    const responsesData = await getCommentResponses(comment.responses);
+    console.log(responsesData);
+    res.status(200).send({
+      responses: responsesData,
     });
   } catch (err) {
     res.json(err.message);

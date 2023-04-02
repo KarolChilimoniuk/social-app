@@ -1,11 +1,16 @@
-import { Dispatch } from "redux";
 import { addComment } from "../../services/api/comments";
+import {
+  IPostWithCommentsContent,
+  IUserDataState,
+} from "../../interfaces/interfaces";
 
 export const publishComment = async (
   e: React.SyntheticEvent,
   commentContent: string,
-  userId: string,
-  thoughtId: string
+  loggedUserData: IUserDataState,
+  thoughtId: string,
+  setModalContent: Function,
+  formerModalContent: IPostWithCommentsContent
   //   dispatch: Dispatch
 ) => {
   e.preventDefault();
@@ -13,7 +18,22 @@ export const publishComment = async (
     alert("Your comment is empty :/ Write something");
   }
   if (commentContent !== "") {
-    await addComment(userId, commentContent, thoughtId);
+    const newComments = [...formerModalContent.comments];
+    newComments.push({
+      author: {
+        _id: loggedUserData._id,
+        firstName: loggedUserData.firstName,
+        lastName: loggedUserData.lastName,
+        pic: loggedUserData.pic,
+      },
+      content: commentContent,
+      created: String(new Date()),
+      likes: [],
+      responses: [],
+      _id: commentContent,
+    });
+    setModalContent({ ...formerModalContent, comments: newComments });
+    await addComment(loggedUserData._id, commentContent, thoughtId);
   }
 };
 
