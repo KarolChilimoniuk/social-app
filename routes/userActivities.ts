@@ -6,6 +6,8 @@ import {
   unlikeThought,
   likeComment,
   unlikeComment,
+  likeCommentResponse,
+  unlikeCommentResponse,
   follow,
   unFollow,
   addComment,
@@ -24,6 +26,8 @@ userActivitiesRouter.patch("/likeThought", likeThought);
 userActivitiesRouter.patch("/unlikeThought", unlikeThought);
 userActivitiesRouter.patch("/likeComment", likeComment);
 userActivitiesRouter.patch("/unlikeComment", unlikeComment);
+userActivitiesRouter.patch("/likeCommentResponse", likeCommentResponse);
+userActivitiesRouter.patch("/unlikeCommentResponse", unlikeCommentResponse);
 userActivitiesRouter.patch("/follow", follow);
 userActivitiesRouter.patch("/unfollow", unFollow);
 

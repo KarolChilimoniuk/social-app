@@ -58,7 +58,12 @@ const Thought = ({
       <ThoughtContent>{content}</ThoughtContent>
       {commentsModalHideStatus ? (
         <>
-          <LikesSection likeStatus={likeStatus} likes={likes} postId={postId} />
+          <LikesSection
+            type={"thoughts"}
+            likeStatus={likeStatus}
+            likes={likes}
+            postId={postId}
+          />
           <Paragraph
             onClick={() => {
               commentsHandler(dispatch, postId);

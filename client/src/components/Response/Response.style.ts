@@ -1,15 +1,20 @@
 import styled from "styled-components";
 
-export const UserContainer = styled.div`
+export const ResponseContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 0 20px 20px 20px;
+  border-radius: 0 15px 15px 15px;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
   margin-top: 20px;
   padding-bottom: 10px;
-  padding-left: 5px;
+  padding-left: 10px;
   padding-top: 5px;
-  width: 90%;
+  width: 100%;
+`;
+
+export const UserContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
 `;
 
 export const HeaderDateContainer = styled.div`
@@ -28,13 +33,19 @@ export const CommentContentParagraph = styled.p`
 `;
 
 export const ResponseContent = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-top: 5px;
+  width: 100%;
 `;
 
-export const ResponseParagraph = styled.div`
+export const ResponseParagraph = styled.p`
+  margin-top: 0;
   width: 100%;
+`;
+
+export const LikesContainer = styled.div`
+  width: 95%;
 `;

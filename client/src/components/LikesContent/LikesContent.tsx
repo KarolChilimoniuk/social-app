@@ -9,6 +9,8 @@ import {
   unlikeComment,
   likeThought,
   unlikeThought,
+  likeCommentResponse,
+  unlikeCommentResponse,
 } from "../../services/api/likes";
 import { LikesContent, Img, Span } from "./LikesContent.style";
 
@@ -29,8 +31,11 @@ const LikesSection = ({
         if (type === "comments") {
           await unlikeComment(loggedUserId, postId);
         }
-        if (type !== "comments") {
+        if (type === "thoughts") {
           await unlikeThought(loggedUserId, postId);
+        }
+        if (type === "commentResponse") {
+          await unlikeCommentResponse(loggedUserId, postId);
         }
         setLikeStatus(!likeStat);
         setLike(postLikes! - 1);
@@ -39,8 +44,11 @@ const LikesSection = ({
         if (type === "comments") {
           await likeComment(loggedUserId, postId);
         }
-        if (type !== "comments") {
+        if (type === "thoughts") {
           await likeThought(loggedUserId, postId);
+        }
+        if (type === "commentResponse") {
+          await likeCommentResponse(loggedUserId, postId);
         }
         setLikeStatus(!likeStat);
         setLike(postLikes! + 1);

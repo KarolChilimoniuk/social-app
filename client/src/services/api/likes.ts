@@ -56,3 +56,37 @@ export const unlikeComment = async (
       console.error("Like can't be removed :(");
     });
 };
+
+export const likeCommentResponse = async (
+  userId: string,
+  responseId: string
+): Promise<any> => {
+  await instance
+    .patch("/logged/likeCommentResponse", {
+      userId: userId,
+      responseId: responseId,
+    })
+    .then((res: AxiosResponse) => {
+      console.log("Like added");
+    })
+    .catch((err: AxiosError) => {
+      console.error("Like can't be added :(");
+    });
+};
+
+export const unlikeCommentResponse = async (
+  userId: string,
+  responseId: string
+): Promise<any> => {
+  await instance
+    .patch("/logged/unlikeCommentResponse", {
+      userId: userId,
+      responseId: responseId,
+    })
+    .then((res: AxiosResponse) => {
+      console.log("Like removed");
+    })
+    .catch((err: AxiosError) => {
+      console.error("Like can't be removed :(");
+    });
+};

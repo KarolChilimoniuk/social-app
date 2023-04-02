@@ -313,6 +313,54 @@ export const unlikeComment = async (req: Request, res: Response) => {
   }
 };
 
+// Like comment response
+
+export const likeCommentResponse = async (req: Request, res: Response) => {
+  const { responseId, userId } = req.body;
+  if (responseId) {
+    try {
+      const response = await CommentResponseModel.findOneAndUpdate(
+        { _id: responseId },
+        { $push: { likes: userId } }
+      );
+      if (!response) {
+        res.status(404).send({
+          message: "Response not found :(",
+        });
+      }
+      res.status(200).send({
+        message: "Like added",
+      });
+    } catch (err) {
+      res.json(err.message);
+    }
+  }
+};
+
+// Remove like from comment response
+
+export const unlikeCommentResponse = async (req: Request, res: Response) => {
+  const { responseId, userId } = req.body;
+  if (responseId) {
+    try {
+      const response = await CommentResponseModel.findOneAndUpdate(
+        { _id: responseId },
+        { $pull: { likes: userId } }
+      );
+      if (!response) {
+        res.status(404).send({
+          message: "Thought not found :(",
+        });
+      }
+      res.status(200).send({
+        message: "Like removed",
+      });
+    } catch (err) {
+      res.json(err.message);
+    }
+  }
+};
+
 // Follow user
 
 export const follow = async (req: Request, res: Response) => {
