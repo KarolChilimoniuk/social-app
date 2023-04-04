@@ -13,7 +13,6 @@ import {
   hideCommentsModalHandler,
 } from "../../actions/appDataAction";
 import {
-  IComment,
   IPostWithCommentsContent,
   IRootState,
 } from "../../interfaces/interfaces";

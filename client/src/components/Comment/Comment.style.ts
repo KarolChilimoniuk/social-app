@@ -72,7 +72,7 @@ export const ResponsesTitle = styled.p`
 
 export const ResponsesContainer = styled.div`
   align-items: center;
-  // background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   display: flex;
   flex-direction: column;

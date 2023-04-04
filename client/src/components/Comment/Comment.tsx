@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { Dispatch } from "redux";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import NoImgAvatar from "../NoImgAvatar/NoImgAvatar";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
@@ -35,9 +34,6 @@ const Comment = ({ comment, thoughtId }: CommentProps): JSX.Element => {
   const loggedUserData = useSelector((state: IRootState) => state.userData);
 
   const [responseContent, newResponseContent] = useState<string>("");
-  //   const [responses, setNewResponses] = useState<
-  //     Array<ICommentResponse> | Array<string>
-  //   >(comment.responses);
   const [responses, setNewResponses] = useState<
     Array<ICommentResponse> | Array<string>
   >([]);
@@ -87,6 +83,9 @@ const Comment = ({ comment, thoughtId }: CommentProps): JSX.Element => {
         />
         <ResponsesTitle
           onClick={() => {
+            if (responsesVisible) {
+              setNewResponses([]);
+            }
             responsesVisibleHandler(responsesVisible, setResponsesVisible);
             if (!responsesVisible) {
               fetchCommentResponses(

@@ -8,7 +8,7 @@ export const FooterContainer = styled.section`
   justify-content: center;
   padding-left: 30px;
   width: 100vw;
-  z-index: 3;
+  z-index: 1;
   @media (orientation: landscape) {
     padding-left: 60px;
   }

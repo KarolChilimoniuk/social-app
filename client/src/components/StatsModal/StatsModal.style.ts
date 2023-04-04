@@ -24,7 +24,7 @@ export const ModalContainer = styled.div`
   overflow: auto;
   width: 300px;
   height: 400px;
-  padding: 20px 20px 0 20px;
+  padding: 40px 20px 0 20px;
   position: relative;
 `;
 

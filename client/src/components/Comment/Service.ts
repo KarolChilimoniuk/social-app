@@ -38,7 +38,6 @@ export const publishResponse = async (
       _id: responseContent,
     });
     newResponsesIds.push(`${responseContent}`);
-    console.log(newResponses);
     setNewResponses(newResponses);
     setResponsesIds(newResponsesIds);
     await addCommentResponse(loggedUserData._id, responseContent, commentId);

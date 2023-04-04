@@ -12,7 +12,7 @@ import {
   HeaderDateContainer,
   DateParagraph,
   ResponseContent,
-  ResponseParagraph,
+  ContentParagraph,
 } from "./Response.style";
 
 const Response = ({ response }: ResponseProps) => {
@@ -48,7 +48,7 @@ const Response = ({ response }: ResponseProps) => {
         </HeaderDateContainer>
       </UserContainer>
       <ResponseContent>
-        <ResponseParagraph>{response.content}</ResponseParagraph>
+        <ContentParagraph>{response.content}</ContentParagraph>
       </ResponseContent>
       <LikesContainer>
         <LikesSection

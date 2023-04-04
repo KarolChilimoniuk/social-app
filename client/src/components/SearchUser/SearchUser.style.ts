@@ -23,9 +23,9 @@ export const DesktopSearchUserContainer = styled.div`
   @media (min-width: 1024px) {
     align-items: center;
     background-color: rgb(85, 121, 142);
+    bottom: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
     padding-top: 30px;
     position: absolute;
     top: 0;

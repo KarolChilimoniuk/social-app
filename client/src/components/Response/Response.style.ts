@@ -9,7 +9,7 @@ export const ResponseContainer = styled.div`
   padding-bottom: 10px;
   padding-left: 10px;
   padding-top: 5px;
-  width: 100%;
+  width: 90%;
 `;
 
 export const UserContainer = styled.div`
@@ -41,7 +41,7 @@ export const ResponseContent = styled.div`
   width: 100%;
 `;
 
-export const ResponseParagraph = styled.p`
+export const ContentParagraph = styled.p`
   margin-top: 0;
   width: 100%;
 `;

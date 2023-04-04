@@ -6,6 +6,7 @@ import {
   FETCH_APP_USERS,
   HIDE_STATS_MODAL_HANDLER,
   FETCH_STATS_MODAL_CONTENT,
+  STATS_MODAL_LOADIG_STATUS,
   HIDE_COMMENTS_MODAL_HANDLER,
   FETCH_COMMENTS_MODAL_CONTENT,
   COMMENTS_MODAL_LOADIG_STATUS,
@@ -44,6 +45,12 @@ const appReducers = (state = initialState, action: AnyAction) => {
       };
     case FETCH_STATS_MODAL_CONTENT: {
       return { ...state, statsModalContent: action.payloads };
+    }
+    case STATS_MODAL_LOADIG_STATUS: {
+      return {
+        ...state,
+        statsModalLoadingStatus: action.payloads,
+      };
     }
     case HIDE_COMMENTS_MODAL_HANDLER:
       return {

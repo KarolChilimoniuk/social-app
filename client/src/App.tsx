@@ -5,6 +5,7 @@ import { Routes, Route, useNavigate, NavigateFunction } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { IRootState } from "./interfaces/interfaces";
 import { tokenChecking } from "./services/api/auth";
+import ErrorPage from "./pages/404/404";
 import UserBar from "./components/UserBar/UserBar";
 import MobileNav from "./components/MobileNav/MobileNav";
 import Home from "./pages/Home/Home";
@@ -85,6 +86,14 @@ const App = (): JSX.Element => {
             element={
               <MainDiv>
                 <Home />
+              </MainDiv>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <MainDiv>
+                <ErrorPage />
               </MainDiv>
             }
           />
