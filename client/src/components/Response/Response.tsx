@@ -4,7 +4,7 @@ import UserProfileImg from "../UserProfileImg/UserProfileImg";
 import UserHeader from "../UserHeader/UserHeader";
 import LikesSection from "../LikesContent/LikesContent";
 import { ResponseProps } from "../../types/types";
-import { IRootState } from "../../interfaces/interfaces";
+import { IRootState, IUserDataState } from "../../interfaces/interfaces";
 import {
   ResponseContainer,
   LikesContainer,
@@ -16,7 +16,10 @@ import {
 } from "./Response.style";
 
 const Response = ({ response }: ResponseProps) => {
-  const loggedUserData = useSelector((state: IRootState) => state.userData);
+  const loggedUserData: IUserDataState = useSelector(
+    (state: IRootState) => state.userData
+  );
+
   return (
     <ResponseContainer>
       <UserContainer>

@@ -41,13 +41,16 @@ export const editData = async (
 export const editUserPic = async (
   userPic: ImgToPreview,
   userId: string,
+  setUploadedImg: Function,
   dispatch: Dispatch
 ): Promise<string | void> => {
   let result: string = await instance
     .post("/logged/editUserPic", { userPic: userPic, userId: userId })
     .then((res: AxiosResponse) => {
       dispatch(updateUserInfoSuccess(res.data.userData));
+      setUploadedImg(res.data.userData.pic);
       alert("Data updated");
+      console.log(res.data.userData.pic);
       return res.data.userData.pic;
     })
     .catch((err) => {

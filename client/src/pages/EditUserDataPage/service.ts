@@ -37,7 +37,7 @@ export const textSubmitHandler = async (
 export const setPreviewFromFileInput = (
   userPic: UserPic,
   setImagePreview: Function
-) => {
+): void => {
   const reader = new FileReader();
   reader.readAsDataURL(userPic!);
   reader.onloadend = () => {
@@ -66,6 +66,7 @@ export const imgSubmitHandler = async (
   const uploadedImageData = await editUserPic(
     imgToPreview,
     loggedUserId,
+    setUploadedImg,
     dispatch
   );
 };

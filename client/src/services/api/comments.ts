@@ -6,7 +6,10 @@ import {
   fetchCommentsModalContent,
 } from "../../actions/appDataAction";
 
-export const fetchComments = async (id: string, dispatch: Dispatch) => {
+export const fetchComments = async (
+  id: string,
+  dispatch: Dispatch
+): Promise<void> => {
   await instance
     .get(`/${id}/comments`)
     .then((res: AxiosResponse) => {
@@ -25,7 +28,7 @@ export const addComment = async (
   commentContent: string,
   thoughtId: string
 ): Promise<void> => {
-  instance
+  await instance
     .post("/logged/newComment", {
       userId: userId,
       commentContent: commentContent,
@@ -45,7 +48,7 @@ export const fetchCommentResponses = async (
   commentId: string,
   setNewResponses: Function,
   setLoading: Function
-) => {
+): Promise<void> => {
   await instance
     .get(`/${thoughtId}/comments/${commentId}/responses`)
     .then((res: AxiosResponse) => {
@@ -64,7 +67,7 @@ export const addCommentResponse = async (
   responseContent: string,
   commentId: string
 ): Promise<void> => {
-  instance
+  await instance
     .post("/logged/newCommentResponse", {
       userId: userId,
       responseContent: responseContent,

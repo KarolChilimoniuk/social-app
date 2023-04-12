@@ -193,6 +193,7 @@ const UserPanel = (): JSX.Element => {
               <SubInput value={"Edit profile photo"} />
             </Form>
           </FormContainer>
+          <button onClick={() => console.log(uploadedImg)}>imagessss</button>
           {typeof uploadedImg === "string" && uploadedImg !== "" && (
             <ImgContainer>
               <UploadedUserImg

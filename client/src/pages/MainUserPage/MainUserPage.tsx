@@ -45,20 +45,20 @@ const MainUserPage = (): JSX.Element => {
                 .filter(
                   (el, i) => i <= indexOfLastPost && i >= indexOfFirstPost
                 )
-                .map((el) => (
+                .map((post) => (
                   <Thought
-                    authorFirstName={el.author.firstName}
-                    authorLastName={el.author.lastName}
-                    authorPic={el.author.pic}
-                    date={new Date(el.created).toDateString()}
-                    content={el.textContent}
-                    likes={el.likes.length}
+                    authorFirstName={post.author.firstName}
+                    authorLastName={post.author.lastName}
+                    authorPic={post.author.pic}
+                    date={new Date(post.created).toDateString()}
+                    content={post.textContent}
+                    likes={post.likes.length}
                     likeStatus={
-                      el.likes.includes(loggedUserData._id) ? true : false
+                      post.likes.includes(loggedUserData._id) ? true : false
                     }
-                    authorId={el.author._id}
-                    postId={el._id}
-                    key={el._id}
+                    authorId={post.author._id}
+                    postId={post._id}
+                    key={post._id}
                   />
                 ))
             : null}

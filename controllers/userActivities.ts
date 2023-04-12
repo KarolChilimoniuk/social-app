@@ -19,7 +19,7 @@ import {
   ICommentResponse,
 } from "interfaces";
 
-// Edit user data controller
+// Edit user data
 
 export const editUserData = async (req: Request, res: Response) => {
   const {
@@ -101,7 +101,7 @@ export const editUserData = async (req: Request, res: Response) => {
   }
 };
 
-// Edit user profile pic controller
+// Edit user profile pic
 
 export const editUserPic = async (req: Request, res: Response) => {
   const { userPic, userId } = req.body;
@@ -134,7 +134,7 @@ export const editUserPic = async (req: Request, res: Response) => {
             }
           }
         );
-        const updatedUser = await UserModel.findOne({ _id: userId });
+        const updatedUser: IUser = await UserModel.findOne({ _id: userId });
         const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
         const listOfFollowers: Array<IUser> = await getUserFollowers(
           updatedUser
@@ -172,14 +172,14 @@ export const editUserPic = async (req: Request, res: Response) => {
   }
 };
 
-// Add new thought(post) controller
+// Add new thought(post)
 
 export const addThought = async (req: Request, res: Response) => {
   const { email, thoughtContent } = req.body;
   if (email) {
     try {
       const user: IUser = await UserModel.findOne({ eMail: email });
-      const newThought = await ThoughtModel.create({
+      const newThought: IThought = await ThoughtModel.create({
         textContent: thoughtContent,
         author: {
           _id: user._id,
@@ -217,16 +217,15 @@ export const likeThought = async (req: Request, res: Response) => {
   const { thoughtId, userId } = req.body;
   if (thoughtId) {
     try {
-      const thought = await ThoughtModel.findOneAndUpdate(
+      const thought: IThought = await ThoughtModel.findOneAndUpdate(
         { _id: thoughtId },
         { $push: { likes: userId } }
       );
-      if (!thought) {
+      !thought &&
         res.status(404).send({
           message: "Thought not found :(",
         });
-      }
-      const updatedThought = await ThoughtModel.findById(thoughtId);
+      const updatedThought: IThought = await ThoughtModel.findById(thoughtId);
       res.status(200).send({
         message: "Like added",
         thoughtData: updatedThought,
@@ -243,15 +242,14 @@ export const unlikeThought = async (req: Request, res: Response) => {
   const { thoughtId, userId } = req.body;
   if (thoughtId) {
     try {
-      const thought = await ThoughtModel.findOneAndUpdate(
+      const thought: IThought = await ThoughtModel.findOneAndUpdate(
         { _id: thoughtId },
         { $pull: { likes: userId } }
       );
-      if (!thought) {
+      !thought &&
         res.status(404).send({
           message: "Thought not found :(",
         });
-      }
       const updatedThought: Array<IThought> = await ThoughtModel.findById(
         thoughtId
       );
@@ -271,15 +269,14 @@ export const likeComment = async (req: Request, res: Response) => {
   const { commentId, userId } = req.body;
   if (commentId) {
     try {
-      const comment = await CommentModel.findOneAndUpdate(
+      const comment: IComment = await CommentModel.findOneAndUpdate(
         { _id: commentId },
         { $push: { likes: userId } }
       );
-      if (!comment) {
+      !comment &&
         res.status(404).send({
           message: "Thought not found :(",
         });
-      }
       res.status(200).send({
         message: "Like added",
       });
@@ -295,15 +292,14 @@ export const unlikeComment = async (req: Request, res: Response) => {
   const { commentId, userId } = req.body;
   if (commentId) {
     try {
-      const comment = await CommentModel.findOneAndUpdate(
+      const comment: IComment = await CommentModel.findOneAndUpdate(
         { _id: commentId },
         { $pull: { likes: userId } }
       );
-      if (!comment) {
+      !comment &&
         res.status(404).send({
           message: "Thought not found :(",
         });
-      }
       res.status(200).send({
         message: "Like removed",
       });
@@ -319,15 +315,15 @@ export const likeCommentResponse = async (req: Request, res: Response) => {
   const { responseId, userId } = req.body;
   if (responseId) {
     try {
-      const response = await CommentResponseModel.findOneAndUpdate(
-        { _id: responseId },
-        { $push: { likes: userId } }
-      );
-      if (!response) {
+      const response: ICommentResponse =
+        await CommentResponseModel.findOneAndUpdate(
+          { _id: responseId },
+          { $push: { likes: userId } }
+        );
+      !response &&
         res.status(404).send({
           message: "Response not found :(",
         });
-      }
       res.status(200).send({
         message: "Like added",
       });
@@ -343,15 +339,15 @@ export const unlikeCommentResponse = async (req: Request, res: Response) => {
   const { responseId, userId } = req.body;
   if (responseId) {
     try {
-      const response = await CommentResponseModel.findOneAndUpdate(
-        { _id: responseId },
-        { $pull: { likes: userId } }
-      );
-      if (!response) {
+      const response: ICommentResponse =
+        await CommentResponseModel.findOneAndUpdate(
+          { _id: responseId },
+          { $pull: { likes: userId } }
+        );
+      !response &&
         res.status(404).send({
           message: "Thought not found :(",
         });
-      }
       res.status(200).send({
         message: "Like removed",
       });
@@ -367,26 +363,25 @@ export const follow = async (req: Request, res: Response) => {
   try {
     const { followerId, followedId } = req.body;
     if (followerId && followedId) {
-      const follower = await UserModel.findOneAndUpdate(
+      const follower: IUser = await UserModel.findOneAndUpdate(
         { _id: followerId },
         { $push: { followed: followedId } }
       );
-      const followed = await UserModel.findOneAndUpdate(
+      const followed: IUser = await UserModel.findOneAndUpdate(
         { _id: followedId },
         { $push: { followers: followerId } }
       );
-      if (!follower || !followed) {
-        return res.status(404).send({
+      (!follower || !followed) &&
+        res.status(404).send({
           message: "User can't be found :(",
         });
-      }
       const updatedUser: IUser = await UserModel.findOne({ _id: followerId });
       const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
       const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
         listOfFollowed,
         updatedUser
       );
-      return res.status(200).send({
+      res.status(200).send({
         message: "Follow",
         listOfFollowed: updatedUser.followed,
         thoughtsToShow: thoughtsToShow,
@@ -403,19 +398,18 @@ export const unFollow = async (req: Request, res: Response) => {
   const { followerId, followedId } = req.body;
   if (followerId && followedId) {
     try {
-      const follower = await UserModel.findOneAndUpdate(
+      const follower: IUser = await UserModel.findOneAndUpdate(
         { _id: followerId },
         { $pull: { followed: followedId } }
       );
-      const followed = await UserModel.findOneAndUpdate(
+      const followed: IUser = await UserModel.findOneAndUpdate(
         { _id: followedId },
         { $pull: { followers: followerId } }
       );
-      if (!follower || !followed) {
+      (!follower || !followed) &&
         res.status(404).send({
           message: "User can't be found :(",
         });
-      }
       const updatedUser: IUser = await UserModel.findOne({ _id: followerId });
       const listOfFollowed: Array<IUser> = await getUserFollowed(updatedUser);
       const thoughtsToShow: Array<IThoughtInPushMethod> = await getPostsToShow(
@@ -443,7 +437,7 @@ export const addComment = async (req: Request, res: Response) => {
     !user && res.status(404).json("User not found :(");
     const thought: IThought = await ThoughtModel.findById(thoughtId);
     !thought && res.status(404).json("Thought not found :(");
-    const newComment = await CommentModel.create({
+    const newComment: IComment = await CommentModel.create({
       content: commentContent,
       author: {
         _id: user._id,

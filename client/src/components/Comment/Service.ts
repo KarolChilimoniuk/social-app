@@ -17,7 +17,7 @@ export const publishResponse = async (
   setNewResponses: Function,
   responsesIds: Array<string>,
   setResponsesIds: Function
-) => {
+): Promise<void> => {
   e.preventDefault();
   if (responseContent === "") {
     alert("Your response is empty :/ Write something");

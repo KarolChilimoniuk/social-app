@@ -4,7 +4,7 @@ import { Img, PageContainer, Paragraph } from "./404.style";
 const ErrorPage = (): JSX.Element => {
   return (
     <PageContainer>
-      <Paragraph>Page not found :(</Paragraph>
+      <Paragraph>Page not found</Paragraph>
       <Img src={ErrorImg} />
     </PageContainer>
   );

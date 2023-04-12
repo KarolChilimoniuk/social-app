@@ -4,7 +4,7 @@ import { AxiosError, AxiosResponse } from "axios";
 export const likeThought = async (
   id: string,
   thoughtId: string
-): Promise<any> => {
+): Promise<void> => {
   await instance
     .patch("/logged/likeThought", { userId: id, thoughtId: thoughtId })
     .then((res: AxiosResponse) => {
@@ -18,7 +18,7 @@ export const likeThought = async (
 export const unlikeThought = async (
   id: string,
   thoughtId: string
-): Promise<any> => {
+): Promise<void> => {
   await instance
     .patch("/logged/unlikeThought", { userId: id, thoughtId: thoughtId })
     .then((res: AxiosResponse) => {
@@ -32,7 +32,7 @@ export const unlikeThought = async (
 export const likeComment = async (
   userId: string,
   commentId: string
-): Promise<any> => {
+): Promise<void> => {
   await instance
     .patch("/logged/likeComment", { userId: userId, commentId: commentId })
     .then((res: AxiosResponse) => {
@@ -46,7 +46,7 @@ export const likeComment = async (
 export const unlikeComment = async (
   userId: string,
   commentId: string
-): Promise<any> => {
+): Promise<void> => {
   await instance
     .patch("/logged/unlikeComment", { userId: userId, commentId: commentId })
     .then((res: AxiosResponse) => {
@@ -60,7 +60,7 @@ export const unlikeComment = async (
 export const likeCommentResponse = async (
   userId: string,
   responseId: string
-): Promise<any> => {
+): Promise<void> => {
   await instance
     .patch("/logged/likeCommentResponse", {
       userId: userId,
@@ -77,7 +77,7 @@ export const likeCommentResponse = async (
 export const unlikeCommentResponse = async (
   userId: string,
   responseId: string
-): Promise<any> => {
+): Promise<void> => {
   await instance
     .patch("/logged/unlikeCommentResponse", {
       userId: userId,

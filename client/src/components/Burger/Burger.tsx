@@ -14,9 +14,9 @@ const Burger = ({ onClickNavHandler }: BurgerBarProps): JSX.Element => {
         activeBarHandler(activeStatus, setActiveStatus);
       }}
     >
-      <Bar1 className={activeStatus === true ? styles.activeBar1 : undefined} />
-      <Bar2 className={activeStatus === true ? styles.activeBar2 : undefined} />
-      <Bar3 className={activeStatus === true ? styles.activeBar3 : undefined} />
+      <Bar1 className={activeStatus ? styles.activeBar1 : undefined} />
+      <Bar2 className={activeStatus ? styles.activeBar2 : undefined} />
+      <Bar3 className={activeStatus ? styles.activeBar3 : undefined} />
     </BurgerContainer>
   );
 };

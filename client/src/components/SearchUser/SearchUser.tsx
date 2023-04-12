@@ -22,7 +22,9 @@ import {
 } from "./SearchUser.style";
 
 const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
-  const appUsers = useSelector((state: IRootState) => state.appData.appUsers);
+  const appUsers: Array<IAppUsers> = useSelector(
+    (state: IRootState) => state.appData.appUsers
+  );
 
   const [formValue, setFormValue] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -32,10 +34,6 @@ const SearchUser = ({ hide, hideHandler }: SearchUserProps): JSX.Element => {
 
   const indexOfLastPost: number = currentPage * usersPerPage;
   const indexOfFirstPost: number = indexOfLastPost - usersPerPage;
-  const currentPosts: Array<IAppUsers> = appUsers.slice(
-    indexOfFirstPost,
-    indexOfLastPost
-  );
 
   useEffect(() => setUsersToShow(appUsers), [appUsers]);
 

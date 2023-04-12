@@ -11,7 +11,7 @@ import {
 } from "../userMethods";
 import { IUser, IDecodedUserData, IThoughtInPushMethod } from "../interfaces";
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
     const users: Array<IUser> = await UserModel.find();
     res.status(200).json(users);
@@ -20,9 +20,12 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-// Register user controller
+// Sign up
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (
+  req: Request,
+  res: Response
+): Promise<Response | void> => {
   const {
     userName,
     firstName,
@@ -42,7 +45,9 @@ export const register = async (req: Request, res: Response) => {
     }
     const user: IUser = await UserModel.findOne({ eMail: email });
     if (user) {
-      res.status(409).send("User using this email exists - choose other email");
+      return res
+        .status(409)
+        .send("User using this email exists - choose other email");
     }
     const hashedPassword: string = await bcrypt.hash(password, 10);
     await UserModel.create({
@@ -59,9 +64,12 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-// Native log in (no Google) controller
+// Native log in (no Google)
 
-export const nativeLogin = async (req: any, res: Response) => {
+export const nativeLogin = async (
+  req: any,
+  res: Response
+): Promise<Response | void> => {
   try {
     let email: string;
     let password: string;
@@ -136,9 +144,12 @@ export const nativeLogin = async (req: any, res: Response) => {
   }
 };
 
-// Log in via Google controller
+// Log in via Google
 
-export const googleLogin = async (req: Request, res: Response) => {
+export const googleLogin = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { credential } = req.body;
   if (credential) {
     const googleUserInfo: any = jwt.decode(credential);
@@ -146,7 +157,7 @@ export const googleLogin = async (req: Request, res: Response) => {
       eMail: googleUserInfo.email,
     });
     if (!appUser) {
-      res.status(404).send("User with email is not found");
+      res.status(404).send("User with this email is not found");
     } else {
       const cookieToken: string = await appUser.genAuthToken(
         appUser._id,
@@ -196,13 +207,13 @@ export const googleLogin = async (req: Request, res: Response) => {
   }
 };
 
-// Token verification
+// Token validator
 
 export const tokenChecking = async (
   req: any,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   const { token } = req.cookies;
   if (!token) {
     res.status(401).send("token does not exist");
@@ -213,9 +224,9 @@ export const tokenChecking = async (
   }
 };
 
-// Logout controller
+// Log out
 
-export const logout = (req: Request, res: Response) => {
+export const logout = (req: Request, res: Response): void => {
   res.clearCookie("token");
   res.status(200).send("Cookie cleared");
 };

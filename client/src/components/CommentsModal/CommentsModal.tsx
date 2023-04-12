@@ -66,76 +66,75 @@ const CommentsModal = (): JSX.Element => {
             <LoadingIcon />
           </ImgContainer2>
         )}
-        {modalContent !== null &&
-          appData.commentsModalLoadingStatus === false && (
-            <Content>
-              <Thought
-                authorFirstName={modalContent.author.firstName}
-                authorLastName={modalContent.author.lastName}
-                authorPic={modalContent.author.pic}
-                date={new Date(modalContent.created).toDateString()}
-                content={modalContent.textContent}
-                likes={modalContent.likes.length}
-                likeStatus={
-                  modalContent.likes.includes(loggedUserData._id) ? true : false
-                }
-                authorId={modalContent.author._id}
-                postId={modalContent._id}
-              />
-              <Form
-                onSubmit={(e: React.SyntheticEvent) => {
-                  publishComment(
-                    e,
-                    commentContent,
-                    loggedUserData,
-                    modalContent!._id,
-                    setModalContent,
-                    modalContent
-                  );
-                  newCommentContent("");
-                }}
-              >
-                <InputContainer>
-                  <TextArea
-                    placeholder="Write comment..."
-                    name="comments"
-                    width={"100%"}
-                    rows={5}
-                    cols={5}
-                    value={commentContent}
-                    onChangeHandler={(e: React.SyntheticEvent) => {
-                      changeCommentValue(e, newCommentContent);
-                      console.log(commentContent);
-                    }}
+        {modalContent !== null && !appData.commentsModalLoadingStatus && (
+          <Content>
+            <Thought
+              authorFirstName={modalContent.author.firstName}
+              authorLastName={modalContent.author.lastName}
+              authorPic={modalContent.author.pic}
+              date={new Date(modalContent.created).toDateString()}
+              content={modalContent.textContent}
+              likes={modalContent.likes.length}
+              likeStatus={
+                modalContent.likes.includes(loggedUserData._id) ? true : false
+              }
+              authorId={modalContent.author._id}
+              postId={modalContent._id}
+            />
+            <Form
+              onSubmit={(e: React.SyntheticEvent) => {
+                publishComment(
+                  e,
+                  commentContent,
+                  loggedUserData,
+                  modalContent!._id,
+                  setModalContent,
+                  modalContent
+                );
+                newCommentContent("");
+              }}
+            >
+              <InputContainer>
+                <TextArea
+                  placeholder="Write comment..."
+                  name="comments"
+                  width={"100%"}
+                  rows={5}
+                  cols={5}
+                  value={commentContent}
+                  onChangeHandler={(e: React.SyntheticEvent) => {
+                    changeCommentValue(e, newCommentContent);
+                    console.log(commentContent);
+                  }}
+                />
+              </InputContainer>
+              <SubmitContainer>
+                <SubInput value={`Publish comment`} />
+              </SubmitContainer>
+            </Form>
+            {modalContent.comments!.length !== 0 ? (
+              modalContent
+                .comments!.filter(
+                  (el, i) => i < indexOfLastPost && i >= indexOfFirstPost
+                )
+                .map((comment) => (
+                  <Comment
+                    comment={comment}
+                    thoughtId={modalContent._id}
+                    key={comment._id}
                   />
-                </InputContainer>
-                <SubmitContainer>
-                  <SubInput value={`Publish comment`} />
-                </SubmitContainer>
-              </Form>
-              {modalContent.comments!.length !== 0 ? (
-                modalContent
-                  .comments!.filter(
-                    (el, i) => i < indexOfLastPost && i >= indexOfFirstPost
-                  )
-                  .map((comment) => (
-                    <Comment
-                      comment={comment}
-                      thoughtId={modalContent._id}
-                      key={comment._id}
-                    />
-                  ))
-              ) : (
-                <Paragraph>No comments</Paragraph>
-              )}
-              <Pagination
-                itemsPerPage={commentsPerPage}
-                totalItems={modalContent!.comments!.length}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-              />
-            </Content>
-          )}
+                ))
+            ) : (
+              <Paragraph>No comments</Paragraph>
+            )}
+            <Pagination
+              itemsPerPage={commentsPerPage}
+              totalItems={modalContent!.comments!.length}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </Content>
+        )}
       </ModalContainer>
     </ModalBackground>
   );

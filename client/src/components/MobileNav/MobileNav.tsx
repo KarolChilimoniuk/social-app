@@ -42,9 +42,7 @@ const MobileNav = ({ active }: NavProps): JSX.Element => {
   const [searchHide, setSearchHide] = useState<boolean>(true);
 
   return (
-    <MobileNavContainer
-      className={active === true ? styles.activeNav : undefined}
-    >
+    <MobileNavContainer className={active ? styles.activeNav : undefined}>
       <SearchUser hide={searchHide} hideHandler={setSearchHide} />
       <LoggedUserInfoContainer>
         {typeof loggedUserData.pic === "string" && loggedUserData.pic !== "" ? (

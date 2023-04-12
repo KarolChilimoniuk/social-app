@@ -11,8 +11,7 @@ export const publishComment = async (
   thoughtId: string,
   setModalContent: Function,
   formerModalContent: IPostWithCommentsContent
-  //   dispatch: Dispatch
-) => {
+): Promise<void> => {
   e.preventDefault();
   if (commentContent === "") {
     alert("Your comment is empty :/ Write something");

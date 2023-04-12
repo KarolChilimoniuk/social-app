@@ -11,18 +11,23 @@ import { IUser, IThought, IThoughtInPushMethod, IComment } from "interfaces";
 import { ThoughtModel } from "../models/Thought";
 import { CommentModel } from "../models/Comment";
 
-export const main = (req: Request, res: Response) => {
+// Main get request
+
+export const main = (req: Request, res: Response): void => {
   res.send("Server works ;]");
 };
 
-export const fetchFilteredUser = async (req: Request, res: Response) => {
+// Fetch chosen user data
+
+export const fetchFilteredUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id } = req.params;
   try {
     !id && res.status(400).json("Bad request :(");
     const user: IUser = await UserModel.findById(id);
     !user && res.status(404).json("User not found :(");
-    const listOfFollowed: Array<IUser> = await getUserFollowed(user);
-    const listOfFollowers: Array<IUser> = await getUserFollowers(user);
     const userPosts: Array<IThoughtInPushMethod> = await getUserPosts(user);
     res.status(200).send({
       userData: {
@@ -45,7 +50,12 @@ export const fetchFilteredUser = async (req: Request, res: Response) => {
   }
 };
 
-export const fetchUsers = async (req: Request, res: Response) => {
+// Fetch app users basic data
+
+export const fetchUsers = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const users = await UserModel.find();
     res.status(200).send({ users: users });
@@ -54,7 +64,12 @@ export const fetchUsers = async (req: Request, res: Response) => {
   }
 };
 
-export const fetchFollowed = async (req: Request, res: Response) => {
+// Fetch info about followed users
+
+export const fetchFollowed = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id } = req.params;
   try {
     !id && res.status(400).json("Bad request :(");
@@ -69,7 +84,12 @@ export const fetchFollowed = async (req: Request, res: Response) => {
   }
 };
 
-export const fetchFollowers = async (req: Request, res: Response) => {
+// Fetch info about followers
+
+export const fetchFollowers = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id } = req.params;
   try {
     !id && res.status(400).json("Bad request :(");
@@ -84,7 +104,12 @@ export const fetchFollowers = async (req: Request, res: Response) => {
   }
 };
 
-export const fetchComments = async (req: Request, res: Response) => {
+// Fetch thought comments
+
+export const fetchComments = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id } = req.params;
   try {
     !id && res.status(400).json("Bad request :(");
@@ -92,7 +117,6 @@ export const fetchComments = async (req: Request, res: Response) => {
     !thought && res.status(404).json("Thought not found :(");
     const thoughtAuthor = await UserModel.findById(thought.author._id);
     const commentsData = await getComments(thought.comments);
-    console.log(commentsData);
     res.status(200).send({
       _id: thought._id,
       author: {
@@ -112,14 +136,18 @@ export const fetchComments = async (req: Request, res: Response) => {
   }
 };
 
-export const fetchCommentResponses = async (req: Request, res: Response) => {
+// Fetch comment responses
+
+export const fetchCommentResponses = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { thoughtId, commentId } = req.params;
   try {
     !thoughtId && res.status(400).json("Bad request :(");
     const comment: IComment = await CommentModel.findById(commentId);
     !comment && res.status(404).json("Comment not found :(");
     const responsesData = await getCommentResponses(comment.responses);
-    console.log(responsesData);
     res.status(200).send({
       responses: responsesData,
     });
